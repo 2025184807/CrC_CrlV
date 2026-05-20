@@ -23,6 +23,13 @@
 *.dll
 *.so.*
 
+# gitgnore
+bin/
+obj/
+.vs/
+*.user
+*.suo
+
 
 # Fortran module files
 *.mod
