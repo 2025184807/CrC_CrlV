@@ -1,9 +1,8 @@
 ﻿using IShopping.Controller;
 using IShopping.Models;
 using System;
-using System.Drawing;
-using System.Linq;
 using System.Windows.Forms;
+using System.Linq;
 
 namespace IShopping.Views
 {
@@ -118,9 +117,8 @@ namespace IShopping.Views
         //Eliminar - PARA ELIMINAR O UTILIZADOR SELECIONADO PELO ID NA TABELA E GUARDAR AS ALTERAÇÕES NA BASE DE DADOS
         private void btnEliminar_Click(object sender, EventArgs e)
         {
-            int id;
 
-            if (!int.TryParse(txtId.Text, out id))
+            if (!int.TryParse(txtId.Text, out int id))
             {
                 MessageBox.Show("O ID tem de ser numérico.");
                 return;

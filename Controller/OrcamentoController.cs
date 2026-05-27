@@ -2,8 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 
 namespace IShopping.Controller
@@ -61,7 +59,7 @@ namespace IShopping.Controller
         }
 
         // EDITAR
-        public static void Editar(int id, decimal valorOrcamento, DateTime? mesDate, DateTime? anoDate, string alteradoPor)
+        public static void Editar(int id, decimal valorOrcamento, DateTime ? dataCompra, string alteradoPor)
         {
             using (shoppingContext db = new shoppingContext())
             {
@@ -69,7 +67,7 @@ namespace IShopping.Controller
                 if (orcamento != null)
                 {
                     orcamento.ValorOrcamento = valorOrcamento;
-                    orcamento.DataCompra = mesDate;
+                    orcamento.DataCompra = dataCompra;
                     orcamento.AlteradoPor = alteradoPor;
                     db.SaveChanges();
                 }

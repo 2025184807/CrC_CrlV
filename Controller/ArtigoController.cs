@@ -26,12 +26,12 @@ namespace IShopping.Controller
             {
                 return db.Artigos
                     .Where(a => a.TipoArtigoId == tipoId)
-                    .ToList();
+                    .ToList(); // Filtra os artigos pelo tipoArtigoId e retorna a lista resultante
             }
         }
 
         // INSERIR
-        public static void Inserir(string nome, int tipoArtigoId)
+        public static void Inserir(string nome, int tipoArtigoId, decimal preco)
         {
             using (shoppingContext db = new shoppingContext())
             {
@@ -39,6 +39,7 @@ namespace IShopping.Controller
 
                 artigo.Nome = nome;
                 artigo.TipoArtigoId = tipoArtigoId;
+                artigo.Preco = preco;
 
                 db.Artigos.Add(artigo);
 
@@ -47,7 +48,7 @@ namespace IShopping.Controller
         }
 
         // EDITAR
-        public static void Editar(int id, string nome, int tipoArtigoId)
+        public static void Editar(int id, string nome, int tipoArtigoId, decimal preco)
         {
             using (shoppingContext db = new shoppingContext())
             {
@@ -57,6 +58,7 @@ namespace IShopping.Controller
                 {
                     artigo.Nome = nome;
                     artigo.TipoArtigoId = tipoArtigoId;
+                    artigo.Preco = preco;
 
                     db.SaveChanges();
                 }
@@ -76,6 +78,16 @@ namespace IShopping.Controller
 
                     db.SaveChanges();
                 }
+            }
+        }
+
+        // PROCURAR POR ID
+        public static Artigo ProcurarPorId(int id)
+        {
+            using (shoppingContext db = new shoppingContext())
+            {
+                return db.Artigos
+                    .FirstOrDefault(a => a.Id == id);
             }
         }
     }

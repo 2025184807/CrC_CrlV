@@ -15,6 +15,14 @@ namespace IShopping.Views
 
         private void button1_Click(object sender, EventArgs e)
         {
+            int id;
+
+            if (!int.TryParse(txtId.Text, out id))
+            {
+                MessageBox.Show("ID inválido.");
+                return;
+            }
+
             string valor = txtValor.Text;
 
             DateTime dataCompra = dateTimePicker1.Value;
@@ -69,6 +77,7 @@ namespace IShopping.Views
             this.Close();
         }
 
+        //Ver detalhes do orçamento
         private void btnVer_Click(object sender, EventArgs e)
         {
             int OrcamentoId;
@@ -90,6 +99,58 @@ namespace IShopping.Views
             {
                 MessageBox.Show("Orçamento não encontrado.");
             }
+        }
+
+        // Editar orçamento
+        private void btnEditar_Click(object sender, EventArgs e)
+        {
+            if (string.IsNullOrWhiteSpace(txtValor.Text))
+            {
+                MessageBox.Show("Preenche todos os campos.");
+                return;
+            }
+
+            int OrcamentoId;
+
+            if (!int.TryParse(txtId.Text, out OrcamentoId))
+            {
+                MessageBox.Show("ID inválido.");
+                return;
+
+            }
+
+            // Chamar controller para editar o orçamento
+            OrcamentoController.Editar(
+                    OrcamentoId,
+                    decimal.Parse(txtValor.Text), //converte o valor do orçamento para decimal
+                    dateTimePicker1.Value,
+                    sessao.UtilizadorAtual
+                    
+                );
+
+             MessageBox.Show("Orçamento editado com sucesso!");
+
+             CarregarGrid();
+             LimparCampos(); 
+        }
+
+        //Eliminar orçamento
+        private void btnEliminar_Click(object sender, EventArgs e)
+        {
+            int OrcamentoId;
+
+            if (!int.TryParse(txtId.Text, out OrcamentoId))
+            {
+                MessageBox.Show("O ID tem de ser numérico.");
+                return;
+            }
+
+            OrcamentoController.Eliminar(OrcamentoId);
+
+            MessageBox.Show("Orçamento eliminado com sucesso!");
+            CarregarGrid();
+
+            LimparCampos();
         }
     }
 }

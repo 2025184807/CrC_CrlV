@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace IShopping.Models
 {
-    [Table("OrcamentosMensais")]
+    [Table("OrcamentosMensais")] // Nome da tabela no banco de dados
     internal class Orcamento
     {
         public int OrcamentoId { get; set; }

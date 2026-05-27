@@ -35,5 +35,10 @@ namespace IShopping
         {
 
         }
+
+        private void textBox1Username_TextChanged(object sender, System.EventArgs e)
+        {
+
+        }
     }
 }

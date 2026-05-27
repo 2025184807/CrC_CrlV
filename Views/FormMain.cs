@@ -40,5 +40,12 @@ namespace IShopping.Views
 
             form.Show();
         }
+
+        private void btnArtigo_Click(object sender, EventArgs e)
+        {
+            FormGestaoArtigo form = new FormGestaoArtigo();
+
+            form.Show();
+        }
     }
 }

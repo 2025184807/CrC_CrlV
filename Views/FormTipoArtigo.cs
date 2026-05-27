@@ -29,7 +29,6 @@ namespace IShopping.Views
         {
             txtId.Clear();
             txtNome.Clear();
-            txtDescricao.Clear();
         }
         private void CarregarGrid()
         {
@@ -42,13 +41,13 @@ namespace IShopping.Views
         }
         private void button1_Click(object sender, EventArgs e)
         {
-            if (string.IsNullOrWhiteSpace(txtNome.Text) || string.IsNullOrWhiteSpace(txtDescricao.Text))
+            if (string.IsNullOrWhiteSpace(txtNome.Text))
             {
                 MessageBox.Show("Preenche todos os campos.");
                 return;
             }
 
-            TipoArtigoController.Inserir(txtNome.Text, txtDescricao.Text);
+            TipoArtigoController.Inserir(txtNome.Text);
             MessageBox.Show("Tipo inserido!");
 
             CarregarGrid();
@@ -59,7 +58,6 @@ namespace IShopping.Views
         {
             txtId.Clear();
             txtNome.Clear();
-            txtDescricao.Clear();
         }
 
         private void btnVer_Click(object sender, EventArgs e)
@@ -78,7 +76,6 @@ namespace IShopping.Views
             if (tipoArtigo != null)
             {
                 txtNome.Text = tipoArtigo.Nome;
-                txtDescricao.Text = tipoArtigo.Descricao;
             }
             else
             {
@@ -88,7 +85,7 @@ namespace IShopping.Views
 
         private void btnEditar_Click(object sender, EventArgs e)
         {
-            if (string.IsNullOrWhiteSpace(txtNome.Text) || string.IsNullOrWhiteSpace(txtDescricao.Text))
+            if (string.IsNullOrWhiteSpace(txtNome.Text))
             {
                 MessageBox.Show("Preenche todos os campos.");
                 return;
@@ -102,7 +99,7 @@ namespace IShopping.Views
                 return;
             }
 
-            TipoArtigoController.Editar(id, txtNome.Text, txtDescricao.Text);
+            TipoArtigoController.Editar(id, txtNome.Text);
 
             MessageBox.Show("Tipo de artigo editado com sucesso!");
             CarregarGrid();
@@ -131,6 +128,11 @@ namespace IShopping.Views
             CarregarGrid();
 
             LimparCampos();
+        }
+
+        private void txtNome_TextChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

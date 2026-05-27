@@ -71,6 +71,7 @@
             this.btnArtigo.TabIndex = 141;
             this.btnArtigo.Text = "Artigos";
             this.btnArtigo.UseVisualStyleBackColor = false;
+            this.btnArtigo.Click += new System.EventHandler(this.btnArtigo_Click);
             // 
             // label3
             // 

@@ -20,14 +20,13 @@ namespace IShopping.Controller
         }
 
         // INSERIR
-        public static void Inserir(string nome, string descricao)
+        public static void Inserir(string nome)
         {
             using (shoppingContext db = new shoppingContext())
             {
                 TipoArtigo tipo = new TipoArtigo();
 
                 tipo.Nome = nome;
-                tipo.Descricao = descricao;
 
                 db.TipoArtigos.Add(tipo);
 
@@ -36,7 +35,7 @@ namespace IShopping.Controller
         }
 
         // EDITAR
-        public static void Editar(int id, string nome, string descricao)
+        public static void Editar(int id, string nome)
         {
             using (shoppingContext db = new shoppingContext())
             {
@@ -45,7 +44,6 @@ namespace IShopping.Controller
                 if (tipo != null)
                 {
                     tipo.Nome = nome;
-                    tipo.Descricao = descricao;
 
                     db.SaveChanges();
                 }
