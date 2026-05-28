@@ -7,16 +7,14 @@ using System.Threading.Tasks;
 
 namespace IShopping.Models
 {
-    [Table("OrcamentosMensais")] // Nome da tabela no banco de dados
+    [Table("Orcamentos")] // Nome da tabela no banco de dados
     internal class Orcamento
     {
         public int OrcamentoId { get; set; }
 
         public decimal ValorOrcamento { get; set; }
 
-        public DateTime? DataCompra { get; set; } = DateTime.Now;
-        public string AlteradoPor { get; set; }
-        public string CriadoPor { get; set; }
-
+        public DateTime? DataCompra { get; set; }
+       
     }
 }

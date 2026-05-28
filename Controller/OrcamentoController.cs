@@ -18,7 +18,7 @@ namespace IShopping.Controller
         }
 
         // INSERIR
-        public static void Inserir(string valorOrcamento, DateTime? dataCompra, string criadoPor)
+        public static void Inserir(string valorOrcamento, DateTime? dataCompra)
         {
             using (shoppingContext db = new shoppingContext())
             {
@@ -26,7 +26,6 @@ namespace IShopping.Controller
 
                 orcamento.ValorOrcamento = decimal.Parse(valorOrcamento);
                 orcamento.DataCompra = dataCompra;
-                orcamento.CriadoPor = criadoPor;
 
                 db.Orcamentos.Add(orcamento);
 
@@ -59,7 +58,7 @@ namespace IShopping.Controller
         }
 
         // EDITAR
-        public static void Editar(int id, decimal valorOrcamento, DateTime ? dataCompra, string alteradoPor)
+        public static void Editar(int id, decimal valorOrcamento, DateTime ? dataCompra)
         {
             using (shoppingContext db = new shoppingContext())
             {
@@ -68,7 +67,7 @@ namespace IShopping.Controller
                 {
                     orcamento.ValorOrcamento = valorOrcamento;
                     orcamento.DataCompra = dataCompra;
-                    orcamento.AlteradoPor = alteradoPor;
+
                     db.SaveChanges();
                 }
             }

@@ -1,4 +1,5 @@
 ﻿
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace IShopping.Models
@@ -19,5 +20,6 @@ namespace IShopping.Models
 
         //Relação com a tabela TipoArtigo
         public virtual TipoArtigo TipoArtigo { get; set; } // virtual serve para carregar os dados apenas quando necessário.
+        public List<ItemCompra> ItensCompra { get; set; } // Relação com a tabela ItemCompra, permitindo que um artigo possa estar presente em vários itens de compra diferentes. A propriedade ItensCompra é uma lista que armazena os itens de compra associados a um artigo específico.
     }
 }

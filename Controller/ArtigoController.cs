@@ -19,14 +19,15 @@ namespace IShopping.Controller
             }
         }
 
-        // LISTAR POR TIPO
-        public static List<Artigo> ListarPorTipo(int tipoId)
+
+        // FILTRAR POR TIPO
+        public static List<Artigo> FiltrarPorTipo(int tipoId)
         {
             using (shoppingContext db = new shoppingContext())
             {
                 return db.Artigos
                     .Where(a => a.TipoArtigoId == tipoId)
-                    .ToList(); // Filtra os artigos pelo tipoArtigoId e retorna a lista resultante
+                    .ToList();
             }
         }
 

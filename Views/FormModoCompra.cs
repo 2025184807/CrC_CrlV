@@ -10,16 +10,11 @@ using System.Windows.Forms;
 
 namespace IShopping.Views
 {
-    public partial class FormAlteracaoPlaneada : Form
+    public partial class FormModoCompra : Form
     {
-        public FormAlteracaoPlaneada()
+        public FormModoCompra()
         {
             InitializeComponent();
-        }
-
-        private void pictureBox1_Click(object sender, EventArgs e)
-        {
-            this.Close();
         }
     }
 }

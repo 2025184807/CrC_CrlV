@@ -11,7 +11,8 @@ namespace IShopping.Models
 
         public string Nome { get; set; }
 
-        // Relação com artigos
-        public virtual ICollection<Artigo> Artigos { get; set; }
+        public virtual ICollection<Artigo> Artigos { get; set; } // Relação com artigos
+        // virtual para permitir o carregamento preguiçoso (lazy loading) dos artigos relacionados a um tipo de artigo específico.
+        //ICollection é uma interface que representa uma coleção de objetos, permitindo a manipulação de uma lista de artigos associados a um tipo de artigo.
     }
 }

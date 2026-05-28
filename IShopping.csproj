@@ -87,6 +87,8 @@
     <Compile Include="Controller\TipoArtigoController.cs" />
     <Compile Include="Controller\UtilizadorController.cs" />
     <Compile Include="Models\Artigo.cs" />
+    <Compile Include="Models\Compra.cs" />
+    <Compile Include="Models\ItemCompra.cs" />
     <Compile Include="Models\TipoArtigo.cs" />
     <Compile Include="Views\FormGerirUtilizadores.cs">
       <SubType>Form</SubType>
@@ -111,6 +113,12 @@
     </Compile>
     <Compile Include="Views\FormGestaoArtigo.Designer.cs">
       <DependentUpon>FormGestaoArtigo.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\FormModoCompra.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\FormModoCompra.Designer.cs">
+      <DependentUpon>FormModoCompra.cs</DependentUpon>
     </Compile>
     <Compile Include="Views\FormOrcamento.cs">
       <SubType>Form</SubType>
@@ -154,6 +162,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Views\FormMain.resx">
       <DependentUpon>FormMain.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\FormModoCompra.resx">
+      <DependentUpon>FormModoCompra.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Views\FormOrcamento.resx">
       <DependentUpon>FormOrcamento.cs</DependentUpon>
@@ -233,6 +244,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\see.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\shopping-bag.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

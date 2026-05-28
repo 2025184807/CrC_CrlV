@@ -1,6 +1,7 @@
 ﻿using IShopping.Controller;
 using IShopping.Models;
 using System;
+using System.Linq;
 using System.Windows.Forms;
 
 namespace IShopping.Views
@@ -10,43 +11,46 @@ namespace IShopping.Views
         public FormOrcamento()
         {
             InitializeComponent();
+
             CarregarGrid();
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
-            int id;
-
-            if (!int.TryParse(txtId.Text, out id))
+            if (string.IsNullOrWhiteSpace(txtValor.Text))
             {
-                MessageBox.Show("ID inválido.");
+                MessageBox.Show("Preenche todos os campos.");
                 return;
             }
 
-            string valor = txtValor.Text;
+            decimal valor;
+
+            if (!decimal.TryParse(txtValor.Text, out valor))
+            {
+                MessageBox.Show("Valor inválido.");
+                return;
+            }
 
             DateTime dataCompra = dateTimePicker1.Value;
 
             // Chamar controller
             OrcamentoController.Inserir(
-                valor,
-                dataCompra,
-                sessao.UtilizadorAtual
+                txtValor.Text,
+                dataCompra
             );
 
             MessageBox.Show("Orçamento inserido!");
 
             CarregarGrid();
             LimparCampos();
-
         }
         
         //Limpar campos
         public void LimparCampos()
         {
             txtId.Clear();
-            //dataGridView1.DataSource = null; //Limpa a data grid view
             txtValor.Clear();
+            dateTimePicker1.Value = DateTime.Today;
         }
 
         // Carregar data grid view
@@ -54,8 +58,15 @@ namespace IShopping.Views
         {
             using (shoppingContext db = new shoppingContext())
             {
-                //dataGridView1.DataSource = null;
-                dataGridView1.DataSource = OrcamentoController.Listar(); // Vai buscar todos os orçamentos da base de dados e mostra na data grid view.
+                dataGridView1.DataSource = db.Orcamentos
+                    .ToList()
+                    .Select(o => new
+                    {
+                        o.OrcamentoId,
+                        MesAno = o.DataCompra.Value.ToString("MM/yyyy"),
+                        o.ValorOrcamento
+                    })
+                    .ToList();
             }
         }
 
@@ -69,7 +80,9 @@ namespace IShopping.Views
 
         private void FormOrcamento_Load(object sender, EventArgs e)
         {
-            
+            dateTimePicker1.Format = DateTimePickerFormat.Custom;
+
+            dateTimePicker1.CustomFormat = "MM/yyyy";
         }
 
         private void button2_Click(object sender, EventArgs e)
@@ -123,9 +136,7 @@ namespace IShopping.Views
             OrcamentoController.Editar(
                     OrcamentoId,
                     decimal.Parse(txtValor.Text), //converte o valor do orçamento para decimal
-                    dateTimePicker1.Value,
-                    sessao.UtilizadorAtual
-                    
+                    dateTimePicker1.Value //data de compra selecionada no DateTimePicker
                 );
 
              MessageBox.Show("Orçamento editado com sucesso!");
@@ -151,6 +162,11 @@ namespace IShopping.Views
             CarregarGrid();
 
             LimparCampos();
+        }
+
+        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+          
         }
     }
 }

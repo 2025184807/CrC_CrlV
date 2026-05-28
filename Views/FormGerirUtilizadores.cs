@@ -8,6 +8,7 @@ namespace IShopping.Views
 {
     public partial class FormGerirUtilizadores : Form
     {
+        // CONSTRUTOR - PARA INICIALIZAR O FORMULÁRIO E CARREGAR OS UTILIZADORES DA BASE DE DADOS NA DATA GRID VIEW
         public FormGerirUtilizadores()
         {
             InitializeComponent();
@@ -21,9 +22,24 @@ namespace IShopping.Views
             if (string.IsNullOrWhiteSpace(txtNome.Text) || string.IsNullOrWhiteSpace(txtPassword.Text))
             {
                 MessageBox.Show("Preenche todos os campos.");
+
                 return;
             }
 
+            using (shoppingContext db = new shoppingContext())
+            {
+                bool existe = db.Utilizadores.Any(u => u.Username == txtNome.Text); // Verifica se já existe um utilizador com o mesmo nome na base de dados.
+                //.Any() é um método que retorna true se existir um utilizador com o mesmo nome.
+                if (existe)
+                {
+                    MessageBox.Show("Username já existe!");
+
+                    return;
+                }
+            }
+
+            // Se não existir um utilizador com o mesmo nome, então insere o novo utilizador na base de dados.
+            // O método Inserir do UtilizadorController recebe o nome, a password e o nome do utilizador que está a criar o novo utilizador (sessao.UtilizadorAtual).
             UtilizadorController.Inserir(
                 txtNome.Text,
                 txtPassword.Text,
@@ -71,7 +87,7 @@ namespace IShopping.Views
                 return;
             }
 
-            Utilizador utilizador = UtilizadorController.ProcurarPorId(id);
+            Utilizador utilizador = UtilizadorController.ProcurarPorId(id); 
 
             if (utilizador != null)
             {
