@@ -18,7 +18,7 @@ namespace IShopping.Controller
         }
 
         // INSERIR
-        public static void Inserir(string valorOrcamento, DateTime? dataCompra)
+        public static void Inserir(string valorOrcamento, DateTime dataCompra)
         {
             using (shoppingContext db = new shoppingContext())
             {
@@ -58,7 +58,7 @@ namespace IShopping.Controller
         }
 
         // EDITAR
-        public static void Editar(int id, decimal valorOrcamento, DateTime ? dataCompra)
+        public static void Editar(int id, decimal valorOrcamento, DateTime dataCompra)
         {
             using (shoppingContext db = new shoppingContext())
             {

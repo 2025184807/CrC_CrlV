@@ -10,28 +10,49 @@ namespace IShopping.Views
     {
         public FormOrcamento()
         {
-            InitializeComponent();
+            InitializeComponent(); // Inicializar os componentes do formulário
 
-            CarregarGrid();
+            CarregarGrid(); // Carregar os dados na DataGridView ao iniciar o formulário
         }
 
+        // Inserir orçamento
         private void button1_Click(object sender, EventArgs e)
         {
+            // Verificar se o campo de valor do orçamento está vazio, se estiver exibe uma mensagem de erro e retorna
             if (string.IsNullOrWhiteSpace(txtValor.Text))
             {
                 MessageBox.Show("Preenche todos os campos.");
                 return;
             }
 
+            // Obter data selecionada
+            DateTime dataCompra = dateTimePicker1.Value;
+
             decimal valor;
 
+            // Tenta converter o valor do orçamento para decimal, se falhar exibe uma mensagem de erro
             if (!decimal.TryParse(txtValor.Text, out valor))
             {
                 MessageBox.Show("Valor inválido.");
                 return;
             }
 
-            DateTime dataCompra = dateTimePicker1.Value;
+            // Verificar se já existe um orçamento para o mesmo mês e ano
+            using (shoppingContext db = new shoppingContext())
+            {
+                // O método Any verifica se existe algum orçamento que tenha a mesma data de compra (mês e ano) do orçamento que está sendo inserido
+                bool existe = db.Orcamentos.Any(o =>
+                    o.DataCompra.Year == dataCompra.Year &&
+                    o.DataCompra.Month == dataCompra.Month
+                );
+
+                // Se existir um orçamento para o mesmo mês e ano, exibe uma mensagem de erro e retorna
+                if (existe)
+                {
+                    MessageBox.Show("Já existe um orçamento neste mês e ano!");
+                    return;
+                }
+            }
 
             // Chamar controller
             OrcamentoController.Inserir(
@@ -39,6 +60,7 @@ namespace IShopping.Views
                 dataCompra
             );
 
+            // Exibir mensagem de sucesso
             MessageBox.Show("Orçamento inserido!");
 
             CarregarGrid();
@@ -50,7 +72,7 @@ namespace IShopping.Views
         {
             txtId.Clear();
             txtValor.Clear();
-            dateTimePicker1.Value = DateTime.Today;
+            dateTimePicker1.Value = DateTime.Today; // Volta ao dia atual
         }
 
         // Carregar data grid view
@@ -63,13 +85,14 @@ namespace IShopping.Views
                     .Select(o => new
                     {
                         o.OrcamentoId,
-                        MesAno = o.DataCompra.Value.ToString("MM/yyyy"),
+                        MesAno = o.DataCompra.ToString("MM/yyyy"),
                         o.ValorOrcamento
                     })
                     .ToList();
             }
         }
 
+        // Limpar campos ao clicar no botão "Limpar"
         private void btnLimpar_Click(object sender, EventArgs e)
         {
             // Limpar campos
@@ -78,13 +101,15 @@ namespace IShopping.Views
             txtValor.Clear();
         }
 
+        // Configurar o DateTimePicker para mostrar apenas mês e ano
         private void FormOrcamento_Load(object sender, EventArgs e)
         {
-            dateTimePicker1.Format = DateTimePickerFormat.Custom;
+            dateTimePicker1.Format = DateTimePickerFormat.Custom; // Define o formato personalizado
 
-            dateTimePicker1.CustomFormat = "MM/yyyy";
+            dateTimePicker1.CustomFormat = "MM/yyyy"; // Exibe apenas mês e ano
         }
 
+        // Fechar formulário
         private void button2_Click(object sender, EventArgs e)
         {
             this.Close();
@@ -95,18 +120,20 @@ namespace IShopping.Views
         {
             int OrcamentoId;
 
+            // Tenta converter o valor do campo de ID para inteiro, se falhar exibe uma mensagem de erro e retorna
             if (!int.TryParse(txtId.Text, out OrcamentoId))
             {
                 MessageBox.Show("ID inválido.");
                 return;
             }
 
-             Orcamento orcamentos = OrcamentoController.ProcurarPorId(OrcamentoId);
+            // Chamar controller para procurar o orçamento por ID
+            Orcamento orcamentos = OrcamentoController.ProcurarPorId(OrcamentoId);
 
             if (orcamentos != null)
             {
                 txtValor.Text = orcamentos.ValorOrcamento.ToString(); // Exibe o valor do orçamento no campo de texto e convertendo para string
-                dateTimePicker1.Value = orcamentos.DataCompra ?? DateTime.Today; // Se DataCompra for nula, define como data atual
+                dateTimePicker1.Value = orcamentos.DataCompra; // Define o valor do DateTimePicker com a data do orçamento
             }
             else
             {
@@ -167,6 +194,12 @@ namespace IShopping.Views
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
           
+        }
+
+        //clica na imagem para fechar o formulário
+        private void pictureBox1_Click(object sender, EventArgs e)
+        {
+            this.Close();
         }
     }
 }

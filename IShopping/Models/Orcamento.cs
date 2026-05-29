@@ -14,7 +14,7 @@ namespace IShopping.Models
 
         public decimal ValorOrcamento { get; set; }
 
-        public DateTime? DataCompra { get; set; }
+        public DateTime DataCompra { get; set; }
        
     }
 }
