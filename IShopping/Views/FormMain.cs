@@ -27,7 +27,7 @@ namespace IShopping.Views
 
         }
 
-        private void button4_Click(object sender, EventArgs e)
+        private void btnTipoArtigo_Click(object sender, EventArgs e)
         {
             FormTipoArtigo form = new FormTipoArtigo(); 
 

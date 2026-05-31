@@ -133,7 +133,7 @@
             this.btnTiposArtigo.TabIndex = 133;
             this.btnTiposArtigo.Text = "Tipos de Artigo";
             this.btnTiposArtigo.UseVisualStyleBackColor = false;
-            this.btnTiposArtigo.Click += new System.EventHandler(this.button4_Click);
+            this.btnTiposArtigo.Click += new System.EventHandler(this.btnTipoArtigo_Click);
             // 
             // btnOrcamentos
             // 

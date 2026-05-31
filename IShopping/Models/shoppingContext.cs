@@ -15,5 +15,7 @@ namespace IShopping
         public DbSet<Compra> Compras { get; set; } // Tabela de compras
         public DbSet<ItemCompra> ItemCompras { get; set; } // Tabela de itens de compra
         public DbSet<Orcamento> Orcamentos { get; set; } // Tabela de orçamentos
+        public DbSet<CompraPlaneada> ComprasPlaneadas { get; set; } // Tabela de compras planeadas
+        public DbSet<ItemCompraPlaneada> ItemComprasPlaneadas { get; set; } // Tabela de itens de compras planeadas
     }
 }

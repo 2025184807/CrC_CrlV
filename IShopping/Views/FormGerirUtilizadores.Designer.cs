@@ -71,7 +71,7 @@
             this.btnVer.Name = "btnVer";
             this.btnVer.Size = new System.Drawing.Size(130, 44);
             this.btnVer.TabIndex = 179;
-            this.btnVer.Text = "Ver Artigo";
+            this.btnVer.Text = "Ver Utilizador";
             this.btnVer.UseVisualStyleBackColor = false;
             this.btnVer.Click += new System.EventHandler(this.btnVer_Click);
             // 
@@ -151,7 +151,7 @@
             this.btnEditar.Name = "btnEditar";
             this.btnEditar.Size = new System.Drawing.Size(139, 44);
             this.btnEditar.TabIndex = 168;
-            this.btnEditar.Text = "Editar Artigo";
+            this.btnEditar.Text = "Editar Utilizador";
             this.btnEditar.UseVisualStyleBackColor = false;
             this.btnEditar.Click += new System.EventHandler(this.btnEditar_Click);
             // 
@@ -163,9 +163,9 @@
             this.btnEliminar.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
             this.btnEliminar.Location = new System.Drawing.Point(498, 566);
             this.btnEliminar.Name = "btnEliminar";
-            this.btnEliminar.Size = new System.Drawing.Size(139, 44);
+            this.btnEliminar.Size = new System.Drawing.Size(157, 44);
             this.btnEliminar.TabIndex = 167;
-            this.btnEliminar.Text = "Eliminar Artigo";
+            this.btnEliminar.Text = "Eliminar Utilizador";
             this.btnEliminar.UseVisualStyleBackColor = false;
             this.btnEliminar.Click += new System.EventHandler(this.btnEliminar_Click);
             // 
