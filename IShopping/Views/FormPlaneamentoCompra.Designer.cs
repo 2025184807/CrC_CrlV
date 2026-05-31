@@ -1,6 +1,6 @@
-﻿namespace IShopping.Forms
+﻿namespace IShopping.Views
 {
-    partial class Form
+    partial class FormPlaneamentoCompra
     {
         /// <summary>
         /// Required designer variable.
@@ -28,8 +28,8 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form));
-            this.button5 = new System.Windows.Forms.Button();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormPlaneamentoCompra));
+            this.bntAlterarCompra = new System.Windows.Forms.Button();
             this.checkBox1 = new System.Windows.Forms.CheckBox();
             this.label3 = new System.Windows.Forms.Label();
             this.comboBox1 = new System.Windows.Forms.ComboBox();
@@ -57,6 +57,11 @@
             this.label5 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.txtNome = new System.Windows.Forms.TextBox();
+            this.label2 = new System.Windows.Forms.Label();
+            this.comboBox2 = new System.Windows.Forms.ComboBox();
+            this.label9 = new System.Windows.Forms.Label();
+            this.label10 = new System.Windows.Forms.Label();
+            this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox6)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox5)).BeginInit();
@@ -64,26 +69,27 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox11)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
             this.SuspendLayout();
             // 
-            // button5
+            // bntAlterarCompra
             // 
-            this.button5.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(68)))), ((int)(((byte)(100)))), ((int)(((byte)(145)))));
-            this.button5.Font = new System.Drawing.Font("Microsoft Yi Baiti", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button5.ForeColor = System.Drawing.Color.White;
-            this.button5.Location = new System.Drawing.Point(527, 27);
-            this.button5.Name = "button5";
-            this.button5.Size = new System.Drawing.Size(281, 46);
-            this.button5.TabIndex = 138;
-            this.button5.Text = "Alteração de Compra Planeada";
-            this.button5.UseVisualStyleBackColor = false;
-            this.button5.Click += new System.EventHandler(this.button5_Click);
+            this.bntAlterarCompra.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(68)))), ((int)(((byte)(100)))), ((int)(((byte)(145)))));
+            this.bntAlterarCompra.Font = new System.Drawing.Font("Microsoft Yi Baiti", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.bntAlterarCompra.ForeColor = System.Drawing.Color.White;
+            this.bntAlterarCompra.Location = new System.Drawing.Point(527, 27);
+            this.bntAlterarCompra.Name = "bntAlterarCompra";
+            this.bntAlterarCompra.Size = new System.Drawing.Size(281, 46);
+            this.bntAlterarCompra.TabIndex = 138;
+            this.bntAlterarCompra.Text = "Alteração de Compra Planeada";
+            this.bntAlterarCompra.UseVisualStyleBackColor = false;
+            this.bntAlterarCompra.Click += new System.EventHandler(this.bntAlterarCompra_Click);
             // 
             // checkBox1
             // 
             this.checkBox1.AutoSize = true;
             this.checkBox1.Font = new System.Drawing.Font("Microsoft Yi Baiti", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.checkBox1.Location = new System.Drawing.Point(287, 272);
+            this.checkBox1.Location = new System.Drawing.Point(267, 354);
             this.checkBox1.Name = "checkBox1";
             this.checkBox1.Size = new System.Drawing.Size(103, 24);
             this.checkBox1.TabIndex = 129;
@@ -94,7 +100,7 @@
             // 
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.Location = new System.Drawing.Point(70, 276);
+            this.label3.Location = new System.Drawing.Point(50, 358);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(59, 20);
             this.label3.TabIndex = 128;
@@ -103,7 +109,7 @@
             // comboBox1
             // 
             this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Location = new System.Drawing.Point(135, 272);
+            this.comboBox1.Location = new System.Drawing.Point(115, 354);
             this.comboBox1.Name = "comboBox1";
             this.comboBox1.Size = new System.Drawing.Size(137, 24);
             this.comboBox1.TabIndex = 127;
@@ -119,11 +125,12 @@
             this.button2.Size = new System.Drawing.Size(45, 38);
             this.button2.TabIndex = 126;
             this.button2.UseVisualStyleBackColor = false;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
             // dataGridView1
             // 
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Location = new System.Drawing.Point(49, 320);
+            this.dataGridView1.Location = new System.Drawing.Point(29, 402);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.RowHeadersWidth = 51;
             this.dataGridView1.RowTemplate.Height = 24;
@@ -157,9 +164,9 @@
             this.button1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(68)))), ((int)(((byte)(100)))), ((int)(((byte)(145)))));
             this.button1.Font = new System.Drawing.Font("Microsoft Yi Baiti", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.button1.ForeColor = System.Drawing.Color.White;
-            this.button1.Location = new System.Drawing.Point(698, 348);
+            this.button1.Location = new System.Drawing.Point(678, 430);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(133, 46);
+            this.button1.Size = new System.Drawing.Size(153, 46);
             this.button1.TabIndex = 202;
             this.button1.Text = "Ver Compra";
             this.button1.UseVisualStyleBackColor = false;
@@ -169,7 +176,7 @@
             this.button4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(68)))), ((int)(((byte)(100)))), ((int)(((byte)(145)))));
             this.button4.Font = new System.Drawing.Font("Microsoft Yi Baiti", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.button4.ForeColor = System.Drawing.Color.White;
-            this.button4.Location = new System.Drawing.Point(698, 475);
+            this.button4.Location = new System.Drawing.Point(678, 546);
             this.button4.Name = "button4";
             this.button4.Size = new System.Drawing.Size(153, 39);
             this.button4.TabIndex = 198;
@@ -181,9 +188,9 @@
             this.button7.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(68)))), ((int)(((byte)(100)))), ((int)(((byte)(145)))));
             this.button7.Font = new System.Drawing.Font("Microsoft Yi Baiti", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.button7.ForeColor = System.Drawing.Color.White;
-            this.button7.Location = new System.Drawing.Point(698, 400);
+            this.button7.Location = new System.Drawing.Point(678, 482);
             this.button7.Name = "button7";
-            this.button7.Size = new System.Drawing.Size(133, 46);
+            this.button7.Size = new System.Drawing.Size(153, 46);
             this.button7.TabIndex = 197;
             this.button7.Text = "Editar Compra";
             this.button7.UseVisualStyleBackColor = false;
@@ -192,7 +199,7 @@
             // 
             this.label8.AutoSize = true;
             this.label8.Font = new System.Drawing.Font("Microsoft Yi Baiti", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label8.Location = new System.Drawing.Point(563, 276);
+            this.label8.Location = new System.Drawing.Point(543, 358);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(33, 23);
             this.label8.TabIndex = 205;
@@ -200,7 +207,7 @@
             // 
             // txtId
             // 
-            this.txtId.Location = new System.Drawing.Point(602, 277);
+            this.txtId.Location = new System.Drawing.Point(582, 359);
             this.txtId.Name = "txtId";
             this.txtId.Size = new System.Drawing.Size(75, 22);
             this.txtId.TabIndex = 204;
@@ -209,7 +216,7 @@
             // 
             this.pictureBox6.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(248)))), ((int)(((byte)(248)))));
             this.pictureBox6.Image = global::IShopping.Properties.Resources.trash;
-            this.pictureBox6.Location = new System.Drawing.Point(857, 486);
+            this.pictureBox6.Location = new System.Drawing.Point(848, 557);
             this.pictureBox6.Name = "pictureBox6";
             this.pictureBox6.Size = new System.Drawing.Size(26, 28);
             this.pictureBox6.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -220,7 +227,7 @@
             // 
             this.pictureBox5.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(248)))), ((int)(((byte)(248)))));
             this.pictureBox5.Image = global::IShopping.Properties.Resources.edit_text;
-            this.pictureBox5.Location = new System.Drawing.Point(838, 418);
+            this.pictureBox5.Location = new System.Drawing.Point(848, 500);
             this.pictureBox5.Name = "pictureBox5";
             this.pictureBox5.Size = new System.Drawing.Size(26, 28);
             this.pictureBox5.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -231,7 +238,7 @@
             // 
             this.pictureBox3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(248)))), ((int)(((byte)(248)))));
             this.pictureBox3.Image = global::IShopping.Properties.Resources.see;
-            this.pictureBox3.Location = new System.Drawing.Point(838, 348);
+            this.pictureBox3.Location = new System.Drawing.Point(848, 439);
             this.pictureBox3.Name = "pictureBox3";
             this.pictureBox3.Size = new System.Drawing.Size(26, 28);
             this.pictureBox3.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -252,7 +259,7 @@
             // pictureBox11
             // 
             this.pictureBox11.Image = global::IShopping.Properties.Resources.filter;
-            this.pictureBox11.Location = new System.Drawing.Point(43, 276);
+            this.pictureBox11.Location = new System.Drawing.Point(23, 358);
             this.pictureBox11.Name = "pictureBox11";
             this.pictureBox11.Size = new System.Drawing.Size(21, 20);
             this.pictureBox11.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -273,7 +280,7 @@
             // txtPreco
             // 
             this.txtPreco.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtPreco.Location = new System.Drawing.Point(135, 231);
+            this.txtPreco.Location = new System.Drawing.Point(134, 272);
             this.txtPreco.Name = "txtPreco";
             this.txtPreco.Size = new System.Drawing.Size(341, 22);
             this.txtPreco.TabIndex = 214;
@@ -284,7 +291,7 @@
             this.btnLimpar.Font = new System.Drawing.Font("Microsoft Yi Baiti", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnLimpar.ForeColor = System.Drawing.Color.White;
             this.btnLimpar.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
-            this.btnLimpar.Location = new System.Drawing.Point(583, 211);
+            this.btnLimpar.Location = new System.Drawing.Point(582, 299);
             this.btnLimpar.Name = "btnLimpar";
             this.btnLimpar.Size = new System.Drawing.Size(86, 44);
             this.btnLimpar.TabIndex = 213;
@@ -297,7 +304,7 @@
             this.btnGuardar.Font = new System.Drawing.Font("Microsoft Yi Baiti", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnGuardar.ForeColor = System.Drawing.Color.White;
             this.btnGuardar.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
-            this.btnGuardar.Location = new System.Drawing.Point(491, 211);
+            this.btnGuardar.Location = new System.Drawing.Point(490, 299);
             this.btnGuardar.Name = "btnGuardar";
             this.btnGuardar.Size = new System.Drawing.Size(86, 44);
             this.btnGuardar.TabIndex = 212;
@@ -308,7 +315,7 @@
             // 
             this.label7.AutoSize = true;
             this.label7.Font = new System.Drawing.Font("Microsoft Yi Baiti", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label7.Location = new System.Drawing.Point(26, 226);
+            this.label7.Location = new System.Drawing.Point(25, 267);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(62, 23);
             this.label7.TabIndex = 211;
@@ -360,11 +367,62 @@
             this.txtNome.Size = new System.Drawing.Size(341, 22);
             this.txtNome.TabIndex = 206;
             // 
-            // Form
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Font = new System.Drawing.Font("Microsoft Yi Baiti", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label2.Location = new System.Drawing.Point(26, 226);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(57, 23);
+            this.label2.TabIndex = 215;
+            this.label2.Text = "Artigo";
+            // 
+            // comboBox2
+            // 
+            this.comboBox2.FormattingEnabled = true;
+            this.comboBox2.Location = new System.Drawing.Point(135, 230);
+            this.comboBox2.Name = "comboBox2";
+            this.comboBox2.Size = new System.Drawing.Size(340, 24);
+            this.comboBox2.TabIndex = 216;
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Font = new System.Drawing.Font("Microsoft Yi Baiti", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label9.Location = new System.Drawing.Point(543, 104);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(163, 23);
+            this.label9.TabIndex = 217;
+            this.label9.Text = "Orcamento Atual :";
+            this.label9.Click += new System.EventHandler(this.AparecerOrçamento_Click);
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Font = new System.Drawing.Font("Microsoft Yi Baiti", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label10.Location = new System.Drawing.Point(26, 308);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(183, 23);
+            this.label10.TabIndex = 218;
+            this.label10.Text = "Quantidade Prevista:";
+            // 
+            // numericUpDown1
+            // 
+            this.numericUpDown1.Location = new System.Drawing.Point(226, 313);
+            this.numericUpDown1.Name = "numericUpDown1";
+            this.numericUpDown1.Size = new System.Drawing.Size(250, 22);
+            this.numericUpDown1.TabIndex = 278;
+            // 
+            // FormPlaneamentoCompra
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(900, 563);
+            this.ClientSize = new System.Drawing.Size(903, 619);
+            this.Controls.Add(this.numericUpDown1);
+            this.Controls.Add(this.label10);
+            this.Controls.Add(this.label9);
+            this.Controls.Add(this.comboBox2);
+            this.Controls.Add(this.label2);
             this.Controls.Add(this.txtPreco);
             this.Controls.Add(this.btnLimpar);
             this.Controls.Add(this.btnGuardar);
@@ -383,7 +441,7 @@
             this.Controls.Add(this.button4);
             this.Controls.Add(this.button7);
             this.Controls.Add(this.pictureBox1);
-            this.Controls.Add(this.button5);
+            this.Controls.Add(this.bntAlterarCompra);
             this.Controls.Add(this.pictureBox11);
             this.Controls.Add(this.checkBox1);
             this.Controls.Add(this.label3);
@@ -393,7 +451,7 @@
             this.Controls.Add(this.pictureBox4);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.textBox1);
-            this.Name = "Form";
+            this.Name = "FormPlaneamentoCompra";
             this.Text = "FormPlaneamentoCompra";
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox6)).EndInit();
@@ -402,6 +460,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox11)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -409,7 +468,7 @@
 
         #endregion
         private System.Windows.Forms.PictureBox pictureBox1;
-        private System.Windows.Forms.Button button5;
+        private System.Windows.Forms.Button bntAlterarCompra;
         private System.Windows.Forms.PictureBox pictureBox11;
         private System.Windows.Forms.CheckBox checkBox1;
         private System.Windows.Forms.Label label3;
@@ -436,5 +495,10 @@
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.TextBox txtNome;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.ComboBox comboBox2;
+        private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.NumericUpDown numericUpDown1;
     }
 }

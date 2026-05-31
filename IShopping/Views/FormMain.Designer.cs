@@ -33,7 +33,7 @@
             this.label3 = new System.Windows.Forms.Label();
             this.button8 = new System.Windows.Forms.Button();
             this.button7 = new System.Windows.Forms.Button();
-            this.button5 = new System.Windows.Forms.Button();
+            this.bntPlaneamentoCompra = new System.Windows.Forms.Button();
             this.btnTiposArtigo = new System.Windows.Forms.Button();
             this.btnOrcamentos = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
@@ -110,17 +110,18 @@
             this.button7.Text = "Abrir Compra";
             this.button7.UseVisualStyleBackColor = false;
             // 
-            // button5
+            // bntPlaneamentoCompra
             // 
-            this.button5.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(68)))), ((int)(((byte)(100)))), ((int)(((byte)(145)))));
-            this.button5.Font = new System.Drawing.Font("Microsoft Yi Baiti", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button5.ForeColor = System.Drawing.Color.White;
-            this.button5.Location = new System.Drawing.Point(667, 15);
-            this.button5.Name = "button5";
-            this.button5.Size = new System.Drawing.Size(129, 57);
-            this.button5.TabIndex = 134;
-            this.button5.Text = "Planeamento de Compras";
-            this.button5.UseVisualStyleBackColor = false;
+            this.bntPlaneamentoCompra.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(68)))), ((int)(((byte)(100)))), ((int)(((byte)(145)))));
+            this.bntPlaneamentoCompra.Font = new System.Drawing.Font("Microsoft Yi Baiti", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.bntPlaneamentoCompra.ForeColor = System.Drawing.Color.White;
+            this.bntPlaneamentoCompra.Location = new System.Drawing.Point(667, 15);
+            this.bntPlaneamentoCompra.Name = "bntPlaneamentoCompra";
+            this.bntPlaneamentoCompra.Size = new System.Drawing.Size(129, 57);
+            this.bntPlaneamentoCompra.TabIndex = 134;
+            this.bntPlaneamentoCompra.Text = "Planeamento de Compras";
+            this.bntPlaneamentoCompra.UseVisualStyleBackColor = false;
+            this.bntPlaneamentoCompra.Click += new System.EventHandler(this.bntPlaneamentoCompra_Click);
             // 
             // btnTiposArtigo
             // 
@@ -270,7 +271,7 @@
             this.Controls.Add(this.pictureBox4);
             this.Controls.Add(this.button8);
             this.Controls.Add(this.button7);
-            this.Controls.Add(this.button5);
+            this.Controls.Add(this.bntPlaneamentoCompra);
             this.Controls.Add(this.btnTiposArtigo);
             this.Controls.Add(this.btnOrcamentos);
             this.Controls.Add(this.button2);
@@ -299,7 +300,7 @@
         private System.Windows.Forms.PictureBox pictureBox4;
         private System.Windows.Forms.Button button8;
         private System.Windows.Forms.Button button7;
-        private System.Windows.Forms.Button button5;
+        private System.Windows.Forms.Button bntPlaneamentoCompra;
         private System.Windows.Forms.Button btnTiposArtigo;
         private System.Windows.Forms.Button btnOrcamentos;
         private System.Windows.Forms.Button button2;

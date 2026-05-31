@@ -19,11 +19,6 @@ namespace IShopping.Views
             this.Close();
         }
 
-        private void FormTipoArtigo_Load(object sender, EventArgs e)
-        {
-
-        }
-
         // LIMPAR CAMPOS
         private void LimparCampos()
         {
