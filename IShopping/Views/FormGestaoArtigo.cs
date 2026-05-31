@@ -25,7 +25,7 @@ namespace IShopping.Views
         // CARREGAR TIPOS-- Carrega os tipos de artigo no combo box
         private void CarregarTipos()
         {
-            cmbTipoArtigo.DataSource = TipoArtigoController.Listar();
+            cmbTipoArtigo.DataSource = TipoArtigoController.Listar(); 
 
             cmbTipoArtigo.DisplayMember = "Nome";
             cmbTipoArtigo.ValueMember = "Id";
@@ -63,6 +63,19 @@ namespace IShopping.Views
             {
                 MessageBox.Show("Preenche todos os campos.");
                 return;
+            }
+
+            // Verificar se já existe um artigo com o mesmo nome (ignorar maiúsculas/minúsculas)
+            using (shoppingContext db = new shoppingContext())
+            {
+                bool existe = db.Artigos
+                    .Any(a => a.Nome.ToLower() == txtNome.Text.ToLower());
+
+                if (existe)
+                {
+                    MessageBox.Show("Já existe um artigo com esse nome.");
+                    return;
+                }
             }
 
             decimal preco;

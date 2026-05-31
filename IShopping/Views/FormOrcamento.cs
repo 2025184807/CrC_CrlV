@@ -10,7 +10,7 @@ namespace IShopping.Views
     {
         public FormOrcamento()
         {
-            InitializeComponent(); // Inicializar os componentes do formulário
+            InitializeComponent(); // Inicializar os componentes do formuláriotoijriugbrh
 
             CarregarGrid(); // Carregar os dados na DataGridView ao iniciar o formulário
         }

@@ -33,7 +33,7 @@
             this.label3 = new System.Windows.Forms.Label();
             this.button8 = new System.Windows.Forms.Button();
             this.button7 = new System.Windows.Forms.Button();
-            this.button5 = new System.Windows.Forms.Button();
+            this.btnPlaneamentoCompras = new System.Windows.Forms.Button();
             this.btnTiposArtigo = new System.Windows.Forms.Button();
             this.btnOrcamentos = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
@@ -103,24 +103,25 @@
             this.button7.Font = new System.Drawing.Font("Microsoft Yi Baiti", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.button7.ForeColor = System.Drawing.Color.White;
             this.button7.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.button7.Location = new System.Drawing.Point(859, 129);
+            this.button7.Location = new System.Drawing.Point(869, 140);
             this.button7.Name = "button7";
             this.button7.Size = new System.Drawing.Size(164, 46);
             this.button7.TabIndex = 137;
             this.button7.Text = "Abrir Compra";
             this.button7.UseVisualStyleBackColor = false;
             // 
-            // button5
+            // btnPlaneamentoCompras
             // 
-            this.button5.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(68)))), ((int)(((byte)(100)))), ((int)(((byte)(145)))));
-            this.button5.Font = new System.Drawing.Font("Microsoft Yi Baiti", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button5.ForeColor = System.Drawing.Color.White;
-            this.button5.Location = new System.Drawing.Point(667, 15);
-            this.button5.Name = "button5";
-            this.button5.Size = new System.Drawing.Size(129, 57);
-            this.button5.TabIndex = 134;
-            this.button5.Text = "Planeamento de Compras";
-            this.button5.UseVisualStyleBackColor = false;
+            this.btnPlaneamentoCompras.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(68)))), ((int)(((byte)(100)))), ((int)(((byte)(145)))));
+            this.btnPlaneamentoCompras.Font = new System.Drawing.Font("Microsoft Yi Baiti", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnPlaneamentoCompras.ForeColor = System.Drawing.Color.White;
+            this.btnPlaneamentoCompras.Location = new System.Drawing.Point(667, 15);
+            this.btnPlaneamentoCompras.Name = "btnPlaneamentoCompras";
+            this.btnPlaneamentoCompras.Size = new System.Drawing.Size(129, 57);
+            this.btnPlaneamentoCompras.TabIndex = 134;
+            this.btnPlaneamentoCompras.Text = "Planeamento de Compras";
+            this.btnPlaneamentoCompras.UseVisualStyleBackColor = false;
+            this.btnPlaneamentoCompras.Click += new System.EventHandler(this.btnPlaneamentoCompra_Click);
             // 
             // btnTiposArtigo
             // 
@@ -212,7 +213,7 @@
             // 
             this.pictureBox1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(68)))), ((int)(((byte)(100)))), ((int)(((byte)(145)))));
             this.pictureBox1.Image = global::IShopping.Properties.Resources.cart;
-            this.pictureBox1.Location = new System.Drawing.Point(997, 140);
+            this.pictureBox1.Location = new System.Drawing.Point(1006, 152);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(19, 29);
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -248,9 +249,9 @@
             this.button3.Font = new System.Drawing.Font("Microsoft Yi Baiti", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.button3.ForeColor = System.Drawing.Color.White;
             this.button3.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.button3.Location = new System.Drawing.Point(754, 132);
+            this.button3.Location = new System.Drawing.Point(764, 140);
             this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(99, 43);
+            this.button3.Size = new System.Drawing.Size(99, 46);
             this.button3.TabIndex = 145;
             this.button3.Text = "Atualizar";
             this.button3.UseVisualStyleBackColor = false;
@@ -270,7 +271,7 @@
             this.Controls.Add(this.pictureBox4);
             this.Controls.Add(this.button8);
             this.Controls.Add(this.button7);
-            this.Controls.Add(this.button5);
+            this.Controls.Add(this.btnPlaneamentoCompras);
             this.Controls.Add(this.btnTiposArtigo);
             this.Controls.Add(this.btnOrcamentos);
             this.Controls.Add(this.button2);
@@ -299,7 +300,7 @@
         private System.Windows.Forms.PictureBox pictureBox4;
         private System.Windows.Forms.Button button8;
         private System.Windows.Forms.Button button7;
-        private System.Windows.Forms.Button button5;
+        private System.Windows.Forms.Button btnPlaneamentoCompras;
         private System.Windows.Forms.Button btnTiposArtigo;
         private System.Windows.Forms.Button btnOrcamentos;
         private System.Windows.Forms.Button button2;

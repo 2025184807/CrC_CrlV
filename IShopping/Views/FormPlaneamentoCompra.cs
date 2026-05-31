@@ -30,5 +30,10 @@ namespace IShopping.Forms
             formAlteracaoPlaneada.ShowDialog(); // Exibe o FormAlteracaoPlaneada como uma janela modal
             // O código após ShowDialog() será executado somente após o FormAlteracaoPlaneada ser fechado
         }
+
+        private void Form_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }

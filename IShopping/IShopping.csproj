@@ -84,6 +84,7 @@
     <Compile Include="Controller\ArtigoController.cs" />
     <Compile Include="Controller\Form2Controller.cs" />
     <Compile Include="Controller\OrcamentoController.cs" />
+    <Compile Include="Controller\PlaneamentoController.cs" />
     <Compile Include="Controller\TipoArtigoController.cs" />
     <Compile Include="Controller\UtilizadorController.cs" />
     <Compile Include="Models\Artigo.cs" />

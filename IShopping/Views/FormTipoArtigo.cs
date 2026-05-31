@@ -1,6 +1,7 @@
 ﻿using IShopping.Controller;
 using IShopping.Models;
 using System;
+using System.Linq;
 using System.Windows.Forms;
 
 namespace IShopping.Views
@@ -39,6 +40,8 @@ namespace IShopping.Views
                 dataGridView1.DataSource = TipoArtigoController.Listar(); // Vai buscar todos os tipos de artigo da base de dados e mostra na data grid view.
             }
         }
+
+        // Botão para guardar um novo tipo de artigo
         private void button1_Click(object sender, EventArgs e)
         {
             if (string.IsNullOrWhiteSpace(txtNome.Text))
@@ -47,7 +50,18 @@ namespace IShopping.Views
                 return;
             }
 
-            TipoArtigoController.Inserir(txtNome.Text);
+            using (shoppingContext db = new shoppingContext())
+            {
+                bool existe = db.TipoArtigos
+                    .Any(t => t.Nome.ToLower() == txtNome.Text.ToLower());
+
+                if (existe)
+                {
+                    MessageBox.Show("Já existe um tipo de artigo com esse nome.");
+                    return;
+                }
+            }
+                TipoArtigoController.Inserir(txtNome.Text);
             MessageBox.Show("Tipo inserido!");
 
             CarregarGrid();
