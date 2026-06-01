@@ -179,7 +179,7 @@
             this.button3.Font = new System.Drawing.Font("Microsoft Yi Baiti", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.button3.ForeColor = System.Drawing.Color.White;
             this.button3.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
-            this.button3.Location = new System.Drawing.Point(356, 808);
+            this.button3.Location = new System.Drawing.Point(367, 803);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(86, 44);
             this.button3.TabIndex = 228;
@@ -192,7 +192,7 @@
             this.button1.Font = new System.Drawing.Font("Microsoft Yi Baiti", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.button1.ForeColor = System.Drawing.Color.White;
             this.button1.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
-            this.button1.Location = new System.Drawing.Point(258, 808);
+            this.button1.Location = new System.Drawing.Point(269, 803);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(86, 44);
             this.button1.TabIndex = 227;
@@ -234,6 +234,7 @@
             this.textBox4.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.textBox4.Location = new System.Drawing.Point(228, 171);
             this.textBox4.Name = "textBox4";
+            this.textBox4.ReadOnly = true;
             this.textBox4.Size = new System.Drawing.Size(214, 22);
             this.textBox4.TabIndex = 223;
             // 
@@ -276,6 +277,7 @@
             this.textBox3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.textBox3.Location = new System.Drawing.Point(182, 201);
             this.textBox3.Name = "textBox3";
+            this.textBox3.ReadOnly = true;
             this.textBox3.Size = new System.Drawing.Size(260, 22);
             this.textBox3.TabIndex = 252;
             // 
@@ -284,6 +286,7 @@
             this.textBox5.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.textBox5.Location = new System.Drawing.Point(182, 233);
             this.textBox5.Name = "textBox5";
+            this.textBox5.ReadOnly = true;
             this.textBox5.Size = new System.Drawing.Size(260, 22);
             this.textBox5.TabIndex = 253;
             // 

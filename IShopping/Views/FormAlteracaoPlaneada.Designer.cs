@@ -250,16 +250,16 @@
             this.label8.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label8.Location = new System.Drawing.Point(505, 133);
             this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(193, 20);
+            this.label8.Size = new System.Drawing.Size(59, 20);
             this.label8.TabIndex = 171;
-            this.label8.Text = "Filtro Tipos de Artigo:";
+            this.label8.Text = "Filtro:";
             // 
             // comboBox3
             // 
             this.comboBox3.FormattingEnabled = true;
-            this.comboBox3.Location = new System.Drawing.Point(703, 131);
+            this.comboBox3.Location = new System.Drawing.Point(570, 133);
             this.comboBox3.Name = "comboBox3";
-            this.comboBox3.Size = new System.Drawing.Size(127, 24);
+            this.comboBox3.Size = new System.Drawing.Size(147, 24);
             this.comboBox3.TabIndex = 170;
             // 
             // label9

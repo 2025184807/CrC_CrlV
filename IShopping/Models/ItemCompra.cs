@@ -21,7 +21,7 @@ namespace IShopping.Models
 
         public decimal PrecoUnitario { get; set; }
 
-       // public string descricao { get; set; }
+        public string descricao { get; set; }
 
         // Navegação
         public virtual Compra Compra { get; set; }
