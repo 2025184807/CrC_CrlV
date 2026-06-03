@@ -33,7 +33,7 @@
             this.label3 = new System.Windows.Forms.Label();
             this.button8 = new System.Windows.Forms.Button();
             this.button7 = new System.Windows.Forms.Button();
-            this.btnPlaneamentoCompras = new System.Windows.Forms.Button();
+            this.button5 = new System.Windows.Forms.Button();
             this.btnTiposArtigo = new System.Windows.Forms.Button();
             this.btnOrcamentos = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
@@ -113,18 +113,17 @@
             this.button7.Text = "Abrir Compra";
             this.button7.UseVisualStyleBackColor = false;
             // 
-            // btnPlaneamentoCompras
+            // button5
             // 
-            this.btnPlaneamentoCompras.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(68)))), ((int)(((byte)(100)))), ((int)(((byte)(145)))));
-            this.btnPlaneamentoCompras.Font = new System.Drawing.Font("Microsoft Yi Baiti", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnPlaneamentoCompras.ForeColor = System.Drawing.Color.White;
-            this.btnPlaneamentoCompras.Location = new System.Drawing.Point(784, 26);
-            this.btnPlaneamentoCompras.Name = "btnPlaneamentoCompras";
-            this.btnPlaneamentoCompras.Size = new System.Drawing.Size(129, 57);
-            this.btnPlaneamentoCompras.TabIndex = 134;
-            this.btnPlaneamentoCompras.Text = "Planeamento de Compras";
-            this.btnPlaneamentoCompras.UseVisualStyleBackColor = false;
-            this.btnPlaneamentoCompras.Click += new System.EventHandler(this.btnPlaneamentoCompra_Click);
+            this.button5.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(68)))), ((int)(((byte)(100)))), ((int)(((byte)(145)))));
+            this.button5.Font = new System.Drawing.Font("Microsoft Yi Baiti", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button5.ForeColor = System.Drawing.Color.White;
+            this.button5.Location = new System.Drawing.Point(667, 15);
+            this.button5.Name = "button5";
+            this.button5.Size = new System.Drawing.Size(129, 57);
+            this.button5.TabIndex = 134;
+            this.button5.Text = "Planeamento de Compras";
+            this.button5.UseVisualStyleBackColor = false;
             // 
             // btnTiposArtigo
             // 
@@ -137,7 +136,7 @@
             this.btnTiposArtigo.TabIndex = 133;
             this.btnTiposArtigo.Text = "Tipos de Artigo";
             this.btnTiposArtigo.UseVisualStyleBackColor = false;
-            this.btnTiposArtigo.Click += new System.EventHandler(this.button4_Click);
+            this.btnTiposArtigo.Click += new System.EventHandler(this.btnTipoArtigo_Click);
             // 
             // btnOrcamentos
             // 
@@ -300,7 +299,7 @@
             this.Controls.Add(this.pictureBox4);
             this.Controls.Add(this.button8);
             this.Controls.Add(this.button7);
-            this.Controls.Add(this.btnPlaneamentoCompras);
+            this.Controls.Add(this.button5);
             this.Controls.Add(this.btnTiposArtigo);
             this.Controls.Add(this.btnOrcamentos);
             this.Controls.Add(this.button2);
@@ -326,7 +325,7 @@
         private System.Windows.Forms.PictureBox pictureBox4;
         private System.Windows.Forms.Button button8;
         private System.Windows.Forms.Button button7;
-        private System.Windows.Forms.Button btnPlaneamentoCompras;
+        private System.Windows.Forms.Button button5;
         private System.Windows.Forms.Button btnTiposArtigo;
         private System.Windows.Forms.Button btnOrcamentos;
         private System.Windows.Forms.Button button2;

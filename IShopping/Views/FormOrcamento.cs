@@ -161,7 +161,7 @@ namespace IShopping.Views
 
             // Chamar controller para editar o orçamento
             OrcamentoController.Editar(
-                    OrcamentoId,
+                    OrcamentoId, 
                     decimal.Parse(txtValor.Text), //converte o valor do orçamento para decimal
                     dateTimePicker1.Value //data de compra selecionada no DateTimePicker
                 );
@@ -200,6 +200,11 @@ namespace IShopping.Views
         private void pictureBox1_Click(object sender, EventArgs e)
         {
             this.Close();
+        }
+
+        private void dateTimePicker1_ValueChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

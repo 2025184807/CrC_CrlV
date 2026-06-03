@@ -1,4 +1,5 @@
-﻿using System;
+﻿using IShopping.Models;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -16,10 +17,14 @@ namespace IShopping.Views
         {
             InitializeComponent();
         }
-
         private void pictureBox1_Click(object sender, EventArgs e)
         {
             this.Close();
+        }
+
+        private void FormAlteracaoPlaneada_Load(object sender, EventArgs e)
+        {
+          
         }
     }
 }

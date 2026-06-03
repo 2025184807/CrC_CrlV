@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Data.Entity; // Necessário para usar o .Include() e outras funcionalidades do Entity Framework
 
 namespace IShopping.Controller
 {
@@ -13,10 +14,12 @@ namespace IShopping.Controller
         // LISTAR TODOS
         public static List<Artigo> Listar()
         {
-            using (shoppingContext db = new shoppingContext())
-            {
-                return db.Artigos.ToList();
-            }
+                using (shoppingContext db = new shoppingContext())
+                {
+                    // O .Include diz ao Entity Framework para trazer o TipoArtigo juntamente com o Artigo
+                    return db.Artigos.Include(a => a.TipoArtigo).ToList();
+                }
+
         }
 
 

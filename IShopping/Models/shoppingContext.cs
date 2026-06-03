@@ -11,9 +11,9 @@ namespace IShopping
         { }
         public DbSet<Utilizador> Utilizadores { get; set; } // Tabela de utilizadores
         public DbSet<TipoArtigo> TipoArtigos { get; set; } // Tabela de tipos de artigo
-        public DbSet<Artigo> Artigos { get; set; } // Tabela de artigos
-        public DbSet<Compra> Compras { get; set; } // Tabela de compras
-        public DbSet<ItemCompra> ItemCompras { get; set; } // Tabela de itens de compra
+        public DbSet<Artigo> Artigos { get; set; } // Tabela de artigo
         public DbSet<Orcamento> Orcamentos { get; set; } // Tabela de orçamentos
+        public DbSet<CompraPlaneada> ComprasPlaneadas { get; set; } // Tabela de compras planeadas
+        public DbSet<ItemCompraPlaneada> ItemComprasPlaneadas { get; set; } // Tabela de itens de compras planeadas
     }
 }

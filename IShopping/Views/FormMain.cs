@@ -28,9 +28,8 @@ namespace IShopping.Views
             form.Show(); // mostra o form de gestão de utilizadores
 
         }
-
         // BOTÃO PARA DIRECIONAR PARA O FORM PLANEAMENTO DE COMPRA
-        private void button4_Click(object sender, EventArgs e)
+        private void btnTipoArtigo_Click(object sender, EventArgs e)
         {
             FormTipoArtigo form = new FormTipoArtigo();  // cria uma nova instância do form de gestão de tipos de artigo
 
@@ -66,6 +65,13 @@ namespace IShopping.Views
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
 
+            form.Show();
+        }
+
+        private void bntPlaneamentoCompra_Click(object sender, EventArgs e)
+        {
+            FormPlaneamentoCompra form = new FormPlaneamentoCompra();
+            form.Show();
         }
     }
 }

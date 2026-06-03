@@ -245,6 +245,7 @@
             this.dateTimePicker1.Name = "dateTimePicker1";
             this.dateTimePicker1.Size = new System.Drawing.Size(229, 22);
             this.dateTimePicker1.TabIndex = 204;
+            this.dateTimePicker1.ValueChanged += new System.EventHandler(this.dateTimePicker1_ValueChanged);
             // 
             // pictureBox6
             // 
@@ -330,6 +331,7 @@
             this.Controls.Add(this.label1);
             this.Controls.Add(this.textBox1);
             this.Name = "FormOrcamento";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "FormOrcamento";
             this.Load += new System.EventHandler(this.FormOrcamento_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();

@@ -82,14 +82,20 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controller\ArtigoController.cs" />
+    <Compile Include="Controller\EstatisticasAvancadasController.cs" />
     <Compile Include="Controller\Form2Controller.cs" />
+    <Compile Include="Controller\ModoCompraController.cs" />
     <Compile Include="Controller\OrcamentoController.cs" />
-    <Compile Include="Controller\PlaneamentoController.cs" />
     <Compile Include="Controller\TipoArtigoController.cs" />
     <Compile Include="Controller\UtilizadorController.cs" />
     <Compile Include="Models\Artigo.cs" />
     <Compile Include="Models\Compra.cs" />
+    <Compile Include="Models\CompraPlaneada.cs" />
+    <Compile Include="Models\CompraPlaneadaGridDto.cs" />
     <Compile Include="Models\ItemCompra.cs" />
+    <Compile Include="Models\ItemCompraPlaneada.cs" />
+    <Compile Include="Models\ResumoComprasDto.cs" />
+    <Compile Include="Models\SugestaoOrcamentoDto.cs" />
     <Compile Include="Models\TipoArtigo.cs" />
     <Compile Include="Views\FormEstatisticas.cs">
       <SubType>Form</SubType>

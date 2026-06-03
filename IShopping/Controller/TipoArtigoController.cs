@@ -11,9 +11,9 @@ namespace IShopping.Controller
     internal class TipoArtigoController
     {
         // LISTAR
-        public static List<TipoArtigo> Listar()
+        public static List<TipoArtigo> Listar() // Método para listar os tipos de artigo, retorna uma lista de objetos do tipo TipoArtigo
         {
-            using (shoppingContext db = new shoppingContext())
+            using (shoppingContext db = new shoppingContext()) 
             {
                 return db.TipoArtigos.ToList();
             }
