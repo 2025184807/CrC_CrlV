@@ -118,7 +118,7 @@
             this.button5.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(68)))), ((int)(((byte)(100)))), ((int)(((byte)(145)))));
             this.button5.Font = new System.Drawing.Font("Microsoft Yi Baiti", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.button5.ForeColor = System.Drawing.Color.White;
-            this.button5.Location = new System.Drawing.Point(667, 15);
+            this.button5.Location = new System.Drawing.Point(784, 27);
             this.button5.Name = "button5";
             this.button5.Size = new System.Drawing.Size(129, 57);
             this.button5.TabIndex = 134;

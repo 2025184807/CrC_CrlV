@@ -57,18 +57,27 @@ namespace IShopping.Views
 
         }
 
-        private void btnPlaneamentoCompra_Click(object sender, EventArgs e)
-        {
-
-        }
-
+    
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
 
+            
+        }
+
+        private void FormMain_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        // Botão para direcionar para o form de criação de compra
+        private void btnCriar_Compra_Click(object sender, EventArgs e)
+        {
+            FormAlteracaoPlaneada form = new FormAlteracaoPlaneada();
             form.Show();
         }
 
-        private void bntPlaneamentoCompra_Click(object sender, EventArgs e)
+        // Botão para direcionar para o form de planeamento de compra
+        private void btnPlaneamento_Click(object sender, EventArgs e)
         {
             FormPlaneamentoCompra form = new FormPlaneamentoCompra();
             form.Show();
