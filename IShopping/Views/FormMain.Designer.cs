@@ -31,23 +31,21 @@
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.btnArtigo = new System.Windows.Forms.Button();
             this.label3 = new System.Windows.Forms.Label();
-            this.button8 = new System.Windows.Forms.Button();
+            this.btnExportar = new System.Windows.Forms.Button();
             this.button7 = new System.Windows.Forms.Button();
-            this.button5 = new System.Windows.Forms.Button();
+            this.btnPlaneamento = new System.Windows.Forms.Button();
             this.btnTiposArtigo = new System.Windows.Forms.Button();
             this.btnOrcamentos = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
+            this.btnEstatistica = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.btnGerirUtilizadores = new System.Windows.Forms.Button();
             this.pictureBox7 = new System.Windows.Forms.PictureBox();
             this.pictureBox4 = new System.Windows.Forms.PictureBox();
-            this.label2 = new System.Windows.Forms.Label();
-            this.textBox2 = new System.Windows.Forms.TextBox();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.label9 = new System.Windows.Forms.Label();
             this.txtId = new System.Windows.Forms.TextBox();
-            this.button3 = new System.Windows.Forms.Button();
+            this.btnCompra = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox7)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).BeginInit();
@@ -87,17 +85,17 @@
             this.label3.TabIndex = 139;
             this.label3.Text = "Compras em Aberto:";
             // 
-            // button8
+            // btnExportar
             // 
-            this.button8.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(68)))), ((int)(((byte)(100)))), ((int)(((byte)(145)))));
-            this.button8.Font = new System.Drawing.Font("Microsoft Yi Baiti", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button8.ForeColor = System.Drawing.Color.White;
-            this.button8.Location = new System.Drawing.Point(919, 26);
-            this.button8.Name = "button8";
-            this.button8.Size = new System.Drawing.Size(118, 58);
-            this.button8.TabIndex = 135;
-            this.button8.Text = "Exportar CSV";
-            this.button8.UseVisualStyleBackColor = false;
+            this.btnExportar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(68)))), ((int)(((byte)(100)))), ((int)(((byte)(145)))));
+            this.btnExportar.Font = new System.Drawing.Font("Microsoft Yi Baiti", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnExportar.ForeColor = System.Drawing.Color.White;
+            this.btnExportar.Location = new System.Drawing.Point(919, 26);
+            this.btnExportar.Name = "btnExportar";
+            this.btnExportar.Size = new System.Drawing.Size(118, 58);
+            this.btnExportar.TabIndex = 135;
+            this.btnExportar.Text = "Exportar CSV";
+            this.btnExportar.UseVisualStyleBackColor = false;
             // 
             // button7
             // 
@@ -113,17 +111,18 @@
             this.button7.Text = "Abrir Compra";
             this.button7.UseVisualStyleBackColor = false;
             // 
-            // button5
+            // btnPlaneamento
             // 
-            this.button5.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(68)))), ((int)(((byte)(100)))), ((int)(((byte)(145)))));
-            this.button5.Font = new System.Drawing.Font("Microsoft Yi Baiti", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button5.ForeColor = System.Drawing.Color.White;
-            this.button5.Location = new System.Drawing.Point(784, 27);
-            this.button5.Name = "button5";
-            this.button5.Size = new System.Drawing.Size(129, 57);
-            this.button5.TabIndex = 134;
-            this.button5.Text = "Planeamento de Compras";
-            this.button5.UseVisualStyleBackColor = false;
+            this.btnPlaneamento.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(68)))), ((int)(((byte)(100)))), ((int)(((byte)(145)))));
+            this.btnPlaneamento.Font = new System.Drawing.Font("Microsoft Yi Baiti", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnPlaneamento.ForeColor = System.Drawing.Color.White;
+            this.btnPlaneamento.Location = new System.Drawing.Point(660, 27);
+            this.btnPlaneamento.Name = "btnPlaneamento";
+            this.btnPlaneamento.Size = new System.Drawing.Size(129, 57);
+            this.btnPlaneamento.TabIndex = 134;
+            this.btnPlaneamento.Text = "Planeamento de Compras";
+            this.btnPlaneamento.UseVisualStyleBackColor = false;
+            this.btnPlaneamento.Click += new System.EventHandler(this.btnPlaneamento_Click_1);
             // 
             // btnTiposArtigo
             // 
@@ -151,17 +150,18 @@
             this.btnOrcamentos.UseVisualStyleBackColor = false;
             this.btnOrcamentos.Click += new System.EventHandler(this.btnOrcamentos_Click);
             // 
-            // button2
+            // btnEstatistica
             // 
-            this.button2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(68)))), ((int)(((byte)(100)))), ((int)(((byte)(145)))));
-            this.button2.Font = new System.Drawing.Font("Microsoft Yi Baiti", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button2.ForeColor = System.Drawing.Color.White;
-            this.button2.Location = new System.Drawing.Point(536, 26);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(118, 57);
-            this.button2.TabIndex = 131;
-            this.button2.Text = "Estatistica";
-            this.button2.UseVisualStyleBackColor = false;
+            this.btnEstatistica.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(68)))), ((int)(((byte)(100)))), ((int)(((byte)(145)))));
+            this.btnEstatistica.Font = new System.Drawing.Font("Microsoft Yi Baiti", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnEstatistica.ForeColor = System.Drawing.Color.White;
+            this.btnEstatistica.Location = new System.Drawing.Point(795, 27);
+            this.btnEstatistica.Name = "btnEstatistica";
+            this.btnEstatistica.Size = new System.Drawing.Size(118, 57);
+            this.btnEstatistica.TabIndex = 131;
+            this.btnEstatistica.Text = "Estatistica";
+            this.btnEstatistica.UseVisualStyleBackColor = false;
+            this.btnEstatistica.Click += new System.EventHandler(this.button2_Click);
             // 
             // button1
             // 
@@ -222,25 +222,6 @@
             this.pictureBox4.TabIndex = 136;
             this.pictureBox4.TabStop = false;
             // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("Microsoft Yi Baiti", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(645, 139);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(101, 23);
-            this.label2.TabIndex = 145;
-            this.label2.Text = "Utilizador:";
-            // 
-            // textBox2
-            // 
-            this.textBox2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.textBox2.Location = new System.Drawing.Point(752, 142);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.ReadOnly = true;
-            this.textBox2.Size = new System.Drawing.Size(161, 22);
-            this.textBox2.TabIndex = 146;
-            // 
             // textBox1
             // 
             this.textBox1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(248)))), ((int)(((byte)(248)))));
@@ -251,6 +232,7 @@
             this.textBox1.ReadOnly = true;
             this.textBox1.Size = new System.Drawing.Size(1075, 114);
             this.textBox1.TabIndex = 128;
+            this.textBox1.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
             // 
             // label9
             // 
@@ -269,40 +251,39 @@
             this.txtId.Size = new System.Drawing.Size(74, 22);
             this.txtId.TabIndex = 260;
             // 
-            // button3
+            // btnCompra
             // 
-            this.button3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(68)))), ((int)(((byte)(100)))), ((int)(((byte)(145)))));
-            this.button3.Font = new System.Drawing.Font("Microsoft Yi Baiti", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button3.ForeColor = System.Drawing.Color.White;
-            this.button3.Location = new System.Drawing.Point(660, 26);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(118, 57);
-            this.button3.TabIndex = 262;
-            this.button3.Text = "Criar da Compra";
-            this.button3.UseVisualStyleBackColor = false;
+            this.btnCompra.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(68)))), ((int)(((byte)(100)))), ((int)(((byte)(145)))));
+            this.btnCompra.Font = new System.Drawing.Font("Microsoft Yi Baiti", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnCompra.ForeColor = System.Drawing.Color.White;
+            this.btnCompra.Location = new System.Drawing.Point(536, 27);
+            this.btnCompra.Name = "btnCompra";
+            this.btnCompra.Size = new System.Drawing.Size(118, 57);
+            this.btnCompra.TabIndex = 262;
+            this.btnCompra.Text = "Criar da Compra";
+            this.btnCompra.UseVisualStyleBackColor = false;
+            this.btnCompra.Click += new System.EventHandler(this.btnCompra_Click);
             // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1053, 508);
-            this.Controls.Add(this.button3);
+            this.Controls.Add(this.btnCompra);
             this.Controls.Add(this.label9);
             this.Controls.Add(this.txtId);
-            this.Controls.Add(this.textBox2);
-            this.Controls.Add(this.label2);
             this.Controls.Add(this.btnGerirUtilizadores);
             this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.btnArtigo);
             this.Controls.Add(this.pictureBox7);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.pictureBox4);
-            this.Controls.Add(this.button8);
+            this.Controls.Add(this.btnExportar);
             this.Controls.Add(this.button7);
-            this.Controls.Add(this.button5);
+            this.Controls.Add(this.btnPlaneamento);
             this.Controls.Add(this.btnTiposArtigo);
             this.Controls.Add(this.btnOrcamentos);
-            this.Controls.Add(this.button2);
+            this.Controls.Add(this.btnEstatistica);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.textBox1);
@@ -323,20 +304,18 @@
         private System.Windows.Forms.PictureBox pictureBox7;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.PictureBox pictureBox4;
-        private System.Windows.Forms.Button button8;
+        private System.Windows.Forms.Button btnExportar;
         private System.Windows.Forms.Button button7;
-        private System.Windows.Forms.Button button5;
+        private System.Windows.Forms.Button btnPlaneamento;
         private System.Windows.Forms.Button btnTiposArtigo;
         private System.Windows.Forms.Button btnOrcamentos;
-        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Button btnEstatistica;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button btnGerirUtilizadores;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.TextBox textBox2;
         private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.TextBox txtId;
-        private System.Windows.Forms.Button button3;
+        private System.Windows.Forms.Button btnCompra;
     }
 }

@@ -76,11 +76,29 @@ namespace IShopping.Views
             form.Show();
         }
 
-        // Botão para direcionar para o form de planeamento de compra
-        private void btnPlaneamento_Click(object sender, EventArgs e)
+
+        // Botão para direcionar para o form de estatísticas
+        private void button2_Click(object sender, EventArgs e)
         {
-            FormPlaneamentoCompra form = new FormPlaneamentoCompra();
+            FormEstatisticas form = new FormEstatisticas(); // Cria uma nova instância do FormEstatisticas
             form.Show();
+        }
+
+        private void btnCompra_Click(object sender, EventArgs e)
+        {
+            FormAlteracaoPlaneada form = new FormAlteracaoPlaneada(); // Cria uma nova instância do FormAlteracaoPlaneada
+            form.Show(); // Exibe o formulário de alteração planeada
+        }
+
+        private void btnPlaneamento_Click_1(object sender, EventArgs e)
+        {
+            FormPlaneamentoCompra form = new FormPlaneamentoCompra(); // Cria uma nova instância do FormPlaneamentoCompra
+            form.Show(); // Exibe o formulário de planeamento de compra
+        }
+
+        private void textBox1_TextChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

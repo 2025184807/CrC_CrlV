@@ -15,6 +15,7 @@ namespace IShopping.Views
             CarregarGrid();
         }
 
+        // Botão para fechar o formulário
         private void button2_Click(object sender, EventArgs e)
         {
             this.Close();
