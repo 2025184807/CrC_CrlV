@@ -70,9 +70,10 @@ namespace IShopping.Views
         }
 
         // Botão para direcionar para o form de criação de compra
+        private int CompraId = 0;
         private void btnCriar_Compra_Click(object sender, EventArgs e)
         {
-            FormAlteracaoPlaneada form = new FormAlteracaoPlaneada();
+            FormAlteracaoPlaneada form = new FormAlteracaoPlaneada(CompraId);
             form.Show();
         }
 
@@ -86,7 +87,7 @@ namespace IShopping.Views
 
         private void btnCompra_Click(object sender, EventArgs e)
         {
-            FormAlteracaoPlaneada form = new FormAlteracaoPlaneada(); // Cria uma nova instância do FormAlteracaoPlaneada
+            FormAlteracaoPlaneada form = new FormAlteracaoPlaneada(CompraId); // Cria uma nova instância do FormAlteracaoPlaneada
             form.Show(); // Exibe o formulário de alteração planeada
         }
 

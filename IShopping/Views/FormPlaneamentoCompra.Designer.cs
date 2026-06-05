@@ -44,11 +44,14 @@
             this.pictureBox4 = new System.Windows.Forms.PictureBox();
             this.label1 = new System.Windows.Forms.Label();
             this.textBox1 = new System.Windows.Forms.TextBox();
+            this.pictureBox2 = new System.Windows.Forms.PictureBox();
+            this.btnEliminar = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox11)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             this.SuspendLayout();
             // 
             // cmbFiltro
@@ -58,12 +61,13 @@
             this.cmbFiltro.Name = "cmbFiltro";
             this.cmbFiltro.Size = new System.Drawing.Size(184, 24);
             this.cmbFiltro.TabIndex = 310;
+            this.cmbFiltro.SelectedIndexChanged += new System.EventHandler(this.cmbFiltro_SelectedIndexChanged);
             // 
             // pictureBox1
             // 
             this.pictureBox1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(248)))), ((int)(((byte)(248)))));
             this.pictureBox1.Image = global::IShopping.Properties.Resources.add;
-            this.pictureBox1.Location = new System.Drawing.Point(188, 455);
+            this.pictureBox1.Location = new System.Drawing.Point(76, 453);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(26, 28);
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -94,7 +98,7 @@
             // 
             this.pictureBox3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(248)))), ((int)(((byte)(248)))));
             this.pictureBox3.Image = global::IShopping.Properties.Resources.see;
-            this.pictureBox3.Location = new System.Drawing.Point(451, 455);
+            this.pictureBox3.Location = new System.Drawing.Point(333, 453);
             this.pictureBox3.Name = "pictureBox3";
             this.pictureBox3.Size = new System.Drawing.Size(26, 28);
             this.pictureBox3.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -106,7 +110,7 @@
             this.btnAlteracao.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(68)))), ((int)(((byte)(100)))), ((int)(((byte)(145)))));
             this.btnAlteracao.Font = new System.Drawing.Font("Microsoft Yi Baiti", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnAlteracao.ForeColor = System.Drawing.Color.White;
-            this.btnAlteracao.Location = new System.Drawing.Point(483, 446);
+            this.btnAlteracao.Location = new System.Drawing.Point(365, 444);
             this.btnAlteracao.Name = "btnAlteracao";
             this.btnAlteracao.Size = new System.Drawing.Size(229, 46);
             this.btnAlteracao.TabIndex = 305;
@@ -147,7 +151,7 @@
             this.bntNovaCompra.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(68)))), ((int)(((byte)(100)))), ((int)(((byte)(145)))));
             this.bntNovaCompra.Font = new System.Drawing.Font("Microsoft Yi Baiti", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.bntNovaCompra.ForeColor = System.Drawing.Color.White;
-            this.bntNovaCompra.Location = new System.Drawing.Point(220, 446);
+            this.bntNovaCompra.Location = new System.Drawing.Point(108, 444);
             this.bntNovaCompra.Name = "bntNovaCompra";
             this.bntNovaCompra.Size = new System.Drawing.Size(166, 46);
             this.bntNovaCompra.TabIndex = 301;
@@ -212,11 +216,37 @@
             this.textBox1.Size = new System.Drawing.Size(954, 92);
             this.textBox1.TabIndex = 296;
             // 
+            // pictureBox2
+            // 
+            this.pictureBox2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(248)))), ((int)(((byte)(248)))));
+            this.pictureBox2.Image = global::IShopping.Properties.Resources.trash;
+            this.pictureBox2.Location = new System.Drawing.Point(639, 453);
+            this.pictureBox2.Name = "pictureBox2";
+            this.pictureBox2.Size = new System.Drawing.Size(26, 28);
+            this.pictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pictureBox2.TabIndex = 312;
+            this.pictureBox2.TabStop = false;
+            // 
+            // btnEliminar
+            // 
+            this.btnEliminar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(68)))), ((int)(((byte)(100)))), ((int)(((byte)(145)))));
+            this.btnEliminar.Font = new System.Drawing.Font("Microsoft Yi Baiti", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnEliminar.ForeColor = System.Drawing.Color.White;
+            this.btnEliminar.Location = new System.Drawing.Point(671, 444);
+            this.btnEliminar.Name = "btnEliminar";
+            this.btnEliminar.Size = new System.Drawing.Size(166, 46);
+            this.btnEliminar.TabIndex = 313;
+            this.btnEliminar.Text = "Eliminar Compra";
+            this.btnEliminar.UseVisualStyleBackColor = false;
+            this.btnEliminar.Click += new System.EventHandler(this.btnEliminar_Click);
+            // 
             // FormPlaneamentoCompra
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(951, 546);
+            this.Controls.Add(this.btnEliminar);
+            this.Controls.Add(this.pictureBox2);
             this.Controls.Add(this.cmbFiltro);
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.pictureBox11);
@@ -241,6 +271,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -263,5 +294,7 @@
         private System.Windows.Forms.PictureBox pictureBox4;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.PictureBox pictureBox2;
+        private System.Windows.Forms.Button btnEliminar;
     }
 }

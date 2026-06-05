@@ -157,7 +157,7 @@ namespace IShopping.Views
                 return;
             }
 
-            // Exibir uma mensagem de confirmação antes de eliminar o tipo de artigo, informando o usuário sobre as possíveis consequências da ação.
+            // Exibir uma mensagem de confirmação antes de eliminar o tipo de artigo, informando o utilizador sobre as possíveis consequências da ação.
             DialogResult resposta = MessageBox.Show(
                 "Deseja eliminar este tipo de artigo? Isto poderá afetar os artigos associados.",
                 "Confirmação",

@@ -13,9 +13,6 @@ namespace IShopping
 
         public string CriadoPor { get; set; }
         public string AlteradoPor { get; set; }
-
-        //public DateTime DataCriacao { get; set; }
-        //public DateTime? DataAlteracao { get; set; }
         public List<CompraPlaneada> Compras { get; set; } // Relação com a tabela Compra, permitindo que um utilizador possa ter várias compras associadas a ele. A propriedade Compras é uma lista que armazena as compras relacionadas a um utilizador específico.
     }
 }

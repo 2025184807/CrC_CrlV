@@ -6,6 +6,7 @@ namespace IShopping.Controller
 {
     internal static class ModoCompraController
     {
+        // Método para registar a aquisição de um item previsto, atualizando a quantidade adquirida e o preço unitário
         public static bool RegistarAquisicaoItemPrevisto(int itemId, int quantidadeAdquirida, decimal precoUnitario, out string mensagem)
         {
             mensagem = "";

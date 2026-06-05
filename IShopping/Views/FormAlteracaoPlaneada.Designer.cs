@@ -32,17 +32,17 @@
             this.label1 = new System.Windows.Forms.Label();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.button3 = new System.Windows.Forms.Button();
-            this.button1 = new System.Windows.Forms.Button();
+            this.btnGuardar = new System.Windows.Forms.Button();
             this.label4 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.txtNome = new System.Windows.Forms.TextBox();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
+            this.dateCompra = new System.Windows.Forms.DateTimePicker();
+            this.cmbArtigo = new System.Windows.Forms.ComboBox();
             this.label6 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
-            this.comboBox2 = new System.Windows.Forms.ComboBox();
+            this.cmbTipoArtigo = new System.Windows.Forms.ComboBox();
             this.label5 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
             this.txtId = new System.Windows.Forms.TextBox();
@@ -51,19 +51,21 @@
             this.btnEliminar = new System.Windows.Forms.Button();
             this.label10 = new System.Windows.Forms.Label();
             this.label11 = new System.Windows.Forms.Label();
-            this.textBox2 = new System.Windows.Forms.TextBox();
             this.pictureBox6 = new System.Windows.Forms.PictureBox();
             this.pictureBox5 = new System.Windows.Forms.PictureBox();
             this.pictureBox3 = new System.Windows.Forms.PictureBox();
             this.pictureBox4 = new System.Windows.Forms.PictureBox();
             this.label8 = new System.Windows.Forms.Label();
-            this.cmbEstado = new System.Windows.Forms.ComboBox();
             this.btnVoltar = new System.Windows.Forms.Button();
+            this.btnAdicionar = new System.Windows.Forms.Button();
+            this.ckbFechar = new System.Windows.Forms.CheckBox();
+            this.numQuantidade = new System.Windows.Forms.NumericUpDown();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox6)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox5)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numQuantidade)).BeginInit();
             this.SuspendLayout();
             // 
             // label1
@@ -85,7 +87,7 @@
             this.textBox1.Multiline = true;
             this.textBox1.Name = "textBox1";
             this.textBox1.ReadOnly = true;
-            this.textBox1.Size = new System.Drawing.Size(1165, 92);
+            this.textBox1.Size = new System.Drawing.Size(738, 92);
             this.textBox1.TabIndex = 140;
             // 
             // button3
@@ -94,25 +96,26 @@
             this.button3.Font = new System.Drawing.Font("Microsoft Yi Baiti", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.button3.ForeColor = System.Drawing.Color.White;
             this.button3.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
-            this.button3.Location = new System.Drawing.Point(172, 422);
+            this.button3.Location = new System.Drawing.Point(171, 473);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(110, 44);
             this.button3.TabIndex = 157;
             this.button3.Text = "Limpar";
             this.button3.UseVisualStyleBackColor = false;
             // 
-            // button1
+            // btnGuardar
             // 
-            this.button1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(68)))), ((int)(((byte)(100)))), ((int)(((byte)(145)))));
-            this.button1.Font = new System.Drawing.Font("Microsoft Yi Baiti", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button1.ForeColor = System.Drawing.Color.White;
-            this.button1.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
-            this.button1.Location = new System.Drawing.Point(41, 422);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(125, 44);
-            this.button1.TabIndex = 156;
-            this.button1.Text = "Adicionar Item";
-            this.button1.UseVisualStyleBackColor = false;
+            this.btnGuardar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(68)))), ((int)(((byte)(100)))), ((int)(((byte)(145)))));
+            this.btnGuardar.Font = new System.Drawing.Font("Microsoft Yi Baiti", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnGuardar.ForeColor = System.Drawing.Color.White;
+            this.btnGuardar.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.btnGuardar.Location = new System.Drawing.Point(41, 265);
+            this.btnGuardar.Name = "btnGuardar";
+            this.btnGuardar.Size = new System.Drawing.Size(142, 44);
+            this.btnGuardar.TabIndex = 156;
+            this.btnGuardar.Text = "Guardar Compra";
+            this.btnGuardar.UseVisualStyleBackColor = false;
+            this.btnGuardar.Click += new System.EventHandler(this.button1_Click);
             // 
             // label4
             // 
@@ -155,33 +158,34 @@
             // dataGridView1
             // 
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Location = new System.Drawing.Point(484, 169);
+            this.dataGridView1.Location = new System.Drawing.Point(45, 582);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.RowHeadersWidth = 51;
             this.dataGridView1.RowTemplate.Height = 24;
             this.dataGridView1.Size = new System.Drawing.Size(627, 233);
             this.dataGridView1.TabIndex = 158;
             // 
-            // dateTimePicker1
+            // dateCompra
             // 
-            this.dateTimePicker1.Location = new System.Drawing.Point(239, 200);
-            this.dateTimePicker1.Name = "dateTimePicker1";
-            this.dateTimePicker1.Size = new System.Drawing.Size(197, 22);
-            this.dateTimePicker1.TabIndex = 159;
+            this.dateCompra.Location = new System.Drawing.Point(239, 200);
+            this.dateCompra.Name = "dateCompra";
+            this.dateCompra.Size = new System.Drawing.Size(197, 22);
+            this.dateCompra.TabIndex = 159;
             // 
-            // comboBox1
+            // cmbArtigo
             // 
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Location = new System.Drawing.Point(173, 352);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(264, 24);
-            this.comboBox1.TabIndex = 161;
+            this.cmbArtigo.FormattingEnabled = true;
+            this.cmbArtigo.Location = new System.Drawing.Point(172, 403);
+            this.cmbArtigo.Name = "cmbArtigo";
+            this.cmbArtigo.Size = new System.Drawing.Size(264, 24);
+            this.cmbArtigo.TabIndex = 161;
+            this.cmbArtigo.SelectedIndexChanged += new System.EventHandler(this.cmbArtigo_SelectedIndexChanged);
             // 
             // label6
             // 
             this.label6.AutoSize = true;
             this.label6.Font = new System.Drawing.Font("Microsoft Yi Baiti", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label6.Location = new System.Drawing.Point(42, 347);
+            this.label6.Location = new System.Drawing.Point(41, 398);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(62, 23);
             this.label6.TabIndex = 165;
@@ -191,25 +195,25 @@
             // 
             this.label7.AutoSize = true;
             this.label7.Font = new System.Drawing.Font("Microsoft Yi Baiti", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label7.Location = new System.Drawing.Point(40, 318);
+            this.label7.Location = new System.Drawing.Point(39, 369);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(137, 23);
             this.label7.TabIndex = 164;
             this.label7.Text = "Tipo de Artigo:";
             // 
-            // comboBox2
+            // cmbTipoArtigo
             // 
-            this.comboBox2.FormattingEnabled = true;
-            this.comboBox2.Location = new System.Drawing.Point(221, 320);
-            this.comboBox2.Name = "comboBox2";
-            this.comboBox2.Size = new System.Drawing.Size(216, 24);
-            this.comboBox2.TabIndex = 166;
+            this.cmbTipoArtigo.FormattingEnabled = true;
+            this.cmbTipoArtigo.Location = new System.Drawing.Point(220, 371);
+            this.cmbTipoArtigo.Name = "cmbTipoArtigo";
+            this.cmbTipoArtigo.Size = new System.Drawing.Size(216, 24);
+            this.cmbTipoArtigo.TabIndex = 166;
             // 
             // label5
             // 
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("Microsoft Tai Le", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label5.Location = new System.Drawing.Point(39, 279);
+            this.label5.Location = new System.Drawing.Point(38, 330);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(271, 29);
             this.label5.TabIndex = 160;
@@ -219,7 +223,7 @@
             // 
             this.label9.AutoSize = true;
             this.label9.Font = new System.Drawing.Font("Microsoft Yi Baiti", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label9.Location = new System.Drawing.Point(998, 129);
+            this.label9.Location = new System.Drawing.Point(559, 542);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(33, 23);
             this.label9.TabIndex = 207;
@@ -227,7 +231,7 @@
             // 
             // txtId
             // 
-            this.txtId.Location = new System.Drawing.Point(1037, 133);
+            this.txtId.Location = new System.Drawing.Point(598, 546);
             this.txtId.Name = "txtId";
             this.txtId.Size = new System.Drawing.Size(74, 22);
             this.txtId.TabIndex = 206;
@@ -238,12 +242,13 @@
             this.btnVer.Font = new System.Drawing.Font("Microsoft Yi Baiti", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnVer.ForeColor = System.Drawing.Color.White;
             this.btnVer.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
-            this.btnVer.Location = new System.Drawing.Point(557, 422);
+            this.btnVer.Location = new System.Drawing.Point(110, 830);
             this.btnVer.Name = "btnVer";
             this.btnVer.Size = new System.Drawing.Size(130, 44);
             this.btnVer.TabIndex = 210;
             this.btnVer.Text = "Ver Artigo";
             this.btnVer.UseVisualStyleBackColor = false;
+            this.btnVer.Click += new System.EventHandler(this.btnVer_Click);
             // 
             // btnEditar
             // 
@@ -251,12 +256,13 @@
             this.btnEditar.Font = new System.Drawing.Font("Microsoft Yi Baiti", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnEditar.ForeColor = System.Drawing.Color.White;
             this.btnEditar.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
-            this.btnEditar.Location = new System.Drawing.Point(742, 422);
+            this.btnEditar.Location = new System.Drawing.Point(295, 830);
             this.btnEditar.Name = "btnEditar";
             this.btnEditar.Size = new System.Drawing.Size(139, 44);
             this.btnEditar.TabIndex = 209;
             this.btnEditar.Text = "Editar Artigo";
             this.btnEditar.UseVisualStyleBackColor = false;
+            this.btnEditar.Click += new System.EventHandler(this.btnEditar_Click);
             // 
             // btnEliminar
             // 
@@ -264,12 +270,13 @@
             this.btnEliminar.Font = new System.Drawing.Font("Microsoft Yi Baiti", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnEliminar.ForeColor = System.Drawing.Color.White;
             this.btnEliminar.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
-            this.btnEliminar.Location = new System.Drawing.Point(938, 422);
+            this.btnEliminar.Location = new System.Drawing.Point(491, 830);
             this.btnEliminar.Name = "btnEliminar";
             this.btnEliminar.Size = new System.Drawing.Size(139, 44);
             this.btnEliminar.TabIndex = 208;
             this.btnEliminar.Text = "Eliminar Artigo";
             this.btnEliminar.UseVisualStyleBackColor = false;
+            this.btnEliminar.Click += new System.EventHandler(this.btnEliminar_Click);
             // 
             // label10
             // 
@@ -285,25 +292,17 @@
             // 
             this.label11.AutoSize = true;
             this.label11.Font = new System.Drawing.Font("Microsoft Yi Baiti", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label11.Location = new System.Drawing.Point(42, 380);
+            this.label11.Location = new System.Drawing.Point(41, 431);
             this.label11.Name = "label11";
             this.label11.Size = new System.Drawing.Size(183, 23);
             this.label11.TabIndex = 217;
             this.label11.Text = "Quantidade Prevista:";
             // 
-            // textBox2
-            // 
-            this.textBox2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.textBox2.Location = new System.Drawing.Point(253, 384);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(184, 22);
-            this.textBox2.TabIndex = 216;
-            // 
             // pictureBox6
             // 
             this.pictureBox6.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(248)))), ((int)(((byte)(248)))));
             this.pictureBox6.Image = global::IShopping.Properties.Resources.trash;
-            this.pictureBox6.Location = new System.Drawing.Point(906, 434);
+            this.pictureBox6.Location = new System.Drawing.Point(459, 842);
             this.pictureBox6.Name = "pictureBox6";
             this.pictureBox6.Size = new System.Drawing.Size(26, 28);
             this.pictureBox6.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -314,7 +313,7 @@
             // 
             this.pictureBox5.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(248)))), ((int)(((byte)(248)))));
             this.pictureBox5.Image = global::IShopping.Properties.Resources.edit_text;
-            this.pictureBox5.Location = new System.Drawing.Point(710, 434);
+            this.pictureBox5.Location = new System.Drawing.Point(263, 842);
             this.pictureBox5.Name = "pictureBox5";
             this.pictureBox5.Size = new System.Drawing.Size(26, 28);
             this.pictureBox5.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -325,7 +324,7 @@
             // 
             this.pictureBox3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(248)))), ((int)(((byte)(248)))));
             this.pictureBox3.Image = global::IShopping.Properties.Resources.see;
-            this.pictureBox3.Location = new System.Drawing.Point(525, 434);
+            this.pictureBox3.Location = new System.Drawing.Point(78, 842);
             this.pictureBox3.Name = "pictureBox3";
             this.pictureBox3.Size = new System.Drawing.Size(26, 28);
             this.pictureBox3.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -347,19 +346,11 @@
             // 
             this.label8.AutoSize = true;
             this.label8.Font = new System.Drawing.Font("Microsoft Tai Le", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label8.Location = new System.Drawing.Point(479, 129);
+            this.label8.Location = new System.Drawing.Point(40, 542);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(193, 29);
             this.label8.TabIndex = 218;
             this.label8.Text = "Itens da Compra:";
-            // 
-            // cmbEstado
-            // 
-            this.cmbEstado.FormattingEnabled = true;
-            this.cmbEstado.Location = new System.Drawing.Point(172, 231);
-            this.cmbEstado.Name = "cmbEstado";
-            this.cmbEstado.Size = new System.Drawing.Size(264, 24);
-            this.cmbEstado.TabIndex = 223;
             // 
             // btnVoltar
             // 
@@ -367,23 +358,58 @@
             this.btnVoltar.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.btnVoltar.Font = new System.Drawing.Font("Microsoft Yi Baiti", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnVoltar.ForeColor = System.Drawing.Color.White;
-            this.btnVoltar.Location = new System.Drawing.Point(1039, 26);
+            this.btnVoltar.Location = new System.Drawing.Point(617, 27);
             this.btnVoltar.Name = "btnVoltar";
             this.btnVoltar.Size = new System.Drawing.Size(87, 38);
             this.btnVoltar.TabIndex = 224;
             this.btnVoltar.Text = "Voltar";
             this.btnVoltar.UseVisualStyleBackColor = false;
+            this.btnVoltar.Click += new System.EventHandler(this.btnVoltar_Click);
+            // 
+            // btnAdicionar
+            // 
+            this.btnAdicionar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(68)))), ((int)(((byte)(100)))), ((int)(((byte)(145)))));
+            this.btnAdicionar.Font = new System.Drawing.Font("Microsoft Yi Baiti", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnAdicionar.ForeColor = System.Drawing.Color.White;
+            this.btnAdicionar.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.btnAdicionar.Location = new System.Drawing.Point(45, 473);
+            this.btnAdicionar.Name = "btnAdicionar";
+            this.btnAdicionar.Size = new System.Drawing.Size(125, 44);
+            this.btnAdicionar.TabIndex = 225;
+            this.btnAdicionar.Text = "Adicionar Item";
+            this.btnAdicionar.UseVisualStyleBackColor = false;
+            this.btnAdicionar.Click += new System.EventHandler(this.btnAdicionar_Click);
+            // 
+            // ckbFechar
+            // 
+            this.ckbFechar.AutoSize = true;
+            this.ckbFechar.Location = new System.Drawing.Point(118, 233);
+            this.ckbFechar.Name = "ckbFechar";
+            this.ckbFechar.Size = new System.Drawing.Size(83, 20);
+            this.ckbFechar.TabIndex = 226;
+            this.ckbFechar.Text = "Fechado";
+            this.ckbFechar.UseVisualStyleBackColor = true;
+            this.ckbFechar.CheckedChanged += new System.EventHandler(this.ckbFechar_CheckedChanged);
+            // 
+            // numQuantidade
+            // 
+            this.numQuantidade.Location = new System.Drawing.Point(231, 435);
+            this.numQuantidade.Name = "numQuantidade";
+            this.numQuantidade.Size = new System.Drawing.Size(205, 22);
+            this.numQuantidade.TabIndex = 227;
+            this.numQuantidade.ValueChanged += new System.EventHandler(this.txtQuantidade_ValueChanged);
             // 
             // FormAlteracaoPlaneada
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1152, 493);
+            this.ClientSize = new System.Drawing.Size(736, 911);
+            this.Controls.Add(this.numQuantidade);
+            this.Controls.Add(this.ckbFechar);
+            this.Controls.Add(this.btnAdicionar);
             this.Controls.Add(this.btnVoltar);
-            this.Controls.Add(this.cmbEstado);
             this.Controls.Add(this.label8);
             this.Controls.Add(this.label11);
-            this.Controls.Add(this.textBox2);
             this.Controls.Add(this.label10);
             this.Controls.Add(this.pictureBox6);
             this.Controls.Add(this.pictureBox5);
@@ -393,15 +419,15 @@
             this.Controls.Add(this.btnEliminar);
             this.Controls.Add(this.label9);
             this.Controls.Add(this.txtId);
-            this.Controls.Add(this.comboBox2);
+            this.Controls.Add(this.cmbTipoArtigo);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.label7);
-            this.Controls.Add(this.comboBox1);
+            this.Controls.Add(this.cmbArtigo);
             this.Controls.Add(this.label5);
-            this.Controls.Add(this.dateTimePicker1);
+            this.Controls.Add(this.dateCompra);
             this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.button3);
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.btnGuardar);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
@@ -418,6 +444,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox5)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numQuantidade)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -428,17 +455,17 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.Button button3;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button btnGuardar;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.TextBox txtNome;
         private System.Windows.Forms.DataGridView dataGridView1;
-        private System.Windows.Forms.DateTimePicker dateTimePicker1;
-        private System.Windows.Forms.ComboBox comboBox1;
+        private System.Windows.Forms.DateTimePicker dateCompra;
+        private System.Windows.Forms.ComboBox cmbArtigo;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.ComboBox comboBox2;
+        private System.Windows.Forms.ComboBox cmbTipoArtigo;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.TextBox txtId;
@@ -450,9 +477,10 @@
         private System.Windows.Forms.Button btnEliminar;
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.Label label11;
-        private System.Windows.Forms.TextBox textBox2;
         private System.Windows.Forms.Label label8;
-        private System.Windows.Forms.ComboBox cmbEstado;
         private System.Windows.Forms.Button btnVoltar;
+        private System.Windows.Forms.Button btnAdicionar;
+        private System.Windows.Forms.CheckBox ckbFechar;
+        private System.Windows.Forms.NumericUpDown numQuantidade;
     }
 }

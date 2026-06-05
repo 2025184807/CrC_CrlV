@@ -1,8 +1,6 @@
 ﻿using IShopping.Controller;
-using IShopping.Models;
-using IShopping.Views;
 using System;
-using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Windows.Forms;
 
@@ -15,220 +13,146 @@ namespace IShopping.Views
             InitializeComponent();
         }
 
-
-        private void bntAlterarCompra_Click(object sender, EventArgs e)
-        {
-            FormAlteracaoPlaneada form = new FormAlteracaoPlaneada(); // Cria uma nova instância do FormAlteracaoPlaneada
-            form.ShowDialog(); // Mostra o FormAlteracaoPlaneada como um diálogo modal
-            // O código após ShowDialog() será executado somente após o FormAlteracaoPlaneada ser fechado
-        }
-
-
-
-        // Método para atualizar a lista de compras, chamado no Load e ao alterar os filtros
-        private void Form_Load(object sender, EventArgs e)
+        private void FormPlaneamentoCompra_Load(object sender, EventArgs e)
         {
             cmbFiltro.Items.Clear();
-            cmbFiltro.Items.Add("Todas"); // Opção para mostrar todas as compras, independentemente do estado
-            cmbFiltro.Items.Add("Abertas"); //Adiciona Opção Abertas no Combobox
-            cmbFiltro.Items.Add("Fechadas"); //Adiciona Opção Fechadas no combobox
+            cmbFiltro.Items.Add("Todas");
+            cmbFiltro.Items.Add("Abertas");
+            cmbFiltro.Items.Add("Fechadas");
 
             cmbFiltro.SelectedIndex = 0;
             AtualizarGrelha();
         }
 
-        //Atualiza a Grelha
+        private void cmbFiltro_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            AtualizarGrelha();
+        }
+
         private void AtualizarGrelha()
         {
-            string filtro;
+            string filtro = cmbFiltro.SelectedItem != null ? cmbFiltro.SelectedItem.ToString() : "Todas";
 
-            if (cmbFiltro.SelectedItem != null) //Se o utilizador tiver selecionado um filtro, usa-o; caso contrário, assume "Todas"
-            {
-                filtro = cmbFiltro.SelectedItem.ToString(); // Converte o item selecionado para string e armazena na variável filtro
-            }
-            else
-            {
-                filtro = "Todas";
-            }
+            // Usa o método exato do Stor para obter a lista total
+            var listaCompras = PlaneamentoController.ObterCompras();
 
-            using (shoppingContext db = new shoppingContext())
+            if (listaCompras != null)
             {
-                // Começamos com a query base apontada para as Compras Planeadas
-                var query = db.ComprasPlaneadas.AsQueryable();
-
-                // Aplica o filtro de estado conforme a seleção do utilizador
+                // Aplica os filtros em memória de forma lógica
                 if (filtro == "Abertas")
                 {
-                    query = query.Where(c => c.Fechada == false); //query filtra as compras onde Fechada é false, ou seja, as compras abertas
-                                                                  //.where é um método de extensão do LINQ que permite filtrar os dados com base em uma condição. Neste caso, a condição é c.Fechada == false, o que significa que estamos selecionando apenas as compras onde a propriedade Fechada é igual a false, ou seja, as compras que estão abertas.
+                    listaCompras = listaCompras.Where(c => c.Fechada == false).ToList();
                 }
-
                 else if (filtro == "Fechadas")
                 {
-                    query = query.Where(c => c.Fechada == true);
+                    listaCompras = listaCompras.Where(c => c.Fechada == true).ToList();
                 }
 
-                // Usa o .Select (exatamente como fez nos Artigos) para definir as colunas da Grid
-                dataGridView1.DataSource = query
-                    .Select(c => new
-                    {
-                        Id = c.Id,
-                        Nome = c.NomeCompra,
-                        Fechada = c.Fechada,
-                        CriadoPor = c.CriadoPor,
-                        CriadoEm = c.DataCriacao
-                    })
-                    .ToList();
+                // Faz a projeção para as colunas da Grid
+                dataGridView1.DataSource = listaCompras.Select(c => new
+                {
+                    Id = c.Id,
+                    Nome = c.NomeCompra,
+                    Fechada = c.Fechada,
+                    CriadoPor = c.CriadoPor,
+                    CriadoEm = c.DataCriacao
+                }).ToList();
             }
         }
 
-        // Método para carregar os dados das compras na grid, chamado no Load e ao alterar os filtros
-        public void carregarGridCompras()
+        // Botão Nova Compra
+        private void bntNovaCompra_Click(object sender, EventArgs e)
         {
-            using (shoppingContext db = new shoppingContext())
-            {
-                var compras = db.ComprasPlaneadas
-                    .Select(c => new
-                    {
-                        Id = c.Id,
-                        Nome = c.NomeCompra,
-                        DataCriacao = c.DataCriacao,
-                        Estado = c.Fechada,
-                        CriadoPor = c.CriadoPor // Ajuste conforme o seu modelo
-                    }).ToList();
-                dataGridView1.DataSource = compras; // Atribui a lista de compras à fonte de dados da grid para exibição
-            }
+            // Passa 0 para indicar que é uma nova compra (conforme a lógica do seu segundo form)
+            FormAlteracaoPlaneada frm = new FormAlteracaoPlaneada(0);
+            frm.ShowDialog();
+            AtualizarGrelha();
         }
 
-        // Botão para fechar o formulário de planeamento de compras
+        // Botão Alterar / Visualizar
+        private void btnAlteracao_Click(object sender, EventArgs e)
+        {
+            if (dataGridView1.CurrentRow == null)
+            {
+                MessageBox.Show("Selecione uma compra.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            int idSelecionado = Convert.ToInt32(dataGridView1.CurrentRow.Cells["Id"].Value);
+
+            FormAlteracaoPlaneada frm = new FormAlteracaoPlaneada(idSelecionado);
+            frm.ShowDialog();
+            AtualizarGrelha();
+        }
+
+        // Botão Fechar
         private void button2_Click(object sender, EventArgs e)
         {
             this.Close();
         }
 
-        private void AparecerOrçamento_Click(object sender, EventArgs e)
-
+        // Botão Alterar / Visualizar com validação melhorada
+        private void button2_Click_1(object sender, EventArgs e)
         {
-
-        }
-
-        private void contextMenuStrip1_Opening(object sender, System.ComponentModel.CancelEventArgs e)
-        {
-
-        }
-
-        private void cmbTipoArtigo_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void btnGuardar_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void rdTodos_CheckedChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void btnAlteracao_Click(object sender, EventArgs e)
-        {
-            if (dataGridView1.CurrentRow == null)
-            {
-                MessageBox.Show("Selecione uma compra.", "Aviso",
-                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
-
-            int compraId = Convert.ToInt32(dataGridView1.CurrentRow.Cells["Id"].Value);
-
-            using (var db = new shoppingContext())
-            {
-                var compra = db.ComprasPlaneadas.Find(compraId);
-
-                if (compra == null)
-                {
-                    MessageBox.Show("Compra não encontrada.");
-                    return;
-                }
-
-                if (compra.Fechada == true)
-                {
-                    MessageBox.Show("Não pode alterar uma compra fechada.");
-                    return;
-                }
-
-                // PASSA A COMPRA PARA O FORM
-                /*var frm = new FormAlteracaoPlaneada(compra);
-
-                 if (frm.ShowDialog() == DialogResult.OK)
-                 {
-                     AtualizarGrelha(); // refresh
-                 }*/
-            }
-        }
-
-        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
-
-        }
-
-        private void FormPlaneamentoCompra_Load(object sender, EventArgs e)
-        {
-
-        }
-
-        // Botão para criar uma nova compra, que abre o FormAlteracaoPlaneada para inserir os detalhes da nova compra
-        private void bntNovaCompra_Click(object sender, EventArgs e)
-        {
-            FormAlteracaoPlaneada form = new FormAlteracaoPlaneada(); // Cria uma nova instância do FormAlteracaoPlaneada
-            form.ShowDialog(); // Mostra o FormAlteracaoPlaneada como um diálogo modal
-            // O código após ShowDialog() será executado somente após o FormAlteracaoPlaneada ser fechado
+            this.Close();
         }
 
         private void btnAlteracao_Click_1(object sender, EventArgs e)
         {
-
-            if (dataGridView1.CurrentRow == null)
+            // 1. Valida e converte o ID que o utilizador escreveu na TextBox (txtIdAlterar)
+            // Se estiver vazio ou contiver letras, o TryParse devolve false e entra no IF
+            if (string.IsNullOrWhiteSpace(txtId.Text) || !int.TryParse(txtId.Text, out int idSelecionado))
             {
-                MessageBox.Show("Selecione uma compra.", "Aviso",
-                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Por favor, introduza um ID numérico válido para alterar.");
+
+                txtId.Focus(); // Coloca o cursor de volta na TextBox para o utilizador corrigir
+                txtId.SelectAll(); // Seleciona o texto para facilitar a correção
                 return;
             }
 
-            int compraId = Convert.ToInt32(dataGridView1.CurrentRow.Cells["Id"].Value);
-
+            // 2. Validação na Base de Dados: Verifica se a compra com esse ID realmente existe
             using (var db = new shoppingContext())
             {
-                var compra = db.ComprasPlaneadas.Find(compraId);
+                var compra = db.ComprasPlaneadas.Find(idSelecionado);
 
                 if (compra == null)
                 {
-                    MessageBox.Show("Compra não encontrada.");
+                    MessageBox.Show($"A compra com o ID {idSelecionado} não foi encontrada na base de dados.");
                     return;
                 }
-
-                if (compra.Fechada == true)
-                {
-                    MessageBox.Show("Não pode alterar uma compra fechada.");
-                    return;
-                }
-
-                // PASSA A COMPRA PARA O FORM
-                /*var frm = new FormAlteracaoPlaneada(compra);
-
-                 if (frm.ShowDialog() == DialogResult.OK)
-                 {
-                     AtualizarGrelha(); // refresh
-                 }*/
             }
+
+            // 3. Se o ID existe, abre o formulário do stor passando o ID validado
+            FormAlteracaoPlaneada frm = new FormAlteracaoPlaneada(idSelecionado);
+            frm.ShowDialog();
+
+            // 4. Atualiza a tabela principal ao voltar para mostrar as mudanças
+            AtualizarGrelha();
+
+            // Limpa o campo do ID para ficar pronto para a próxima pesquisa
+            txtId.Clear();
         }
 
-        // Botão para fechar o formulário de planeamento de compras
-        private void button2_Click_1(object sender, EventArgs e)
-        {
-            this.Close();
+        // Botão Eliminar Compra
+        private void btnEliminar_Click(object sender, EventArgs e)
+        { 
+
+            int Id;
+
+            if (!int.TryParse(txtId.Text, out Id))
+            {
+                MessageBox.Show("O ID tem de ser numérico.");
+                return;
+            }
+
+            string mensagem;
+
+            PlaneamentoController.EliminarCompra(
+                Id,
+                out mensagem);
+
+            MessageBox.Show(mensagem);
+            AtualizarGrelha();
         }
     }
 }

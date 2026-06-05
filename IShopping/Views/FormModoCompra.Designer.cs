@@ -63,12 +63,6 @@
             this.label13 = new System.Windows.Forms.Label();
             this.textBox2 = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
-            this.label9 = new System.Windows.Forms.Label();
-            this.panel1 = new System.Windows.Forms.Panel();
-            this.label17 = new System.Windows.Forms.Label();
-            this.textBox8 = new System.Windows.Forms.TextBox();
-            this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
-            this.label16 = new System.Windows.Forms.Label();
             this.label15 = new System.Windows.Forms.Label();
             this.textBox6 = new System.Windows.Forms.TextBox();
             this.label14 = new System.Windows.Forms.Label();
@@ -77,7 +71,6 @@
             this.textBox3 = new System.Windows.Forms.TextBox();
             this.label12 = new System.Windows.Forms.Label();
             this.label19 = new System.Windows.Forms.Label();
-            this.button6 = new System.Windows.Forms.Button();
             this.label20 = new System.Windows.Forms.Label();
             this.label21 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
@@ -91,8 +84,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
             this.panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown2)).BeginInit();
-            this.panel1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
             this.SuspendLayout();
             // 
             // button3
@@ -349,7 +340,7 @@
             this.button5.Font = new System.Drawing.Font("Microsoft Yi Baiti", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.button5.ForeColor = System.Drawing.Color.White;
             this.button5.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
-            this.button5.Location = new System.Drawing.Point(607, 602);
+            this.button5.Location = new System.Drawing.Point(68, 589);
             this.button5.Name = "button5";
             this.button5.Size = new System.Drawing.Size(188, 44);
             this.button5.TabIndex = 322;
@@ -368,7 +359,7 @@
             this.panel2.Controls.Add(this.label13);
             this.panel2.Controls.Add(this.textBox2);
             this.panel2.Controls.Add(this.label5);
-            this.panel2.Location = new System.Drawing.Point(609, 367);
+            this.panel2.Location = new System.Drawing.Point(70, 354);
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(419, 229);
             this.panel2.TabIndex = 321;
@@ -463,62 +454,6 @@
             this.label5.TabIndex = 262;
             this.label5.Text = "Observações:";
             // 
-            // label9
-            // 
-            this.label9.AutoSize = true;
-            this.label9.Font = new System.Drawing.Font("Microsoft Tai Le", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label9.Location = new System.Drawing.Point(63, 323);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(257, 29);
-            this.label9.TabIndex = 320;
-            this.label9.Text = "Adquirir Item Previsto:\r\n";
-            // 
-            // panel1
-            // 
-            this.panel1.Controls.Add(this.label17);
-            this.panel1.Controls.Add(this.textBox8);
-            this.panel1.Controls.Add(this.numericUpDown1);
-            this.panel1.Controls.Add(this.label16);
-            this.panel1.Location = new System.Drawing.Point(68, 367);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(367, 106);
-            this.panel1.TabIndex = 319;
-            // 
-            // label17
-            // 
-            this.label17.AutoSize = true;
-            this.label17.Font = new System.Drawing.Font("Microsoft Yi Baiti", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label17.Location = new System.Drawing.Point(17, 16);
-            this.label17.Name = "label17";
-            this.label17.Size = new System.Drawing.Size(62, 23);
-            this.label17.TabIndex = 292;
-            this.label17.Text = "Preço:";
-            // 
-            // textBox8
-            // 
-            this.textBox8.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.textBox8.Location = new System.Drawing.Point(132, 19);
-            this.textBox8.Name = "textBox8";
-            this.textBox8.Size = new System.Drawing.Size(200, 22);
-            this.textBox8.TabIndex = 291;
-            // 
-            // numericUpDown1
-            // 
-            this.numericUpDown1.Location = new System.Drawing.Point(132, 59);
-            this.numericUpDown1.Name = "numericUpDown1";
-            this.numericUpDown1.Size = new System.Drawing.Size(200, 22);
-            this.numericUpDown1.TabIndex = 290;
-            // 
-            // label16
-            // 
-            this.label16.AutoSize = true;
-            this.label16.Font = new System.Drawing.Font("Microsoft Yi Baiti", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label16.Location = new System.Drawing.Point(17, 54);
-            this.label16.Name = "label16";
-            this.label16.Size = new System.Drawing.Size(108, 23);
-            this.label16.TabIndex = 289;
-            this.label16.Text = "Quantidade:";
-            // 
             // label15
             // 
             this.label15.AutoSize = true;
@@ -575,7 +510,7 @@
             // 
             this.label12.AutoSize = true;
             this.label12.Font = new System.Drawing.Font("Microsoft Tai Le", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label12.Location = new System.Drawing.Point(604, 320);
+            this.label12.Location = new System.Drawing.Point(65, 307);
             this.label12.Name = "label12";
             this.label12.Size = new System.Drawing.Size(224, 29);
             this.label12.TabIndex = 312;
@@ -590,19 +525,6 @@
             this.label19.Size = new System.Drawing.Size(154, 23);
             this.label19.TabIndex = 311;
             this.label19.Text = "Saldo Disponivel:";
-            // 
-            // button6
-            // 
-            this.button6.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(68)))), ((int)(((byte)(100)))), ((int)(((byte)(145)))));
-            this.button6.Font = new System.Drawing.Font("Microsoft Yi Baiti", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button6.ForeColor = System.Drawing.Color.White;
-            this.button6.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
-            this.button6.Location = new System.Drawing.Point(68, 491);
-            this.button6.Name = "button6";
-            this.button6.Size = new System.Drawing.Size(189, 44);
-            this.button6.TabIndex = 310;
-            this.button6.Text = "Confirmar no Carrinho";
-            this.button6.UseVisualStyleBackColor = false;
             // 
             // label20
             // 
@@ -655,8 +577,6 @@
             this.Controls.Add(this.btnEliminar);
             this.Controls.Add(this.button5);
             this.Controls.Add(this.panel2);
-            this.Controls.Add(this.label9);
-            this.Controls.Add(this.panel1);
             this.Controls.Add(this.label15);
             this.Controls.Add(this.textBox6);
             this.Controls.Add(this.label14);
@@ -665,7 +585,6 @@
             this.Controls.Add(this.textBox3);
             this.Controls.Add(this.label12);
             this.Controls.Add(this.label19);
-            this.Controls.Add(this.button6);
             this.Controls.Add(this.label20);
             this.Controls.Add(this.label21);
             this.Controls.Add(this.button4);
@@ -690,9 +609,6 @@
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown2)).EndInit();
-            this.panel1.ResumeLayout(false);
-            this.panel1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -733,12 +649,6 @@
         private System.Windows.Forms.Label label13;
         private System.Windows.Forms.TextBox textBox2;
         private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.Label label9;
-        private System.Windows.Forms.Panel panel1;
-        private System.Windows.Forms.Label label17;
-        private System.Windows.Forms.TextBox textBox8;
-        private System.Windows.Forms.NumericUpDown numericUpDown1;
-        private System.Windows.Forms.Label label16;
         private System.Windows.Forms.Label label15;
         private System.Windows.Forms.TextBox textBox6;
         private System.Windows.Forms.Label label14;
@@ -747,7 +657,6 @@
         private System.Windows.Forms.TextBox textBox3;
         private System.Windows.Forms.Label label12;
         private System.Windows.Forms.Label label19;
-        private System.Windows.Forms.Button button6;
         private System.Windows.Forms.Label label20;
         private System.Windows.Forms.Label label21;
         private System.Windows.Forms.Label label2;

@@ -211,7 +211,7 @@
             this.txtNome.Name = "txtNome";
             this.txtNome.Size = new System.Drawing.Size(341, 22);
             this.txtNome.TabIndex = 87;
-            this.txtNome.TextChanged += new System.EventHandler(this.txtNome_TextChanged);
+            //this.txtNome.TextChanged += new System.EventHandler(this.txtNome_TextChanged);
             // 
             // dataGridView1
             // 
@@ -222,7 +222,7 @@
             this.dataGridView1.RowTemplate.Height = 24;
             this.dataGridView1.Size = new System.Drawing.Size(760, 252);
             this.dataGridView1.TabIndex = 86;
-            this.dataGridView1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
+            //this.dataGridView1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
             // 
             // label1
             // 
