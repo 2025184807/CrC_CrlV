@@ -1,105 +1,160 @@
 ﻿using System;
+using System.Data;
+using System.Linq;
 using System.Windows.Forms;
 
 namespace IShopping.Views
 {
     public partial class FormMain : Form
     {
-        // Construtor do FormMain, responsável por inicializar os componentes do formulário
+        // Já não precisamos da variável global 'CompraId' a monitorizar o clique,
+        // vamos ler diretamente da TextBox quando for necessário.
+
         public FormMain()
         {
-            InitializeComponent(); // Inicializa os componentes do formulário, como botões, labels, etc.
-        }
-
-        // Ao clicar no botão de logout, impar os dados da sessão e voltar para o form de login
-        private void btnLogout_Click(object sender, EventArgs e)
-        {
-            // limpa os dados da sessão e volta para o form de login
-            MessageBox.Show("Logout com sucesso", "Logout", MessageBoxButtons.OK, MessageBoxIcon.Information); // Exibe uma mensagem de sucesso para o usuário
-            this.DialogResult = DialogResult.Retry; // Define o resultado do diálogo como Retry, indicando que o usuário deseja tentar novamente (voltar para o form de login)
-            this.Close(); // Fecha o formulário atual (FormMain)
-        }
-
-        // BOTÃO PARA DIRECIONAR PARA O FORM GERIR UTILIZADORES
-        private void btnGerirUtilizadores_Click(object sender, EventArgs e)
-        {
-            FormGerirUtilizadores form = new FormGerirUtilizadores(); // cria uma nova instância do form de gestão de utilizadores
-
-            form.Show(); // mostra o form de gestão de utilizadores
-
-        }
-        // BOTÃO PARA DIRECIONAR PARA O FORM PLANEAMENTO DE COMPRA
-        private void btnTipoArtigo_Click(object sender, EventArgs e)
-        {
-            FormTipoArtigo form = new FormTipoArtigo();  // cria uma nova instância do form de gestão de tipos de artigo
-
-            form.Show(); // mostra o form de gestão de tipos de artigo
-        }
-
-        // Botâo para direcionar para o form de gestão de fornecedores
-        private void btnOrcamentos_Click(object sender, EventArgs e)
-        {
-            FormOrcamento form = new FormOrcamento(); // cria uma nova instância do form de gestão de orçamentos
-
-            form.Show();
-        }
-
-        // Botão para direcionar para o form de gestão de artigos
-        private void btnArtigo_Click(object sender, EventArgs e)
-        {
-            FormGestaoArtigo form = new FormGestaoArtigo(); // cria uma nova instância do form de gestão de artigos
-
-            form.Show(); // mostra o form de gestão de artigos
-        }
-
-        private void PlaneamentoCompra_Click(object sender, EventArgs e)
-        {
-
-        }
-
-    
-        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
-
-            
+            InitializeComponent();
         }
 
         private void FormMain_Load(object sender, EventArgs e)
         {
-
+            ActualizarListaCompras();
         }
 
-        // Botão para direcionar para o form de criação de compra
-        private int CompraId = 0;
+        // ================= MÉTODO PARA CARREGAR AS COMPRAS EM ABERTO =================
+        private void ActualizarListaCompras()
+        {
+            try
+            {
+                using (shoppingContext db = new shoppingContext())
+                {
+                    var comprasAbertas = db.ComprasPlaneadas
+                        .Where(c => c.Fechada == false)
+                        .Select(c => new
+                        {
+                            c.Id,
+                            Nome = c.NomeCompra,
+                            Data = c.DataCompra
+                        })
+                        .ToList();
+
+                    dataGridView1.DataSource = comprasAbertas;
+                }
+
+                if (dataGridView1.Columns.Contains("Id"))
+                    dataGridView1.Columns["Id"].Width = 60;
+
+                // Limpa a caixa de texto ao carregar/atualizar a lista
+                txtId.Text = "";
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Erro ao carregar compras: {ex.Message}", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        // ================= BOTÕES DE AÇÃO DA ZONA INFERIOR =================
+
+        // Botão "Criar Compra" (Não precisa de ID, pois cria uma nova)
         private void btnCriar_Compra_Click(object sender, EventArgs e)
         {
-            FormAlteracaoPlaneada form = new FormAlteracaoPlaneada(CompraId);
-            form.Show();
+            FormAlteracaoPlaneada form = new FormAlteracaoPlaneada(0);
+            form.ShowDialog();
+            ActualizarListaCompras();
         }
 
-
-        // Botão para direcionar para o form de estatísticas
-        private void button2_Click(object sender, EventArgs e)
-        {
-            FormEstatisticas form = new FormEstatisticas(); // Cria uma nova instância do FormEstatisticas
-            form.Show();
-        }
-
+        // Botão "Abrir Compra"
         private void btnCompra_Click(object sender, EventArgs e)
         {
-            FormAlteracaoPlaneada form = new FormAlteracaoPlaneada(CompraId); // Cria uma nova instância do FormAlteracaoPlaneada
-            form.Show(); // Exibe o formulário de alteração planeada
+            // 1. Tenta converter o texto digitado na txtId para um número inteiro
+            if (!int.TryParse(txtId.Text.Trim(), out int idDigitado) || idDigitado <= 0)
+            {
+                MessageBox.Show("Por favor, introduza um ID de compra válido na caixa de texto.");
+                txtId.Focus();
+                return;
+            }
+
+            // 2. Passa o ID que a pessoa escreveu para o formulário
+            FormAlteracaoPlaneada form = new FormAlteracaoPlaneada(idDigitado);
+            form.ShowDialog();
+
+            ActualizarListaCompras();
         }
 
-        private void btnPlaneamento_Click_1(object sender, EventArgs e)
+        // Botão "Modo Compra"
+        private void btnModoCompra_Click(object sender, EventArgs e)
         {
-            FormPlaneamentoCompra form = new FormPlaneamentoCompra(); // Cria uma nova instância do FormPlaneamentoCompra
-            form.Show(); // Exibe o formulário de planeamento de compra
+            // 1. Tenta converter o texto digitado na txtId para um número inteiro
+            if (!int.TryParse(txtId.Text.Trim(), out int idDigitado) || idDigitado <= 0)
+            {
+                MessageBox.Show("Por favor, introduza um ID de compra válido para iniciar o Modo Compra.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                txtId.Focus();
+                return;
+            }
+
+            FormModoCompra form = new FormModoCompra();
+
+            // 2. Passa o ID que a pessoa escreveu para a variável pública do outro form
+            form.CompraIdSelecionada = idDigitado;
+
+            form.ShowDialog();
+            ActualizarListaCompras();
         }
 
-        private void textBox1_TextChanged(object sender, EventArgs e)
-        {
+        // ================= MENUS SUPERIORES E NAVEGAÇÃO =================
 
+        private void btnLogout_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("Logout efetuado com sucesso.");
+            this.DialogResult = DialogResult.Retry;
+            this.Close();
+        }
+
+        private void btnGerirUtilizadores_Click(object sender, EventArgs e)
+        {
+            FormGerirUtilizadores form = new FormGerirUtilizadores();
+            form.Show();
+        }
+
+        private void btnTipoArtigo_Click(object sender, EventArgs e)
+        {
+            FormTipoArtigo form = new FormTipoArtigo();
+            form.Show();
+        }
+
+        private void btnOrcamentos_Click(object sender, EventArgs e)
+        {
+            FormOrcamento form = new FormOrcamento();
+            form.Show();
+        }
+
+        private void btnArtigo_Click(object sender, EventArgs e)
+        {
+            FormGestaoArtigo form = new FormGestaoArtigo();
+            form.Show();
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            FormEstatisticas form = new FormEstatisticas();
+            form.Show();
+        }
+
+        private void btnPlaneamento_click(object sender, EventArgs e)
+        {
+            FormPlaneamentoCompra form = new FormPlaneamentoCompra();
+            form.Show();
+        }
+
+        // Métodos vazios limpos para evitar conflitos
+        private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e) { }
+        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e) { }
+        private void textBox1_TextChanged(object sender, EventArgs e) { }
+        private void pictureBox4_Click(object sender, EventArgs e) { }
+        private void label1_Click(object sender, EventArgs e) { }
+        private void btnCriarCompra_Click(object sender, EventArgs e)
+        {
+            FormAlteracaoPlaneada form = new FormAlteracaoPlaneada(0);
+            form.Show();
         }
     }
 }

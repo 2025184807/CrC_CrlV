@@ -30,7 +30,7 @@ namespace IShopping.Controller
         {
             mensagem = "";
 
-            if (nomeCompra.Trim() == "")
+            if (string.IsNullOrWhiteSpace(nomeCompra))
             {
                 mensagem = "Indique o nome da compra.";
                 return false;
@@ -38,12 +38,34 @@ namespace IShopping.Controller
 
             using (shoppingContext db = new shoppingContext())
             {
+                // impedir nomes repetidos (não fechadas ou todas, como quiseres)
+                bool existe = db.ComprasPlaneadas
+                    .Any(c => c.NomeCompra == nomeCompra);
+
+                if (existe)
+                {
+                    mensagem = "Já existe uma compra com esse nome.";
+                    return false;
+                }
+
                 CompraPlaneada compra = new CompraPlaneada
                 {
                     NomeCompra = nomeCompra,
+
+                    // mês atual da compra
+                    DataCompra = new DateTime(
+                        DateTime.Now.Year,
+                        DateTime.Now.Month,
+                        1
+                    ),
+
                     DataCriacao = DateTime.Now,
+                    DataHoraAlteracao = DateTime.Now,
+
                     CriadoPor = sessao.UtilizadorAtual,
-                    Fechada = false // Toda a compra nasce aberta
+                    AlteradoPor = sessao.UtilizadorAtual,
+
+                    Fechada = false
                 };
 
                 db.ComprasPlaneadas.Add(compra);
@@ -51,22 +73,6 @@ namespace IShopping.Controller
 
                 mensagem = "Compra criada com sucesso.";
                 return true;
-            }
-        }
-
-        // EDITAR
-        public static void Editar(int id, string nome)
-        {
-            using (shoppingContext db = new shoppingContext())
-            {
-                TipoArtigo tipo = db.TipoArtigos.Find(id);
-
-                if (tipo != null)
-                {
-                    tipo.Nome = nome;
-
-                    db.SaveChanges();
-                }
             }
         }
         // PROCURAR ITEM POR ID
@@ -160,7 +166,11 @@ namespace IShopping.Controller
         }
 
         // 4. Adicionar um artigo previsto à lista de itens da compra
-        public static bool AdicionarItemPrevisto(int compraId, int artigoid, int quantidadePrevista, out string mensagem)
+        public static bool AdicionarItemPrevisto(
+    int compraId,
+    int artigoid,
+    int quantidadePrevista,
+    out string mensagem)
         {
             mensagem = "";
 
@@ -186,7 +196,15 @@ namespace IShopping.Controller
                     return false;
                 }
 
-                // Verifica se este artigo já foi adicionado anteriormente à mesma compra
+                var artigo = db.Artigos.Find(artigoid);
+
+                if (artigo == null)
+                {
+                    mensagem = "Artigo não encontrado.";
+                    return false;
+                }
+
+                // evita duplicados
                 bool existe = db.ItemComprasPlaneadas.Any(i =>
                     i.CompraPlaneadaId == compraId &&
                     i.ArtigoId == artigoid &&
@@ -204,6 +222,7 @@ namespace IShopping.Controller
                     ArtigoId = artigoid,
                     QuantidadePrevista = quantidadePrevista,
                     QuantidadeAdquirida = 0,
+                    PrecoUnitario = artigo.Preco, 
                     Previsto = true,
                     Adquirido = false,
                     Observacoes = ""
@@ -211,7 +230,6 @@ namespace IShopping.Controller
 
                 db.ItemComprasPlaneadas.Add(item);
 
-                // Atualiza a auditoria de modificação na compra "mãe"
                 compra.DataHoraAlteracao = DateTime.Now;
                 compra.AlteradoPor = sessao.UtilizadorAtual;
 

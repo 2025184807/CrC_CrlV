@@ -29,12 +29,17 @@ namespace IShopping.Controller
                     return false;
                 }
 
+                // Eliminar todos os itens da compra
                 var itens = db.ItemComprasPlaneadas
-                    .Where(i => i.CompraPlaneadaId == compraId)
-                    .ToList();
+                              .Where(i => i.CompraPlaneadaId == compraId)
+                              .ToList();
 
-                db.ItemComprasPlaneadas.RemoveRange(itens);
+                if (itens.Any())
+                {
+                    db.ItemComprasPlaneadas.RemoveRange(itens);
+                }
 
+                // Eliminar a compra
                 db.ComprasPlaneadas.Remove(compra);
 
                 db.SaveChanges();

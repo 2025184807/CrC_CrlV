@@ -50,12 +50,14 @@
             this.label8 = new System.Windows.Forms.Label();
             this.txtId = new System.Windows.Forms.TextBox();
             this.btnEditar = new System.Windows.Forms.Button();
+            this.pictureBox2 = new System.Windows.Forms.PictureBox();
             this.pictureBox6 = new System.Windows.Forms.PictureBox();
             this.pictureBox5 = new System.Windows.Forms.PictureBox();
             this.pictureBox3 = new System.Windows.Forms.PictureBox();
             this.pictureBox11 = new System.Windows.Forms.PictureBox();
             this.pictureBox4 = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox6)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox5)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
@@ -66,9 +68,9 @@
             // txtPreco
             // 
             this.txtPreco.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtPreco.Location = new System.Drawing.Point(161, 259);
+            this.txtPreco.Location = new System.Drawing.Point(239, 260);
             this.txtPreco.Name = "txtPreco";
-            this.txtPreco.Size = new System.Drawing.Size(341, 22);
+            this.txtPreco.Size = new System.Drawing.Size(292, 22);
             this.txtPreco.TabIndex = 109;
             // 
             // btnEliminar
@@ -76,9 +78,9 @@
             this.btnEliminar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(68)))), ((int)(((byte)(100)))), ((int)(((byte)(145)))));
             this.btnEliminar.Font = new System.Drawing.Font("Microsoft Yi Baiti", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnEliminar.ForeColor = System.Drawing.Color.White;
-            this.btnEliminar.Location = new System.Drawing.Point(850, 585);
+            this.btnEliminar.Location = new System.Drawing.Point(833, 585);
             this.btnEliminar.Name = "btnEliminar";
-            this.btnEliminar.Size = new System.Drawing.Size(133, 46);
+            this.btnEliminar.Size = new System.Drawing.Size(150, 46);
             this.btnEliminar.TabIndex = 106;
             this.btnEliminar.Text = "Eliminar Artigo";
             this.btnEliminar.UseVisualStyleBackColor = false;
@@ -90,7 +92,7 @@
             this.btnLimpar.Font = new System.Drawing.Font("Microsoft Yi Baiti", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnLimpar.ForeColor = System.Drawing.Color.White;
             this.btnLimpar.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
-            this.btnLimpar.Location = new System.Drawing.Point(609, 239);
+            this.btnLimpar.Location = new System.Drawing.Point(638, 240);
             this.btnLimpar.Name = "btnLimpar";
             this.btnLimpar.Size = new System.Drawing.Size(86, 44);
             this.btnLimpar.TabIndex = 105;
@@ -102,7 +104,7 @@
             // 
             this.label7.AutoSize = true;
             this.label7.Font = new System.Drawing.Font("Microsoft Yi Baiti", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label7.Location = new System.Drawing.Point(52, 254);
+            this.label7.Location = new System.Drawing.Point(83, 255);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(62, 23);
             this.label7.TabIndex = 102;
@@ -113,9 +115,9 @@
             this.btnVer.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(68)))), ((int)(((byte)(100)))), ((int)(((byte)(145)))));
             this.btnVer.Font = new System.Drawing.Font("Microsoft Yi Baiti", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnVer.ForeColor = System.Drawing.Color.White;
-            this.btnVer.Location = new System.Drawing.Point(849, 450);
+            this.btnVer.Location = new System.Drawing.Point(833, 450);
             this.btnVer.Name = "btnVer";
-            this.btnVer.Size = new System.Drawing.Size(133, 46);
+            this.btnVer.Size = new System.Drawing.Size(149, 46);
             this.btnVer.TabIndex = 82;
             this.btnVer.Text = "Ver Artigo";
             this.btnVer.UseVisualStyleBackColor = false;
@@ -125,7 +127,7 @@
             // 
             this.label6.AutoSize = true;
             this.label6.Font = new System.Drawing.Font("Microsoft Yi Baiti", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label6.Location = new System.Drawing.Point(52, 214);
+            this.label6.Location = new System.Drawing.Point(81, 215);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(137, 23);
             this.label6.TabIndex = 100;
@@ -134,7 +136,7 @@
             // cmbTipoArtigo
             // 
             this.cmbTipoArtigo.FormattingEnabled = true;
-            this.cmbTipoArtigo.Location = new System.Drawing.Point(210, 215);
+            this.cmbTipoArtigo.Location = new System.Drawing.Point(239, 216);
             this.cmbTipoArtigo.Name = "cmbTipoArtigo";
             this.cmbTipoArtigo.Size = new System.Drawing.Size(292, 24);
             this.cmbTipoArtigo.TabIndex = 98;
@@ -188,7 +190,7 @@
             // 
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("Microsoft Yi Baiti", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label5.Location = new System.Drawing.Point(52, 170);
+            this.label5.Location = new System.Drawing.Point(83, 175);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(61, 23);
             this.label5.TabIndex = 91;
@@ -198,7 +200,7 @@
             // 
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("Microsoft YaHei", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label4.Location = new System.Drawing.Point(49, 124);
+            this.label4.Location = new System.Drawing.Point(81, 128);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(95, 31);
             this.label4.TabIndex = 89;
@@ -207,11 +209,10 @@
             // txtNome
             // 
             this.txtNome.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtNome.Location = new System.Drawing.Point(161, 174);
+            this.txtNome.Location = new System.Drawing.Point(239, 175);
             this.txtNome.Name = "txtNome";
-            this.txtNome.Size = new System.Drawing.Size(341, 22);
+            this.txtNome.Size = new System.Drawing.Size(292, 22);
             this.txtNome.TabIndex = 87;
-            //this.txtNome.TextChanged += new System.EventHandler(this.txtNome_TextChanged);
             // 
             // dataGridView1
             // 
@@ -222,7 +223,6 @@
             this.dataGridView1.RowTemplate.Height = 24;
             this.dataGridView1.Size = new System.Drawing.Size(760, 252);
             this.dataGridView1.TabIndex = 86;
-            //this.dataGridView1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
             // 
             // label1
             // 
@@ -252,7 +252,7 @@
             this.btnGuardar.Font = new System.Drawing.Font("Microsoft Yi Baiti", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnGuardar.ForeColor = System.Drawing.Color.White;
             this.btnGuardar.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
-            this.btnGuardar.Location = new System.Drawing.Point(517, 239);
+            this.btnGuardar.Location = new System.Drawing.Point(546, 240);
             this.btnGuardar.Name = "btnGuardar";
             this.btnGuardar.Size = new System.Drawing.Size(86, 44);
             this.btnGuardar.TabIndex = 104;
@@ -282,13 +282,24 @@
             this.btnEditar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(68)))), ((int)(((byte)(100)))), ((int)(((byte)(145)))));
             this.btnEditar.Font = new System.Drawing.Font("Microsoft Yi Baiti", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnEditar.ForeColor = System.Drawing.Color.White;
-            this.btnEditar.Location = new System.Drawing.Point(850, 516);
+            this.btnEditar.Location = new System.Drawing.Point(833, 516);
             this.btnEditar.Name = "btnEditar";
-            this.btnEditar.Size = new System.Drawing.Size(133, 46);
+            this.btnEditar.Size = new System.Drawing.Size(150, 46);
             this.btnEditar.TabIndex = 196;
             this.btnEditar.Text = "Editar Artigo";
             this.btnEditar.UseVisualStyleBackColor = false;
             this.btnEditar.Click += new System.EventHandler(this.button1_Click);
+            // 
+            // pictureBox2
+            // 
+            this.pictureBox2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(248)))), ((int)(((byte)(248)))));
+            this.pictureBox2.Image = global::IShopping.Properties.Resources.clipboard;
+            this.pictureBox2.Location = new System.Drawing.Point(44, 128);
+            this.pictureBox2.Name = "pictureBox2";
+            this.pictureBox2.Size = new System.Drawing.Size(35, 31);
+            this.pictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pictureBox2.TabIndex = 197;
+            this.pictureBox2.TabStop = false;
             // 
             // pictureBox6
             // 
@@ -348,7 +359,8 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1050, 662);
+            this.ClientSize = new System.Drawing.Size(1050, 657);
+            this.Controls.Add(this.pictureBox2);
             this.Controls.Add(this.btnEditar);
             this.Controls.Add(this.label8);
             this.Controls.Add(this.txtId);
@@ -380,6 +392,7 @@
             this.Text = "FormGestaoArtigo";
             this.Load += new System.EventHandler(this.FormGestaoArtigo_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox6)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox5)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).EndInit();
@@ -417,5 +430,6 @@
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.TextBox txtId;
         private System.Windows.Forms.Button btnEditar;
+        private System.Windows.Forms.PictureBox pictureBox2;
     }
 }

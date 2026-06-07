@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace IShopping.Models
 {
@@ -14,18 +11,18 @@ namespace IShopping.Models
         public int Id { get; set; }
         public string NomeCompra { get; set; }
 
-         public DateTime DataCompra { get; set; }
+        public DateTime DataCompra { get; set; }
 
         public DateTime DataCriacao { get; set; }
-         public string CriadoPor { get; set; }
+        public string CriadoPor { get; set; }
 
-         public DateTime? DataHoraAlteracao { get; set; }
-         public string AlteradoPor { get; set; }
+        public DateTime? DataHoraAlteracao { get; set; }
+        public string AlteradoPor { get; set; }
 
         public DateTime? DataFecho { get; set; }
-         public string FechadoPor { get; set; }
+        public string FechadoPor { get; set; }
 
-         public bool Fechada { get; set; }
+        public bool Fechada { get; set; }
 
         // FK Compra
         public int CompraId { get; set; }
@@ -36,9 +33,9 @@ namespace IShopping.Models
         public virtual ICollection<ItemCompraPlaneada> Itens { get; set; }
 
         public CompraPlaneada()
-         {
-        Itens = new List<ItemCompraPlaneada>();
-         }
+        {
+            Itens = new List<ItemCompraPlaneada>();
+        }
 
-}
+    }
 }

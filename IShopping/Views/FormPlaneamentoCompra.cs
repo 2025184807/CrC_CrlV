@@ -1,4 +1,5 @@
 ﻿using IShopping.Controller;
+using IShopping.Models;
 using System;
 using System.Data;
 using System.Linq;
@@ -16,12 +17,16 @@ namespace IShopping.Views
         private void FormPlaneamentoCompra_Load(object sender, EventArgs e)
         {
             cmbFiltro.Items.Clear();
+
             cmbFiltro.Items.Add("Todas");
             cmbFiltro.Items.Add("Abertas");
             cmbFiltro.Items.Add("Fechadas");
 
             cmbFiltro.SelectedIndex = 0;
+
             AtualizarGrelha();
+
+          
         }
 
         private void cmbFiltro_SelectedIndexChanged(object sender, EventArgs e)
@@ -29,8 +34,10 @@ namespace IShopping.Views
             AtualizarGrelha();
         }
 
+
         private void AtualizarGrelha()
         {
+     
             string filtro = cmbFiltro.SelectedItem != null ? cmbFiltro.SelectedItem.ToString() : "Todas";
 
             // Usa o método exato do Stor para obter a lista total
@@ -48,16 +55,19 @@ namespace IShopping.Views
                     listaCompras = listaCompras.Where(c => c.Fechada == true).ToList();
                 }
 
-                // Faz a projeção para as colunas da Grid
+                // Faz a projeção para as colunas da Grid incluindo a Data e o Orçamento
                 dataGridView1.DataSource = listaCompras.Select(c => new
                 {
                     Id = c.Id,
                     Nome = c.NomeCompra,
+                    DataCompra = c.DataCompra.ToString("dd/MM/yyyy"), // Exibe a data da compra formatada
+                    Orcamento = ModoCompraController.ObterOrcamentoCompra(c.Id).ToString("0.00") + " €", // Vai buscar o valor ao controller
                     Fechada = c.Fechada,
                     CriadoPor = c.CriadoPor,
                     CriadoEm = c.DataCriacao
                 }).ToList();
             }
+        
         }
 
         // Botão Nova Compra
@@ -153,6 +163,11 @@ namespace IShopping.Views
 
             MessageBox.Show(mensagem);
             AtualizarGrelha();
+        }
+
+        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
         }
     }
 }

@@ -12,66 +12,66 @@ namespace IShopping.Controller
             {
                 ResumoComprasDto resumo = new ResumoComprasDto();
 
-                Orcamento orcamento = db.Orcamentos.FirstOrDefault(o => o.DataCompra.Month == mes && o.DataCompra.Year == ano);
+                // ORÇAMENTO 
+                var orcamento = db.Orcamentos
+                    .FirstOrDefault(o => o.Mes == mes && o.Ano == ano);
 
                 if (orcamento != null)
                 {
                     resumo.OrcamentoMensal = orcamento.ValorOrcamento;
                 }
 
-                var comprasFechadas = db.ComprasPlaneadas.Where(c => c.DataCompra.Month == mes && c.DataCompra.Year == ano && c.Fechada);
+                // COMPRAS DO MÊS
+                var comprasFechadas = db.ComprasPlaneadas
+                    .Where(c => c.DataCompra.Month == mes &&
+                                c.DataCompra.Year == ano &&
+                                c.Fechada)
+                    .ToList();
 
                 decimal total = 0m;
 
-                foreach (var compra in comprasFechadas.ToList())
+                foreach (var compra in comprasFechadas)
                 {
                     var itens = db.ItemComprasPlaneadas
-                    .Where(i => i.CompraPlaneadaId == compra.Id && i.Adquirido)
-                    .ToList();
+                        .Where(i => i.CompraPlaneadaId == compra.Id && i.Adquirido)
+                        .ToList();
 
                     foreach (var item in itens)
                     {
                         if (item.PrecoUnitario.HasValue)
                         {
-                            total += item.QuantidadeAdquirida * item.
-                           PrecoUnitario.Value;
+                            total += item.QuantidadeAdquirida * item.PrecoUnitario.Value;
                         }
 
                         if (item.Previsto)
-                        {
                             resumo.TotalItensPrevistos++;
-                        }
                         else
-                        {
                             resumo.TotalItensNaoPrevistos++;
-                        }
                     }
 
                     resumo.ComprasFechadas.Add(compra.NomeCompra);
                 }
 
                 resumo.TotalComprasMes = total;
-                resumo.Diferenca = resumo.OrcamentoMensal - resumo.
-               TotalComprasMes;
+                resumo.Diferenca = resumo.OrcamentoMensal - resumo.TotalComprasMes;
 
-                int totalItens = resumo.TotalItensPrevistos + resumo.
-               TotalItensNaoPrevistos;
+                int totalItens =
+                    resumo.TotalItensPrevistos + resumo.TotalItensNaoPrevistos;
 
                 if (totalItens > 0)
                 {
                     resumo.PercentagemPrevistos =
-                    (decimal)resumo.TotalItensPrevistos * 100 / totalItens;
-
+                        (decimal)resumo.TotalItensPrevistos * 100 / totalItens;
 
                     resumo.PercentagemNaoPrevistos =
-                    (decimal)resumo.TotalItensNaoPrevistos * 100 /
-                   totalItens;
+                        (decimal)resumo.TotalItensNaoPrevistos * 100 / totalItens;
                 }
 
                 return resumo;
             }
-
         }
+
+        // SUGESTÃO ORÇAMENTO 
         public static SugestaoOrcamentoDto SugerirOrcamentoProximoMes()
         {
             using (shoppingContext db = new shoppingContext())
@@ -79,15 +79,18 @@ namespace IShopping.Controller
                 SugestaoOrcamentoDto sugestao = new SugestaoOrcamentoDto();
 
                 var orcamentos = db.Orcamentos
-                .OrderByDescending(o => o.DataCompra.Year)
-                .ThenByDescending(o => o.DataCompra.Month)
-                .Take(6)
-                .ToList();
+                    .OrderByDescending(o => o.Ano)
+                    .ThenByDescending(o => o.Mes)
+                    .Take(6)
+                    .ToList();
 
-                if (orcamentos.Count > 0)
+                if (orcamentos.Any())
                 {
-                    sugestao.MediaUltimosMeses = orcamentos.Average(o => o.ValorOrcamento);
-                    sugestao.SugestaoProximoMes = sugestao.MediaUltimosMeses;
+                    sugestao.MediaUltimosMeses =
+                        orcamentos.Average(o => o.ValorOrcamento);
+
+                    sugestao.SugestaoProximoMes =
+                        sugestao.MediaUltimosMeses;
                 }
 
                 return sugestao;
@@ -95,5 +98,3 @@ namespace IShopping.Controller
         }
     }
 }
-    
-

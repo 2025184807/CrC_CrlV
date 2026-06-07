@@ -120,9 +120,10 @@
             // 
             // txtNome
             // 
-            this.txtNome.Location = new System.Drawing.Point(147, 173);
+            this.txtNome.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtNome.Location = new System.Drawing.Point(161, 173);
             this.txtNome.Name = "txtNome";
-            this.txtNome.Size = new System.Drawing.Size(182, 22);
+            this.txtNome.Size = new System.Drawing.Size(168, 22);
             this.txtNome.TabIndex = 89;
             this.txtNome.TextChanged += new System.EventHandler(this.txtNome_TextChanged);
             // 

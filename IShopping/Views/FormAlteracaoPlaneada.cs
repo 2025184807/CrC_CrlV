@@ -2,6 +2,7 @@
 using IShopping.Models;
 using System;
 using System.Data;
+using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
 
@@ -9,7 +10,7 @@ namespace IShopping.Views
 {
     public partial class FormAlteracaoPlaneada : Form
     {
-        private int compraId = 0; // 0 = Nova Compra, > 0 = Editar
+        private int compraId = 0; // Se for 0, é uma nova compra. Caso contrário, está em modo de edição.
 
         public FormAlteracaoPlaneada(int id)
         {
@@ -19,37 +20,102 @@ namespace IShopping.Views
 
         private void FormAlteracaoPlaneada_Load(object sender, EventArgs e)
         {
-            // 1. Carrega os tipos de artigo primeiro
+            // Configura o DateTimePicker para mostrar apenas mês e ano
+            dateCompra.Format = DateTimePickerFormat.Custom;
+            dateCompra.CustomFormat = "MM/yyyy";
+
+            // Inicializa os dados das ComboBoxes
             CarregarTiposArtigo();
             CarregarComboArtigo();
 
-            // 2. Se for uma edição, carrega os dados da compra e os respetivos itens
+            // Determina o fluxo inicial se for Nova Compra ou Edição
             if (compraId > 0)
             {
                 CarregarCompra();
             }
+            else
+            {
+                txtEstado.Text = "Aberta";
+                txtId.Text = "Novo";
+                txtOrcamento.Text = "0.00 €";
+                txtTotal.Text = "0.00 €";
+                txtDisponivel.Text = "0.00 €";
+            }
+
+            // Atualiza dinamicamente o estado dos orçamentos na interface
+            AtualizarResumoOrcamento();
         }
+
+        // ================= ORÇAMENTO & RESUMOS FINANCEIROS =================
+
+        private decimal CalcularTotalPrevisto()
+        {
+            using (shoppingContext db = new shoppingContext())
+            {
+                return db.ItemComprasPlaneadas
+                    .Where(i => i.CompraPlaneadaId == compraId)
+                    .Sum(i => (decimal?)i.QuantidadePrevista * (i.PrecoUnitario ?? 0)) ?? 0;
+            }
+        }
+
+        private void AtualizarResumoOrcamento()
+        {
+            int mes = dateCompra.Value.Month;
+            int ano = dateCompra.Value.Year;
+            var orcamento = OrcamentoController.ObterPorMesAno(mes, ano);
+
+            decimal valorOrcamento = orcamento?.ValorOrcamento ?? 0;
+            decimal totalPrevisto = CalcularTotalPrevisto();
+            decimal disponivel = valorOrcamento - totalPrevisto;
+
+            // Atualiza os campos de texto do ecrã
+            txtOrcamento.Text = valorOrcamento.ToString("0.00") + " €";
+            txtTotal.Text = totalPrevisto.ToString("0.00") + " €";
+            txtDisponivel.Text = disponivel.ToString("0.00") + " €";
+
+            // Gestão de cores e alertas visuais do orçamento
+            if (orcamento == null)
+            {
+                lblAviso.Visible = true;
+                lblAviso.Text = "Não existe orçamento para este mês.";
+                lblAviso.ForeColor = Color.Red;
+            }
+            else if (totalPrevisto > valorOrcamento)
+            {
+                lblAviso.Visible = true;
+                lblAviso.Text = "O valor previsto ultrapassa o orçamento.";
+                lblAviso.ForeColor = Color.DarkOrange;
+            }
+            else
+            {
+                lblAviso.Visible = false;
+            }
+        }
+
+        // ================= GESTÃO DE ARTIGOS (COMBOBOXES) =================
 
         private void CarregarTiposArtigo()
         {
             var tipos = TipoArtigoController.Listar();
 
-            if (tipos != null)
-            {
-                cmbTipoArtigo.DataSource = null;
-                cmbTipoArtigo.DisplayMember = "Nome";
-                cmbTipoArtigo.ValueMember = "Id";
-                cmbTipoArtigo.DataSource = tipos;
-            }
+            // Desvincula o evento temporariamente para evitar erros de index nulo ao carregar a lista
+            cmbTipoArtigo.SelectedIndexChanged -= cmbTipoArtigo_SelectedIndexChanged;
+
+            cmbTipoArtigo.DataSource = null;
+            cmbTipoArtigo.DataSource = tipos;
+            cmbTipoArtigo.DisplayMember = "Nome";
+            cmbTipoArtigo.ValueMember = "Id";
             cmbTipoArtigo.SelectedIndex = -1;
+
+            cmbTipoArtigo.SelectedIndexChanged += cmbTipoArtigo_SelectedIndexChanged;
         }
 
-        // Carregar os tipos de artigo no combo box
         private void CarregarComboArtigo()
         {
             using (shoppingContext db = new shoppingContext())
             {
-                cmbArtigo.DataSource = db.Artigos.ToList();
+                cmbArtigo.DataSource = null;
+                cmbArtigo.DataSource = db.Artigos.OrderBy(a => a.Nome).ToList();
                 cmbArtigo.DisplayMember = "Nome";
                 cmbArtigo.ValueMember = "Id";
                 cmbArtigo.SelectedIndex = -1;
@@ -58,59 +124,44 @@ namespace IShopping.Views
 
         private void cmbTipoArtigo_SelectedIndexChanged(object sender, EventArgs e)
         {
-            // Valida se existe uma seleção real
-            if (cmbTipoArtigo.SelectedValue == null)
-            {
-                cmbArtigo.DataSource = null;
-                return;
-            }
+            if (cmbTipoArtigo.SelectedValue == null) return;
 
-            // Converte o valor selecionado de forma segura para inteiro
-            string valorTexto = cmbTipoArtigo.SelectedValue.ToString();
-            if (!int.TryParse(valorTexto, out int tipoId))
-            {
-                cmbArtigo.DataSource = null;
+            if (!int.TryParse(cmbTipoArtigo.SelectedValue.ToString(), out int tipoId))
                 return;
-            }
 
-            // Filtra os artigos com base no Tipo de Artigo selecionado
             using (shoppingContext db = new shoppingContext())
             {
-                var artigosFiltrados = db.Artigos.Where(a => a.TipoArtigoId == tipoId).ToList();
+                var artigosFiltrados = db.Artigos
+                    .Where(a => a.TipoArtigoId == tipoId)
+                    .OrderBy(a => a.Nome)
+                    .ToList();
 
                 cmbArtigo.DataSource = null;
-
-                if (artigosFiltrados != null && artigosFiltrados.Count > 0)
-                {
-                    cmbArtigo.DisplayMember = "Nome";
-
-                    // A classe Artigo do teu stor!
-                    cmbArtigo.ValueMember = "Id";
-
-                    cmbArtigo.DataSource = artigosFiltrados;
-                }
-
+                cmbArtigo.DataSource = artigosFiltrados;
+                cmbArtigo.DisplayMember = "Nome";
+                cmbArtigo.ValueMember = "Id";
                 cmbArtigo.SelectedIndex = -1;
             }
         }
+
+        // ================= DADOS DA COMPRA MÃE =================
 
         private void CarregarCompra()
         {
             using (shoppingContext db = new shoppingContext())
             {
-                CompraPlaneada compra = db.ComprasPlaneadas.Find(compraId);
-
+                var compra = db.ComprasPlaneadas.Find(compraId);
                 if (compra == null) return;
 
                 txtId.Text = compra.Id.ToString();
                 txtNome.Text = compra.NomeCompra;
                 dateCompra.Value = compra.DataCompra;
-                ckbFechar.Checked = compra.Fechada;
+
+                // Troca da Checkbox pelo conteúdo de Texto do txtEstado
+                txtEstado.Text = compra.Fechada ? "Fechada" : "Aberta";
 
                 if (compra.Fechada)
-                {
                     BloquearEdicao();
-                }
 
                 CarregarItens();
             }
@@ -120,74 +171,84 @@ namespace IShopping.Views
         {
             txtNome.ReadOnly = true;
             dateCompra.Enabled = false;
-            ckbFechar.Enabled = false;
+            txtEstado.ReadOnly = true; // Bloqueia também o campo de texto do estado
+
             btnGuardar.Enabled = false;
             btnAdicionar.Enabled = false;
             btnEditar.Enabled = false;
             btnEliminar.Enabled = false;
         }
 
-        // BOTÃO GUARDAR COMPRA (Atualizado para usar a arquitetura correta do teu Controller)
-        private void button1_Click(object sender, EventArgs e)
+        private void button1_Click(object sender, EventArgs e) // Botão Guardar Compra
         {
-            string message;
+            if (string.IsNullOrWhiteSpace(txtNome.Text))
+            {
+                MessageBox.Show("Por favor, dê um nome válido a esta compra.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            string mensagem;
             bool ok;
+
+            // Define se a compra vai ser gravada como fechada avaliando o texto digitado/selecionado
+            bool fecharCompra = txtEstado.Text.Trim().Equals("Fechada", StringComparison.OrdinalIgnoreCase);
 
             if (compraId == 0)
             {
-                // Usa o método de criação do teu AlteracaoPlaneadaController
-                ok = AlteracaoPlaneadaController.CriarCompra(txtNome.Text, out message);
+                ok = AlteracaoPlaneadaController.CriarCompra(txtNome.Text, out mensagem);
 
                 if (ok)
                 {
                     using (shoppingContext db = new shoppingContext())
                     {
-                        var novaCompra = db.ComprasPlaneadas
-                                           .Where(c => c.CriadoPor == sessao.UtilizadorAtual)
-                                           .OrderByDescending(c => c.Id)
-                                           .FirstOrDefault();
-
-                        if (novaCompra != null)
+                        var nova = db.ComprasPlaneadas.OrderByDescending(c => c.Id).FirstOrDefault();
+                        if (nova != null)
                         {
-                            compraId = novaCompra.Id;
+                            compraId = nova.Id;
                             txtId.Text = compraId.ToString();
+                            txtEstado.Text = fecharCompra ? "Fechada" : "Aberta";
+
+                            if (fecharCompra)
+                                BloquearEdicao();
                         }
                     }
                 }
             }
             else
             {
-                // Usa o método de alteração do teu AlteracaoPlaneadaController, 
-                // limpando a lógica de BD de dentro do Form!
                 ok = AlteracaoPlaneadaController.AlterarCompra(
                     compraId,
                     txtNome.Text,
                     dateCompra.Value,
-                    ckbFechar.Checked,
-                    out message
+                    fecharCompra, // Passa o booleano interpretado a partir do txtEstado
+                    out mensagem
                 );
 
-                if (ok && ckbFechar.Checked)
+                if (ok)
                 {
-                    BloquearEdicao();
+                    txtEstado.Text = fecharCompra ? "Fechada" : "Aberta";
+                    if (fecharCompra)
+                        BloquearEdicao();
                 }
             }
 
-            MessageBox.Show(message, "Informação", MessageBoxButtons.OK);
+            MessageBox.Show(mensagem, "Sucesso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            AtualizarResumoOrcamento();
         }
 
-        // BOTÃO ADICIONAR ITEM (Atualizado para apontar para o controlador correto)
+        // ================= OPERAÇÕES DOS ITENS DA COMPRA =================
+
         private void btnAdicionar_Click(object sender, EventArgs e)
         {
             if (compraId == 0)
             {
-                MessageBox.Show("Por favor, grave primeiro o cabeçalho da compra antes de adicionar itens.");
+                MessageBox.Show("Guarde a informação principal da compra antes de lhe adicionar artigos.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
             if (cmbArtigo.SelectedValue == null)
             {
-                MessageBox.Show("Por favor, selecione um artigo válido.");
+                MessageBox.Show("Selecione um artigo da lista para submeter.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
@@ -196,25 +257,120 @@ namespace IShopping.Views
 
             if (qtd <= 0)
             {
-                MessageBox.Show("A quantidade deve ser superior a zero.");
+                MessageBox.Show("Insira uma quantidade prevista válida.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
             string mensagem;
+            bool ok = AlteracaoPlaneadaController.AdicionarItemPrevisto(compraId, artigoId, qtd, out mensagem);
 
-            AlteracaoPlaneadaController.AdicionarItemPrevisto(
-                compraId,
-                artigoId,
-                qtd,
-                out mensagem);
+            MessageBox.Show(mensagem, "Artigo", MessageBoxButtons.OK, ok ? MessageBoxIcon.Information : MessageBoxIcon.Error);
 
-            MessageBox.Show("Artigo Adicionado com sucesso!"); // Exibe uma mensagem de sucesso após a edição do tipo de artigo.
+            if (ok)
+            {
+                CarregarItens();
+                LimparDados();
+                AtualizarResumoOrcamento();
+            }
+        }
 
+        private void CarregarItens()
+        {
+            using (shoppingContext db = new shoppingContext())
+            {
+                dataGridView1.DataSource = db.ItemComprasPlaneadas
+                    .Where(i => i.CompraPlaneadaId == compraId)
+                    .Select(i => new
+                    {
+                        i.Id,
+                        Artigo = i.Artigos.Nome,
+                        TipoArtigo = i.Artigos.TipoArtigo.Nome,
+                        i.QuantidadePrevista,
+                        PrecoUnitario = i.PrecoUnitario ?? 0,
+                        Total = i.QuantidadePrevista * (i.PrecoUnitario ?? 0)
+                    })
+                    .ToList();
+            }
+
+            if (dataGridView1.Columns.Contains("Id"))
+                dataGridView1.Columns["Id"].Visible = false;
+        }
+
+        private void btnVer_Click(object sender, EventArgs e)
+        {
+            if (dataGridView1.CurrentRow == null)
+            {
+                MessageBox.Show("Selecione um registo na tabela para inspecionar.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            int idItem = Convert.ToInt32(dataGridView1.CurrentRow.Cells["Id"].Value);
+            var item = AlteracaoPlaneadaController.ProcurarItemPorId(idItem);
+
+            if (item == null)
+            {
+                MessageBox.Show("O artigo selecionado já não existe no sistema.", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            numQuantidade.Value = item.QuantidadePrevista;
+
+            using (shoppingContext db = new shoppingContext())
+            {
+                var artigo = db.Artigos.Find(item.ArtigoId);
+                if (artigo != null)
+                {
+                    cmbTipoArtigo.SelectedValue = artigo.TipoArtigoId;
+                    cmbArtigo.SelectedValue = artigo.Id;
+                }
+            }
+        }
+
+        private void btnEditar_Click(object sender, EventArgs e)
+        {
+            if (dataGridView1.CurrentRow == null)
+            {
+                MessageBox.Show("Selecione um artigo na grelha para atualizar.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            int novaQtd = (int)numQuantidade.Value;
+
+            if (novaQtd <= 0)
+            {
+                MessageBox.Show("A quantidade do item tem de ser maior que zero.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            int idItem = Convert.ToInt32(dataGridView1.CurrentRow.Cells["Id"].Value);
+            AlteracaoPlaneadaController.AlterarItem(idItem, novaQtd);
+
+            MessageBox.Show("Item alterado com sucesso.", "Sucesso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+            LimparDados();
+            CarregarItens();
+            AtualizarResumoOrcamento();
+        }
+
+        private void btnEliminar_Click(object sender, EventArgs e)
+        {
+            if (dataGridView1.CurrentRow == null)
+            {
+                MessageBox.Show("Selecione o artigo que pretende remover da lista.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            if (MessageBox.Show("Tem a certeza que deseja retirar este item da compra planeada?", "Confirmação", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No)
+                return;
+
+            int idItem = Convert.ToInt32(dataGridView1.CurrentRow.Cells["Id"].Value);
+            AlteracaoPlaneadaController.EliminarItem(idItem);
 
             CarregarItens();
-            LimparDados();
-
+            AtualizarResumoOrcamento();
         }
+
+        // ================= CONTROLOS E UTILITÁRIOS =================
 
         private void LimparDados()
         {
@@ -223,149 +379,22 @@ namespace IShopping.Views
             cmbTipoArtigo.SelectedIndex = -1;
         }
 
-        // Método para carregar os itens previstos da compra e exibi-los na DataGridView
-        private void CarregarItens()
+        private void btnLimpar_Click(object sender, EventArgs e)
         {
-            if (compraId <= 0) return;
-
-            using (shoppingContext db = new shoppingContext())
-            {
-                var itens = db.ItemComprasPlaneadas
-                    .Where(i => i.CompraPlaneadaId == compraId)
-                    .Select(i => new
-                    {
-                        i.Id,
-                        Artigo = i.Artigos.Nome,
-                        i.QuantidadePrevista,
-                        i.QuantidadeAdquirida,
-                        i.PrecoUnitario,
-                        i.Observacoes
-                    })
-                    .ToList();
-
-                dataGridView1.DataSource = null;
-                if (itens != null)
-                {
-                    dataGridView1.DataSource = itens;
-                }
-            }
-
-            if (dataGridView1.Columns.Contains("Id"))
-                dataGridView1.Columns["Id"].Visible = false;
+            LimparDados();
         }
 
-        // BOTÃO VOLTAR
+        private void dateCompra_ValueChanged(object sender, EventArgs e)
+        {
+            AtualizarResumoOrcamento();
+        }
+
         private void btnVoltar_Click(object sender, EventArgs e)
         {
             this.Close();
         }
 
-        private void ckbFechar_CheckedChanged(object sender, EventArgs e)
-        {
-            txtNome.ReadOnly = ckbFechar.Checked;
-            cmbTipoArtigo.Enabled = !ckbFechar.Checked;
-            cmbArtigo.Enabled = !ckbFechar.Checked;
-            numQuantidade.ReadOnly = ckbFechar.Checked;
-            btnAdicionar.Enabled = !ckbFechar.Checked;
-            btnEditar.Enabled = !ckbFechar.Checked;
-            btnEliminar.Enabled = !ckbFechar.Checked;
-        }
-
-        private void cmbArtigo_SelectedIndexChanged(object sender, EventArgs e)
-        {
-        }
-
-        // BOTÃO VER ITEM
-        private void btnVer_Click(object sender, EventArgs e)
-        {
-
-
-            int id;
-
-            if (!int.TryParse(txtId.Text, out id))
-            {
-                MessageBox.Show("ID inválido.");
-                return;
-            }
-
-            ItemCompraPlaneada item =
-                AlteracaoPlaneadaController.ProcurarItemPorId(id);
-
-            if (item == null)
-            {
-                MessageBox.Show("Item não encontrado.");
-                return;
-            }
-            numQuantidade.Text =
-            item.QuantidadePrevista.ToString();
-
-            cmbArtigo.SelectedValue =
-                item.ArtigoId;
-            using (shoppingContext db = new shoppingContext())
-            {
-                int tipoId = db.Artigos
-                               .Where(a => a.Id == item.ArtigoId)
-                               .Select(a => a.TipoArtigoId)
-                               .FirstOrDefault();
-
-                cmbTipoArtigo.SelectedValue = tipoId;
-                cmbArtigo.SelectedValue = item.ArtigoId;
-            }
-
-        }
-
-        // BOTÃO EDITAR ITEM
-        private void btnEditar_Click(object sender, EventArgs e)
-        {
-            if (dataGridView1.CurrentRow == null)
-            {
-                MessageBox.Show("Por favor, selecione um item na tabela para editar.", "Aviso", MessageBoxButtons.OK);
-                return;
-            }
-
-            // Valida se a TextBox da quantidade tem um número válido antes de mandar alterar
-            if (!int.TryParse(numQuantidade.Text, out int novaQtd) || novaQtd <= 0)
-            {
-                MessageBox.Show("Por favor, introduza uma quantidade válida e superior a zero na caixa de texto.", "Aviso", MessageBoxButtons.OK);
-                numQuantidade.Focus();
-                return;
-            }
-
-            int idItem = Convert.ToInt32(dataGridView1.CurrentRow.Cells["Id"].Value);
-
-            // Executa a alteração no controlador
-            AlteracaoPlaneadaController.AlterarItem(idItem, novaQtd);
-
-            MessageBox.Show("Item alterado com sucesso.", "Resultado", MessageBoxButtons.OK);
-
-            // Limpa a caixa e atualiza a grelha e as combos
-            LimparDados();
-            CarregarItens();
-        }
-
-        // BOTÃO ELIMINAR ITEM
-        private void btnEliminar_Click(object sender, EventArgs e)
-        {
-            if (dataGridView1.CurrentRow == null)
-            {
-                MessageBox.Show("Por favor, selecione um item na tabela para eliminar.", "Aviso", MessageBoxButtons.OK);
-                return;
-            }
-
-            int idItem = Convert.ToInt32(dataGridView1.CurrentRow.Cells["Id"].Value); // Obtém o ID do item selecionado na DataGridView
-
-            // Executa a eliminação no controlador
-            AlteracaoPlaneadaController.EliminarItem(idItem);
-
-            MessageBox.Show("Item eliminado com sucesso.", "Resultado", MessageBoxButtons.OK);
-
-            // Atualiza a grelha para fazer desaparecer o item apagado
-            CarregarItens();
-        }
-
-        private void txtQuantidade_ValueChanged(object sender, EventArgs e)
-        {
-
-        }
+        private void numQuantidade_ValueChanged(object sender, EventArgs e) { }
+        private void cmbArtigo_SelectedIndexChanged(object sender, EventArgs e) { }
     }
 }

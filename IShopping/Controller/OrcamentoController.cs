@@ -3,7 +3,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-
 namespace IShopping.Controller
 {
     internal class OrcamentoController
@@ -17,18 +16,19 @@ namespace IShopping.Controller
             }
         }
 
-        // INSERIR
-        public static void Inserir(string valorOrcamento, DateTime dataCompra)
+        // INSERT
+        public static void Inserir(decimal valorOrcamento, int ano, int mes)
         {
             using (shoppingContext db = new shoppingContext())
             {
-                Orcamento orcamento = new Orcamento();
-
-                orcamento.ValorOrcamento = decimal.Parse(valorOrcamento);
-                orcamento.DataCompra = dataCompra;
+                var orcamento = new Orcamento
+                {
+                    ValorOrcamento = valorOrcamento,
+                    Ano = ano,
+                    Mes = mes
+                };
 
                 db.Orcamentos.Add(orcamento);
-
                 db.SaveChanges();
             }
         }
@@ -43,12 +43,23 @@ namespace IShopping.Controller
             }
         }
 
-        //Eliminar
+        // PROCURAR POR MES/ANO
+        public static Orcamento ObterPorMesAno(int mes, int ano)
+        {
+            using (shoppingContext db = new shoppingContext())
+            {
+                return db.Orcamentos
+                    .FirstOrDefault(o => o.Mes == mes && o.Ano == ano);
+            }
+        }
+
+        // ELIMINAR
         public static void Eliminar(int id)
         {
             using (shoppingContext db = new shoppingContext())
             {
-                Orcamento orcamento = db.Orcamentos.Find(id);
+                var orcamento = db.Orcamentos.Find(id);
+
                 if (orcamento != null)
                 {
                     db.Orcamentos.Remove(orcamento);
@@ -58,21 +69,44 @@ namespace IShopping.Controller
         }
 
         // EDITAR
-        public static void Editar(int id, decimal valorOrcamento, DateTime dataCompra)
+        public static void Editar(int id, decimal valorOrcamento, int ano, int mes)
         {
             using (shoppingContext db = new shoppingContext())
             {
-                Orcamento orcamento = db.Orcamentos.Find(id);
+                var orcamento = db.Orcamentos.Find(id);
+
                 if (orcamento != null)
                 {
                     orcamento.ValorOrcamento = valorOrcamento;
-                    orcamento.DataCompra = dataCompra;
+                    orcamento.Ano = ano;
+                    orcamento.Mes = mes;
 
                     db.SaveChanges();
                 }
             }
         }
 
+        // SALDO DISPONÍVEL 
+        public static decimal ObterSaldoDisponivel()
+        {
+            using (shoppingContext db = new shoppingContext())
+            {
+                var orcamento = db.Orcamentos
+                    .OrderByDescending(o => o.Ano)
+                    .ThenByDescending(o => o.Mes)
+                    .FirstOrDefault();
 
+                if (orcamento == null)
+                    return 0;
+
+                decimal totalGasto =
+                    db.ItemComprasPlaneadas
+                    .Where(i => i.Adquirido)
+                    .Sum(i => (decimal?)i.QuantidadeAdquirida * (i.PrecoUnitario ?? 0))
+                    ?? 0;
+
+                return orcamento.ValorOrcamento - totalGasto;
+            }
+        }
     }
 }

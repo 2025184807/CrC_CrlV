@@ -11,10 +11,9 @@ namespace IShopping.Models
     internal class Orcamento
     {
         public int OrcamentoId { get; set; }
-
+        public int Mes { get; set; }
+        public int Ano { get; set; }
         public decimal ValorOrcamento { get; set; }
 
-        public DateTime DataCompra { get; set; }
-       
     }
 }

@@ -57,7 +57,7 @@
             // cmbFiltro
             // 
             this.cmbFiltro.FormattingEnabled = true;
-            this.cmbFiltro.Location = new System.Drawing.Point(263, 188);
+            this.cmbFiltro.Location = new System.Drawing.Point(263, 196);
             this.cmbFiltro.Name = "cmbFiltro";
             this.cmbFiltro.Size = new System.Drawing.Size(184, 24);
             this.cmbFiltro.TabIndex = 310;
@@ -67,7 +67,7 @@
             // 
             this.pictureBox1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(248)))), ((int)(((byte)(248)))));
             this.pictureBox1.Image = global::IShopping.Properties.Resources.add;
-            this.pictureBox1.Location = new System.Drawing.Point(76, 453);
+            this.pictureBox1.Location = new System.Drawing.Point(76, 461);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(26, 28);
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -77,7 +77,7 @@
             // pictureBox11
             // 
             this.pictureBox11.Image = global::IShopping.Properties.Resources.filter;
-            this.pictureBox11.Location = new System.Drawing.Point(56, 188);
+            this.pictureBox11.Location = new System.Drawing.Point(56, 196);
             this.pictureBox11.Name = "pictureBox11";
             this.pictureBox11.Size = new System.Drawing.Size(21, 20);
             this.pictureBox11.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -88,7 +88,7 @@
             // 
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.Location = new System.Drawing.Point(77, 188);
+            this.label3.Location = new System.Drawing.Point(77, 196);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(158, 20);
             this.label3.TabIndex = 307;
@@ -98,7 +98,7 @@
             // 
             this.pictureBox3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(248)))), ((int)(((byte)(248)))));
             this.pictureBox3.Image = global::IShopping.Properties.Resources.see;
-            this.pictureBox3.Location = new System.Drawing.Point(333, 453);
+            this.pictureBox3.Location = new System.Drawing.Point(333, 461);
             this.pictureBox3.Name = "pictureBox3";
             this.pictureBox3.Size = new System.Drawing.Size(26, 28);
             this.pictureBox3.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -110,7 +110,7 @@
             this.btnAlteracao.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(68)))), ((int)(((byte)(100)))), ((int)(((byte)(145)))));
             this.btnAlteracao.Font = new System.Drawing.Font("Microsoft Yi Baiti", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnAlteracao.ForeColor = System.Drawing.Color.White;
-            this.btnAlteracao.Location = new System.Drawing.Point(365, 444);
+            this.btnAlteracao.Location = new System.Drawing.Point(365, 452);
             this.btnAlteracao.Name = "btnAlteracao";
             this.btnAlteracao.Size = new System.Drawing.Size(229, 46);
             this.btnAlteracao.TabIndex = 305;
@@ -132,7 +132,7 @@
             // 
             this.label8.AutoSize = true;
             this.label8.Font = new System.Drawing.Font("Microsoft Yi Baiti", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label8.Location = new System.Drawing.Point(734, 187);
+            this.label8.Location = new System.Drawing.Point(758, 194);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(33, 23);
             this.label8.TabIndex = 303;
@@ -141,7 +141,7 @@
             // txtId
             // 
             this.txtId.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtId.Location = new System.Drawing.Point(773, 189);
+            this.txtId.Location = new System.Drawing.Point(797, 196);
             this.txtId.Name = "txtId";
             this.txtId.Size = new System.Drawing.Size(98, 22);
             this.txtId.TabIndex = 302;
@@ -151,7 +151,7 @@
             this.bntNovaCompra.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(68)))), ((int)(((byte)(100)))), ((int)(((byte)(145)))));
             this.bntNovaCompra.Font = new System.Drawing.Font("Microsoft Yi Baiti", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.bntNovaCompra.ForeColor = System.Drawing.Color.White;
-            this.bntNovaCompra.Location = new System.Drawing.Point(108, 444);
+            this.bntNovaCompra.Location = new System.Drawing.Point(108, 452);
             this.bntNovaCompra.Name = "bntNovaCompra";
             this.bntNovaCompra.Size = new System.Drawing.Size(166, 46);
             this.bntNovaCompra.TabIndex = 301;
@@ -176,12 +176,13 @@
             // dataGridView1
             // 
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Location = new System.Drawing.Point(54, 223);
+            this.dataGridView1.Location = new System.Drawing.Point(54, 231);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.RowHeadersWidth = 51;
             this.dataGridView1.RowTemplate.Height = 24;
-            this.dataGridView1.Size = new System.Drawing.Size(817, 205);
+            this.dataGridView1.Size = new System.Drawing.Size(841, 205);
             this.dataGridView1.TabIndex = 299;
+            this.dataGridView1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
             // 
             // pictureBox4
             // 
@@ -220,7 +221,7 @@
             // 
             this.pictureBox2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(248)))), ((int)(((byte)(248)))));
             this.pictureBox2.Image = global::IShopping.Properties.Resources.trash;
-            this.pictureBox2.Location = new System.Drawing.Point(639, 453);
+            this.pictureBox2.Location = new System.Drawing.Point(639, 461);
             this.pictureBox2.Name = "pictureBox2";
             this.pictureBox2.Size = new System.Drawing.Size(26, 28);
             this.pictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -232,9 +233,9 @@
             this.btnEliminar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(68)))), ((int)(((byte)(100)))), ((int)(((byte)(145)))));
             this.btnEliminar.Font = new System.Drawing.Font("Microsoft Yi Baiti", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnEliminar.ForeColor = System.Drawing.Color.White;
-            this.btnEliminar.Location = new System.Drawing.Point(671, 444);
+            this.btnEliminar.Location = new System.Drawing.Point(671, 452);
             this.btnEliminar.Name = "btnEliminar";
-            this.btnEliminar.Size = new System.Drawing.Size(166, 46);
+            this.btnEliminar.Size = new System.Drawing.Size(184, 46);
             this.btnEliminar.TabIndex = 313;
             this.btnEliminar.Text = "Eliminar Compra";
             this.btnEliminar.UseVisualStyleBackColor = false;
@@ -244,7 +245,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(951, 546);
+            this.ClientSize = new System.Drawing.Size(951, 530);
             this.Controls.Add(this.btnEliminar);
             this.Controls.Add(this.pictureBox2);
             this.Controls.Add(this.cmbFiltro);
