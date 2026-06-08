@@ -288,6 +288,21 @@
   <ItemGroup>
     <None Include="Resources\copy-writing.png" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\clipboard1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\clipboard2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\lists1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\editing1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\list1.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

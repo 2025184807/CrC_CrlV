@@ -17,6 +17,15 @@ namespace IShopping.Views
             InitializeComponent();
         }
 
-    
+        private void tabPage1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        // Botão "Voltar" para fechar o formulário de estatísticas e retornar ao menu principal
+        private void btnVoltar_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
     }
 }
