@@ -106,6 +106,7 @@
             this.btnExportar.TabIndex = 135;
             this.btnExportar.Text = "Exportar CSV";
             this.btnExportar.UseVisualStyleBackColor = false;
+            this.btnExportar.Click += new System.EventHandler(this.btnExportar_Click);
             // 
             // bntCriarCompra
             // 

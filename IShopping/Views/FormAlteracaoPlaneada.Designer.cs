@@ -43,7 +43,7 @@
             this.cmbTipoArtigo = new System.Windows.Forms.ComboBox();
             this.label5 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
-            this.txtId = new System.Windows.Forms.TextBox();
+            this.txtIdItem = new System.Windows.Forms.TextBox();
             this.btnVer = new System.Windows.Forms.Button();
             this.btnEditar = new System.Windows.Forms.Button();
             this.btnEliminar = new System.Windows.Forms.Button();
@@ -227,13 +227,13 @@
             this.label9.TabIndex = 207;
             this.label9.Text = "ID:";
             // 
-            // txtId
+            // txtIdItem
             // 
-            this.txtId.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtId.Location = new System.Drawing.Point(1107, 371);
-            this.txtId.Name = "txtId";
-            this.txtId.Size = new System.Drawing.Size(74, 22);
-            this.txtId.TabIndex = 206;
+            this.txtIdItem.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtIdItem.Location = new System.Drawing.Point(1107, 371);
+            this.txtIdItem.Name = "txtIdItem";
+            this.txtIdItem.Size = new System.Drawing.Size(74, 22);
+            this.txtIdItem.TabIndex = 206;
             // 
             // btnVer
             // 
@@ -381,6 +381,7 @@
             // 
             this.txtDisponivel.BackColor = System.Drawing.SystemColors.ControlLightLight;
             this.txtDisponivel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtDisponivel.Font = new System.Drawing.Font("Microsoft YaHei", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtDisponivel.ForeColor = System.Drawing.SystemColors.MenuText;
             this.txtDisponivel.Location = new System.Drawing.Point(401, 54);
             this.txtDisponivel.Multiline = true;
@@ -388,11 +389,13 @@
             this.txtDisponivel.ReadOnly = true;
             this.txtDisponivel.Size = new System.Drawing.Size(153, 48);
             this.txtDisponivel.TabIndex = 326;
+            this.txtDisponivel.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // txtTotal
             // 
             this.txtTotal.BackColor = System.Drawing.SystemColors.ControlLightLight;
             this.txtTotal.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtTotal.Font = new System.Drawing.Font("Microsoft YaHei", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtTotal.ForeColor = System.Drawing.SystemColors.MenuText;
             this.txtTotal.Location = new System.Drawing.Point(230, 54);
             this.txtTotal.Multiline = true;
@@ -400,6 +403,7 @@
             this.txtTotal.ReadOnly = true;
             this.txtTotal.Size = new System.Drawing.Size(130, 48);
             this.txtTotal.TabIndex = 325;
+            this.txtTotal.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // label19
             // 
@@ -425,6 +429,7 @@
             // 
             this.txtOrcamento.BackColor = System.Drawing.SystemColors.ControlLightLight;
             this.txtOrcamento.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtOrcamento.Font = new System.Drawing.Font("Microsoft YaHei", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtOrcamento.ForeColor = System.Drawing.SystemColors.MenuText;
             this.txtOrcamento.Location = new System.Drawing.Point(80, 54);
             this.txtOrcamento.Multiline = true;
@@ -432,6 +437,7 @@
             this.txtOrcamento.ReadOnly = true;
             this.txtOrcamento.Size = new System.Drawing.Size(115, 48);
             this.txtOrcamento.TabIndex = 322;
+            this.txtOrcamento.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // label12
             // 
@@ -566,7 +572,7 @@
             this.Controls.Add(this.btnEditar);
             this.Controls.Add(this.btnEliminar);
             this.Controls.Add(this.label9);
-            this.Controls.Add(this.txtId);
+            this.Controls.Add(this.txtIdItem);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.btnLimpar);
@@ -611,7 +617,7 @@
         private System.Windows.Forms.ComboBox cmbTipoArtigo;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label9;
-        private System.Windows.Forms.TextBox txtId;
+        private System.Windows.Forms.TextBox txtIdItem;
         private System.Windows.Forms.PictureBox pictureBox6;
         private System.Windows.Forms.PictureBox pictureBox5;
         private System.Windows.Forms.PictureBox pictureBox3;

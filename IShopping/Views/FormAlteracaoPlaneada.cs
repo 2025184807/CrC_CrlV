@@ -4,6 +4,7 @@ using System;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Runtime.Remoting.Messaging;
 using System.Windows.Forms;
 
 namespace IShopping.Views
@@ -11,6 +12,7 @@ namespace IShopping.Views
     public partial class FormAlteracaoPlaneada : Form
     {
         private int compraId = 0; // Se for 0, é uma nova compra. Caso contrário, está em modo de edição.
+        // O construtor recebe o ID da compra a editar, ou 0 para criar uma nova compra. 
 
         public FormAlteracaoPlaneada(int id)
         {
@@ -36,7 +38,7 @@ namespace IShopping.Views
             else
             {
                 txtEstado.Text = "Aberta";
-                txtId.Text = "Novo";
+                txtIdItem.Text = "Novo";
                 txtOrcamento.Text = "0.00 €";
                 txtTotal.Text = "0.00 €";
                 txtDisponivel.Text = "0.00 €";
@@ -48,6 +50,7 @@ namespace IShopping.Views
 
         // ================= ORÇAMENTO & RESUMOS FINANCEIROS =================
 
+        // Calcula o total previsto para a compra somando o valor de cada item (quantidade prevista * preço unitário), garantindo que valores nulos são tratados como zero
         private decimal CalcularTotalPrevisto()
         {
             using (shoppingContext db = new shoppingContext())
@@ -58,6 +61,7 @@ namespace IShopping.Views
             }
         }
 
+        // Atualiza os campos de resumo financeiro (Orçamento, Total Previsto, Disponível) com base na data da compra e nos itens associados, e exibe alertas visuais se necessário
         private void AtualizarResumoOrcamento()
         {
             int mes = dateCompra.Value.Month;
@@ -92,8 +96,8 @@ namespace IShopping.Views
             }
         }
 
-        // ================= GESTÃO DE ARTIGOS (COMBOBOXES) =================
-
+        // ================= GESTÃO DE ARTIGOS  =================
+        // Carrega os tipos de artigo na ComboBox, garantindo que o evento de seleção é gerido corretamente para evitar erros de index nulo
         private void CarregarTiposArtigo()
         {
             var tipos = TipoArtigoController.Listar();
@@ -110,6 +114,7 @@ namespace IShopping.Views
             cmbTipoArtigo.SelectedIndexChanged += cmbTipoArtigo_SelectedIndexChanged;
         }
 
+        // Carrega todos os artigos na ComboBox de Artigos, ordenados por nome, e prepara a interface para seleção
         private void CarregarComboArtigo()
         {
             using (shoppingContext db = new shoppingContext())
@@ -122,6 +127,7 @@ namespace IShopping.Views
             }
         }
 
+        // Filtra os artigos disponíveis na ComboBox de Artigos com base no Tipo de Artigo selecionado, garantindo que apenas os artigos relevantes são mostrados
         private void cmbTipoArtigo_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (cmbTipoArtigo.SelectedValue == null) return;
@@ -144,8 +150,9 @@ namespace IShopping.Views
             }
         }
 
-        // ================= DADOS DA COMPRA MÃE =================
+        // ================= DADOS DA COMPRA =================
 
+        // Carrega os dados da compra para edição, incluindo o estado (Fechada/Aberta) e bloqueia a edição se estiver fechada
         private void CarregarCompra()
         {
             using (shoppingContext db = new shoppingContext())
@@ -153,7 +160,7 @@ namespace IShopping.Views
                 var compra = db.ComprasPlaneadas.Find(compraId);
                 if (compra == null) return;
 
-                txtId.Text = compra.Id.ToString();
+                txtIdItem.Text = compra.Id.ToString();
                 txtNome.Text = compra.NomeCompra;
                 dateCompra.Value = compra.DataCompra;
 
@@ -167,6 +174,7 @@ namespace IShopping.Views
             }
         }
 
+        // Método para bloquear a edição dos campos principais da compra quando a compra estiver fechada
         private void BloquearEdicao()
         {
             txtNome.ReadOnly = true;
@@ -179,7 +187,8 @@ namespace IShopping.Views
             btnEliminar.Enabled = false;
         }
 
-        private void button1_Click(object sender, EventArgs e) // Botão Guardar Compra
+        // Botão Guardar Compra, está button1 pois cliquei no designer para criar o evento e não renomeei o botão, mas é o botão de guardar a compra.
+        private void button1_Click(object sender, EventArgs e) 
         {
             if (string.IsNullOrWhiteSpace(txtNome.Text))
             {
@@ -205,7 +214,7 @@ namespace IShopping.Views
                         if (nova != null)
                         {
                             compraId = nova.Id;
-                            txtId.Text = compraId.ToString();
+                            txtIdItem.Text = compraId.ToString();
                             txtEstado.Text = fecharCompra ? "Fechada" : "Aberta";
 
                             if (fecharCompra)
@@ -232,7 +241,7 @@ namespace IShopping.Views
                 }
             }
 
-            MessageBox.Show(mensagem, "Sucesso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            MessageBox.Show(mensagem);
             AtualizarResumoOrcamento();
         }
 
@@ -292,24 +301,26 @@ namespace IShopping.Views
                     .ToList();
             }
 
+            // Mantemos a coluna visível caso precises de confirmar visualmente o ID do Item na tabela
             if (dataGridView1.Columns.Contains("Id"))
-                dataGridView1.Columns["Id"].Visible = false;
+                dataGridView1.Columns["Id"].Visible = true;
         }
 
+        // PROCURAR / VER ITEM
         private void btnVer_Click(object sender, EventArgs e)
         {
-            if (dataGridView1.CurrentRow == null)
+            if (string.IsNullOrWhiteSpace(txtIdItem.Text) || !int.TryParse(txtIdItem.Text, out int idItem))
             {
-                MessageBox.Show("Selecione um registo na tabela para inspecionar.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Por favor, introduza um ID de Item numérico válido.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                txtIdItem.Focus();
                 return;
             }
 
-            int idItem = Convert.ToInt32(dataGridView1.CurrentRow.Cells["Id"].Value);
             var item = AlteracaoPlaneadaController.ProcurarItemPorId(idItem);
 
-            if (item == null)
+            if (item == null || item.CompraPlaneadaId != compraId)
             {
-                MessageBox.Show("O artigo selecionado já não existe no sistema.", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("O ID do item especificado não pertence a esta compra ou não existe.", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
@@ -326,11 +337,40 @@ namespace IShopping.Views
             }
         }
 
+         // ELIMINAR ITEM
+        private void btnEliminar_Click(object sender, EventArgs e)
+        {
+
+            if (string.IsNullOrWhiteSpace(txtIdItem.Text) || !int.TryParse(txtIdItem.Text, out int idItem))
+            {
+                MessageBox.Show("Por favor, introduza um ID de Item numérico válido para remover.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                txtIdItem.Focus();
+                return;
+            }
+
+            if (MessageBox.Show("Tem a certeza que deseja retirar este item da compra planeada?", "Confirmação", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No)
+                return;
+
+            string mensagem;
+            // Chama o controlador passando a variável de saída
+            AlteracaoPlaneadaController.EliminarItem(idItem, out mensagem);
+
+            MessageBox.Show(mensagem, "Resultado", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+            LimparDados();
+            CarregarItens();
+            AtualizarResumoOrcamento();
+        }
+ 
+
+        // ALTERADO: Edita o item com base no ID 
         private void btnEditar_Click(object sender, EventArgs e)
         {
-            if (dataGridView1.CurrentRow == null)
+
+            if (string.IsNullOrWhiteSpace(txtIdItem.Text) || !int.TryParse(txtIdItem.Text, out int idItem))
             {
-                MessageBox.Show("Selecione um artigo na grelha para atualizar.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Por favor, introduza um ID de Item numérico válido para atualizar.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                txtIdItem.Focus(); // Foca o campo de ID do item para correção
                 return;
             }
 
@@ -342,38 +382,22 @@ namespace IShopping.Views
                 return;
             }
 
-            int idItem = Convert.ToInt32(dataGridView1.CurrentRow.Cells["Id"].Value);
-            AlteracaoPlaneadaController.AlterarItem(idItem, novaQtd);
+            // Executa a alteração no controlador usando o ID do campo de texto
+            AlteracaoPlaneadaController.AlterarItem(idItem, novaQtd, out string mensagem);
 
-            MessageBox.Show("Item alterado com sucesso.", "Sucesso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            MessageBox.Show(mensagem);
 
             LimparDados();
             CarregarItens();
             AtualizarResumoOrcamento();
         }
 
-        private void btnEliminar_Click(object sender, EventArgs e)
-        {
-            if (dataGridView1.CurrentRow == null)
-            {
-                MessageBox.Show("Selecione o artigo que pretende remover da lista.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
-
-            if (MessageBox.Show("Tem a certeza que deseja retirar este item da compra planeada?", "Confirmação", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No)
-                return;
-
-            int idItem = Convert.ToInt32(dataGridView1.CurrentRow.Cells["Id"].Value);
-            AlteracaoPlaneadaController.EliminarItem(idItem);
-
-            CarregarItens();
-            AtualizarResumoOrcamento();
-        }
 
         // ================= CONTROLOS E UTILITÁRIOS =================
 
         private void LimparDados()
         {
+            txtIdItem.Clear(); // Limpa também o campo de pesquisa por ID do item
             numQuantidade.Value = 0;
             cmbArtigo.SelectedIndex = -1;
             cmbTipoArtigo.SelectedIndex = -1;

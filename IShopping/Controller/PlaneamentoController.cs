@@ -138,5 +138,48 @@ namespace IShopping.Controller
                 return true;
             }
         }
+        // Método para exportar as compras fechadas do utilizador atual para um formato CSV conforme exigido pelo Stor
+        public static string ExportarComprasFechadasParaCSV()
+        {
+            using (shoppingContext db = new shoppingContext())
+            {
+                // 1. Vai buscar apenas as compras do utilizador atual que estão FECHADAS
+                var comprasFechadas = db.ComprasPlaneadas
+                    .Where(c => c.CriadoPor == sessao.UtilizadorAtual && c.Fechada == true)
+                    .ToList();
+
+                // 2. Cria o cabeçalho do ficheiro CSV conforme exigido pelo Stor
+                string csv = "NomeCompra;DataCriacao;DataFechada;NomeArtigo;ArtigoPrevisto;PrecoUnitario;ArtigoNaoPrevisto;QuantidadePrevista;QuantidadeAdquirida\r\n";
+
+                // 3. Percorre as compras e os seus respetivos itens
+                foreach (var compra in comprasFechadas)
+                {
+                    // CORREÇÃO: Adicionado o .Include(i => i.Artigos) para forçar o carregamento do Artigo!
+                    var itens = db.ItemComprasPlaneadas
+                        .Include("Artigos") // Se o teu EF não aceitar a Lambda, usa assim em formato de String
+                        .Where(i => i.CompraPlaneadaId == compra.Id)
+                        .ToList();
+
+                    foreach (var item in itens)
+                    {
+                        // Agora o item.Artigos já não vem nulo e consegue ler o Nome!
+                        string nomeArtigo = item.Artigos != null ? item.Artigos.Nome : "Desconhecido";
+
+                        string dataCriacao = compra.DataCriacao.ToString("dd/MM/yyyy");
+                        string dataFecho = compra.DataFecho.HasValue ? compra.DataFecho.Value.ToString("dd/MM/yyyy") : "---";
+                        string precoUnitario = (item.PrecoUnitario ?? 0).ToString("0.00");
+
+                        string artigoPrevisto = "Sim";
+                        string artigoNaoPrevisto = "Nao";
+
+                        // Monta a linha do item separada por ponto e vírgula
+                        csv += $"{compra.NomeCompra};{dataCriacao};{dataFecho};{nomeArtigo};{artigoPrevisto};{precoUnitario};{artigoNaoPrevisto};{item.QuantidadePrevista};{item.QuantidadeAdquirida}\r\n";
+                    }
+                }
+
+                return csv;
+            }
+        }
     }
+    
 }

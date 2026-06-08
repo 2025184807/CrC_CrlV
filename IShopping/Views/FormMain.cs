@@ -1,4 +1,5 @@
-﻿using System;
+﻿using IShopping.Controller;
+using System;
 using System.Data;
 using System.Linq;
 using System.Windows.Forms;
@@ -155,6 +156,27 @@ namespace IShopping.Views
         {
             FormAlteracaoPlaneada form = new FormAlteracaoPlaneada(0);
             form.Show();
+        }
+
+        private void btnExportar_Click(object sender, EventArgs e)
+        {
+            // 1. Chama o controlador para gerar o conteúdo do CSV
+            string conteudoCSV = PlaneamentoController.ExportarComprasFechadasParaCSV();
+
+            // 2. Configura a janela de diálogo para guardar o ficheiro
+            SaveFileDialog salvarFicheiro = new SaveFileDialog();
+            salvarFicheiro.Filter = "Ficheiros CSV (*.csv)|*.csv";
+            salvarFicheiro.Title = "Exportar Compras Fechadas";
+            salvarFicheiro.FileName = "Compras_Fechadas.csv";
+
+            // 3. Se o utilizador escolher o caminho e clicar em "Guardar"
+            if (salvarFicheiro.ShowDialog() == DialogResult.OK)
+            {
+                // Grava o texto gerado no caminho escolhido com codificação UTF-8 (para não estragar os acentos)
+                System.IO.File.WriteAllText(salvarFicheiro.FileName, conteudoCSV, System.Text.Encoding.UTF8);
+
+                MessageBox.Show("Ficheiro CSV exportado com sucesso!", "Exportação", MessageBoxButtons.OK);
+            }
         }
     }
 }
