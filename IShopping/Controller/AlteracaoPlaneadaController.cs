@@ -85,34 +85,40 @@ namespace IShopping.Controller
             }
         }
 
-        // ALTERAR / EDITAR QUANTIDADE DO ITEM
-        public static void AlterarItem(int id, int novaQuantidade)
+        // ALTERAR NO CONTROLADOR
+        public static void AlterarItem(int id, int novaQuantidade, out string mensagem)
         {
             using (shoppingContext db = new shoppingContext())
             {
                 ItemCompraPlaneada item = db.ItemComprasPlaneadas.Find(id);
-
                 if (item != null)
                 {
                     item.QuantidadePrevista = novaQuantidade;
-
                     db.SaveChanges();
+                    mensagem = "Item alterado com sucesso.";
+                }
+                else
+                {
+                    mensagem = "Item não encontrado.";
                 }
             }
         }
 
-        // ELIMINAR ITEM
-        public static void EliminarItem(int id)
+        // ELIMINAR NO CONTROLADOR
+        public static void EliminarItem(int id, out string mensagem)
         {
             using (shoppingContext db = new shoppingContext())
             {
                 ItemCompraPlaneada item = db.ItemComprasPlaneadas.Find(id);
-
                 if (item != null)
                 {
                     db.ItemComprasPlaneadas.Remove(item);
-
                     db.SaveChanges();
+                    mensagem = "Item eliminado com sucesso.";
+                }
+                else
+                {
+                    mensagem = "Item não encontrado.";
                 }
             }
         }
@@ -166,11 +172,7 @@ namespace IShopping.Controller
         }
 
         // 4. Adicionar um artigo previsto à lista de itens da compra
-        public static bool AdicionarItemPrevisto(
-    int compraId,
-    int artigoid,
-    int quantidadePrevista,
-    out string mensagem)
+        public static bool AdicionarItemPrevisto( int compraId, int artigoid, int quantidadePrevista,  out string mensagem)
         {
             mensagem = "";
 
