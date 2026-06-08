@@ -84,18 +84,8 @@ namespace IShopping.Views
         // Botão "Modo Compra"
         private void btnModoCompra_Click(object sender, EventArgs e)
         {
-            // 1. Tenta converter o texto digitado na txtId para um número inteiro
-            if (!int.TryParse(txtId.Text.Trim(), out int idDigitado) || idDigitado <= 0)
-            {
-                MessageBox.Show("Por favor, introduza um ID de compra válido para iniciar o Modo Compra.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                txtId.Focus();
-                return;
-            }
 
             FormModoCompra form = new FormModoCompra();
-
-            // 2. Passa o ID que a pessoa escreveu para a variável pública do outro form
-            form.CompraIdSelecionada = idDigitado;
 
             form.ShowDialog();
             ActualizarListaCompras();

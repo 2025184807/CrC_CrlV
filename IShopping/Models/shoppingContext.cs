@@ -16,6 +16,5 @@ namespace IShopping
         public DbSet<Orcamento> Orcamentos { get; set; } // Tabela de orçamentos
         public DbSet<CompraPlaneada> ComprasPlaneadas { get; set; } // Tabela de compras planeadas
         public DbSet<ItemCompraPlaneada> ItemComprasPlaneadas { get; set; } // Tabela de itens de compras planeadas
-        //public DbSet<Estatistica> Estatisticas{ get; set; } // Tabela de estatísticas avançadas
     }
 }

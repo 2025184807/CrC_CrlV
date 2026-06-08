@@ -94,6 +94,7 @@
     <Compile Include="Models\CompraPlaneada.cs" />
     <Compile Include="Models\CompraPlaneadaGridDto.cs" />
     <Compile Include="Models\ItemCompraPlaneada.cs" />
+    <Compile Include="Models\ItemSugeridoDto.cs" />
     <Compile Include="Models\ResumoComprasDto.cs" />
     <Compile Include="Models\SugestaoOrcamentoDto.cs" />
     <Compile Include="Models\TipoArtigo.cs" />
