@@ -8,41 +8,47 @@ using System.Windows.Forms;
 
 namespace IShopping.Views
 {
+    // Classe responsável pelo ecrã de Planeamento e Histórico de Compras
     public partial class FormPlaneamentoCompra : Form
     {
+        // Construtor - Inicializa o formulário
         public FormPlaneamentoCompra()
         {
             InitializeComponent();
         }
 
+        // Evento executado ao carregar o ecrã
         private void FormPlaneamentoCompra_Load(object sender, EventArgs e)
         {
             cmbFiltro.Items.Clear();
 
+            // Adiciona as opções de filtragem na ComboBox
             cmbFiltro.Items.Add("Todas");
             cmbFiltro.Items.Add("Abertas");
             cmbFiltro.Items.Add("Fechadas");
 
-            cmbFiltro.SelectedIndex = 0;
+            cmbFiltro.SelectedIndex = 0; // Define "Todas" como filtro inicial
 
-            AtualizarGrelha();
+            AtualizarGrelha(); // Carrega a tabela com os dados
         }
 
+        // Evento que atualiza sempre que o utilizador muda a opção do filtro
         private void cmbFiltro_SelectedIndexChanged(object sender, EventArgs e)
         {
             AtualizarGrelha();
         }
 
+        // Método principal para carregar, filtrar e formatar a lista de compras na tabela
         private void AtualizarGrelha()
-        { 
+        {
             string filtro = cmbFiltro.SelectedItem != null ? cmbFiltro.SelectedItem.ToString() : "Todas";
 
-            // Usa o método exato do Stor para obter a lista total
+            // Obtém a lista completa de compras registadas através do Controller
             var listaCompras = PlaneamentoController.ObterCompras();
 
             if (listaCompras != null)
             {
-                // Aplica os filtros em memória de forma lógica
+                // Aplica o filtro de estado selecionado na ComboBox
                 if (filtro == "Abertas")
                 {
                     listaCompras = listaCompras.Where(c => c.Fechada == false).ToList();
@@ -52,10 +58,7 @@ namespace IShopping.Views
                     listaCompras = listaCompras.Where(c => c.Fechada == true).ToList();
                 }
 
-                // Define a cultura em português para obter o dia da semana traduzido
-                var culturaPortuguesa = new System.Globalization.CultureInfo("pt-PT");
-
-                // Faz a projeção para as colunas da Grid
+                // Cria e preenche as colunas da DataGridView de forma organizada
                 dataGridView1.DataSource = listaCompras.Select(c => new
                 {
                     Id = c.Id,
@@ -66,11 +69,9 @@ namespace IShopping.Views
 
                     // DATA E HORA DO FECHO
                     DataHoraFecho = c.DataFecho.HasValue ? c.DataFecho.Value.ToString("dd/MM/yyyy HH:mm") : "---",
-                    //Se a compra estiver fechada, vai criar uma coluna a dizer a Data e hora do Fechamento da compra por extenso.Se estiver aberta, mostra "---".
 
                     // QUEM FECHOU
-                    FechadoPor = c.Fechada ? (c.FechadoPor ?? "Sistema") : "---",
-                    //? se for nulo o fechado por mostra Sistema se tiver aberta mostra "---".
+                    FecharPor = c.Fechada ? (c.FechadoPor ?? "Sistema") : "---",
 
                     CriadoPor = c.CriadoPor,
                     CriadoEm = c.DataCriacao.ToString("dd/MM/yyyy")
@@ -78,34 +79,18 @@ namespace IShopping.Views
             }
         }
 
-        // Botão Nova Compra
+        // Botão "Nova Compra" - Abre o ecrã de alteração em modo de criação (ID 0)
         private void bntNovaCompra_Click(object sender, EventArgs e)
         {
             FormAlteracaoPlaneada frm = new FormAlteracaoPlaneada(0);
             frm.ShowDialog();
-            AtualizarGrelha();
+            AtualizarGrelha(); // Atualiza a tabela ao fechar a janela secundária
         }
 
-        // Botão Alterar / Visualizar (Através da linha selecionada na Grid)
-        private void btnAlteracao_Click(object sender, EventArgs e)
-        {
-            if (dataGridView1.CurrentRow == null)
-            {
-                MessageBox.Show("Selecione uma compra.", "Aviso", MessageBoxButtons.OK);
-                return;
-            }
-
-            int idSelecionado = Convert.ToInt32(dataGridView1.CurrentRow.Cells["Id"].Value);
-
-            FormAlteracaoPlaneada frm = new FormAlteracaoPlaneada(idSelecionado);
-            frm.ShowDialog();
-            AtualizarGrelha();
-        }
-
-        // Botão Alterar / Visualizar (Através do ID digitado na TextBox txtId)
+        // Botão Alterar / Visualizar através do ID digitado manualmente na TextBox
         private void btnAlteracao_Click_1(object sender, EventArgs e)
         {
-            // 1. Valida e converte o ID que o utilizador escreveu na TextBox (txtId)
+            // 1. Valida se o texto digitado é um ID numérico inteiro válido
             if (string.IsNullOrWhiteSpace(txtId.Text) || !int.TryParse(txtId.Text, out int idSelecionado))
             {
                 MessageBox.Show("Por favor, introduza um ID numérico válido para alterar.");
@@ -114,7 +99,7 @@ namespace IShopping.Views
                 return;
             }
 
-            // 2. Validação na Base de Dados: Verifica se a compra com esse ID realmente existe
+            // 2. Procura na Base de Dados para garantir que o ID inserido existe mesmo
             using (var db = new shoppingContext())
             {
                 var compra = db.ComprasPlaneadas.Find(idSelecionado);
@@ -126,22 +111,21 @@ namespace IShopping.Views
                 }
             }
 
-            // 3. Se o ID existe, abre o formulário do stor passando o ID validado
+            // 3. Se existir, abre a janela passando o ID validado
             FormAlteracaoPlaneada frm = new FormAlteracaoPlaneada(idSelecionado);
             frm.ShowDialog();
 
-            // 4. Atualiza a tabela principal ao voltar para mostrar as mudanças
+            // 4. Recarrega a tabela e limpa o campo de texto do ID
             AtualizarGrelha();
-
-            // Limpa o campo do ID para ficar pronto para a próxima pesquisa
             txtId.Clear();
         }
 
-        // Botão Eliminar Compra
+        // Botão "Eliminar Compra" - Remove uma lista pelo ID inserido na TextBox
         private void btnEliminar_Click(object sender, EventArgs e)
         {
             int id;
 
+            // Valida se o ID digitado é um número
             if (!int.TryParse(txtId.Text, out id))
             {
                 MessageBox.Show("O ID tem de ser numérico.");
@@ -150,25 +134,25 @@ namespace IShopping.Views
 
             string mensagem;
 
-            // Executa a eliminação através do controlador do stor
+            // Executa o comando de apagar através do Controller
             PlaneamentoController.EliminarCompra(id, out mensagem);
 
             MessageBox.Show(mensagem);
 
+            // Reseta o ecrã limpando o campo e recarregando a tabela
             txtId.Clear();
             AtualizarGrelha();
         }
 
+        // Método automático do clique na tabela (Pode ficar vazio)
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
         }
 
-        // Botão Voltar
+        // Botão Sair / Fechar Janela
         private void btnVoltar_Click(object sender, EventArgs e)
         {
             this.Close();
         }
-
-       
     }
 }

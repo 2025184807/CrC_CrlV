@@ -6,8 +6,10 @@ using System.Windows.Forms;
 
 namespace IShopping.Views
 {
+    // Classe responsável pelo ecrã de gestão de Categorias / Tipos de Artigo
     public partial class FormTipoArtigo : Form
     {
+        // Construtor - Inicializa o formulário e carrega os dados na tabela
         public FormTipoArtigo()
         {
             InitializeComponent();
@@ -21,22 +23,21 @@ namespace IShopping.Views
             this.Close();
         }
 
-        // LIMPAR CAMPOS
+        // LIMPAR CAMPOS - Remove o texto das caixas de ID e Nome
         private void LimparCampos()
         {
             txtId.Clear();
             txtNome.Clear();
         }
 
-        // CARREGAR GRID CORRIGIDO
+        // CARREGAR GRID - Mostra todas as categorias guardadas na base de dados
         private void CarregarGrid()
         {
             using (shoppingContext db = new shoppingContext())
             {
                 dataGridView1.DataSource = null;
 
-                // Forçamos a criação de uma lista limpa com propriedades explícitas.
-                // Isto garante que a DataGridView monte as linhas e colunas sem depender do estado do EF.
+                // Seleciona o ID e o Nome (rebatizado como Categoria) para a tabela visual
                 dataGridView1.DataSource = db.TipoArtigos
                     .Select(t => new
                     {
@@ -47,15 +48,17 @@ namespace IShopping.Views
             }
         }
 
-        // Botão para guardar um novo tipo de artigo
+        // Botão para guardar um novo tipo de artigo (Inserir)
         private void button1_Click(object sender, EventArgs e)
         {
+            // Valida se o campo do nome está vazio ou apenas com espaços
             if (string.IsNullOrWhiteSpace(txtNome.Text))
             {
                 MessageBox.Show("Preenche todos os campos.");
                 return;
             }
 
+            // Verifica se já existe uma categoria com o mesmo nome
             using (shoppingContext db = new shoppingContext())
             {
                 bool existe = db.TipoArtigos
@@ -68,32 +71,37 @@ namespace IShopping.Views
                 }
             }
 
+            // Grava através do Controller se o nome for unico
             TipoArtigoController.Inserir(txtNome.Text);
             MessageBox.Show("Tipo inserido!");
 
+            // Atualiza a tabela visual e limpa os campos de escrita
             CarregarGrid();
             LimparCampos();
         }
 
-        // Botão para limpar os campos de entrada
+        // Botão para limpar os campos de entrada manualmente
         private void btnLimpar_Click(object sender, EventArgs e)
         {
             LimparCampos();
         }
 
-        // Botão para ver os detalhes de um tipo de artigo existente
+        // Botão para ver os detalhes de um tipo de artigo existente através do ID
         private void btnVer_Click(object sender, EventArgs e)
         {
             int id;
 
+            // Valida se o ID introduzido é um número inteiro válido
             if (!int.TryParse(txtId.Text, out id))
             {
                 MessageBox.Show("ID inválido.");
                 return;
             }
 
+            // Procura o registo na BD recorrendo ao Controller
             TipoArtigo tipoArtigo = TipoArtigoController.ProcurarPorId(id);
 
+            // Se encontrar, preenche a caixa do nome; caso contrário, avisa o utilizador
             if (tipoArtigo != null)
             {
                 txtNome.Text = tipoArtigo.Nome;
@@ -107,14 +115,14 @@ namespace IShopping.Views
         // Botão para editar um tipo de artigo existente
         private void btnEditar_Click(object sender, EventArgs e)
         {
-            // Validação básica dos campos, sem permitir que o nome seja vazio ou apenas espaços em branco
+            // Validação básica para não permitir nomes vazios
             if (string.IsNullOrWhiteSpace(txtNome.Text))
             {
                 MessageBox.Show("Preenche todos os campos.");
                 return;
             }
 
-            // Verificar se já existe outro tipo de artigo com o mesmo nome (ignorando o caso)
+            // Verificar se o novo nome já está a ser usado por outra categoria
             using (shoppingContext db = new shoppingContext())
             {
                 bool existe = db.TipoArtigos
@@ -127,23 +135,21 @@ namespace IShopping.Views
                 }
             }
 
-            int id;// Validação do ID para garantir que é um número inteiro válido
+            int id;
 
-            if (!int.TryParse(txtId.Text, out id)) // Tenta converter o texto do ID para um inteiro. Se falhar, exibe uma mensagem de erro e retorna.
+            // Validação do ID para garantir que é um número inteiro válido
+            if (!int.TryParse(txtId.Text, out id))
             {
                 MessageBox.Show("O ID tem de ser numérico.");
                 return;
             }
 
-            TipoArtigoController.Editar(id, txtNome.Text); // Chama o método Editar do controlador para atualizar o tipo de artigo com o ID e nome fornecidos.
+            // Executa a atualização através do Controller
+            TipoArtigoController.Editar(id, txtNome.Text);
 
-            MessageBox.Show("Tipo de artigo editado com sucesso!"); // Exibe uma mensagem de sucesso após a edição do tipo de artigo.
-            CarregarGrid(); // Recarrega a grade para refletir as alterações feitas.
-            LimparCampos(); // Limpa os campos de entrada para permitir uma nova operação ou evitar confusão com os dados editados.
-        }
-
-        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
+            MessageBox.Show("Tipo de artigo editado com sucesso!");
+            CarregarGrid(); // Recarrega a tabela
+            LimparCampos(); // Limpa os controlos
         }
 
         // Botão para eliminar um tipo de artigo existente
@@ -151,20 +157,21 @@ namespace IShopping.Views
         {
             int id;
 
+            // Garante que o ID fornecido é um número válido
             if (!int.TryParse(txtId.Text, out id))
             {
                 MessageBox.Show("O ID tem de ser numérico.");
                 return;
             }
 
-            // Exibir uma mensagem de confirmação antes de eliminar o tipo de artigo, informando o utilizador sobre as possíveis consequências da ação.
+            // Caixa de diálogo de confirmação para prevenir eliminações acidentais
             DialogResult resposta = MessageBox.Show(
                 "Deseja eliminar este tipo de artigo? Isto poderá afetar os artigos associados.",
                 "Confirmação",
                 MessageBoxButtons.YesNo
             );
 
-            // Se o usuário confirmar a eliminação, o método Eliminar do controlador é chamado para remover o tipo de artigo com o ID fornecido. Após a eliminação, uma mensagem de sucesso é exibida, a grade é recarregada para refletir as alterações e os campos de entrada são limpos.
+            // Se a resposta for SIM, remove o registo e atualiza a interface
             if (resposta == DialogResult.Yes)
             {
                 TipoArtigoController.Eliminar(id);
@@ -175,12 +182,9 @@ namespace IShopping.Views
             }
         }
 
-        private void txtNome_TextChanged(object sender, EventArgs e)
-        {
-        }
-
-        private void FormTipoArtigo_Load(object sender, EventArgs e)
-        {
-        }
+        // Métodos automáticos gerados pelo Visual Studio (Mantidos vazios para não quebrar o Designer)
+        private void txtNome_TextChanged(object sender, EventArgs e) { }
+        private void FormTipoArtigo_Load(object sender, EventArgs e) { }
+        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e){ }
     }
 }

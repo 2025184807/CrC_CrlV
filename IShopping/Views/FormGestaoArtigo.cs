@@ -1,81 +1,85 @@
-﻿using IShopping.Controller;
-using IShopping.Models;
+﻿using IShopping.Controller; // Permite aceder às lógicas de controlo de artigos (Inserir, Editar, Eliminar)
+using IShopping.Models;     // Permite interagir com as classes de dados e o Contexto da BD
 using System;
 using System.Data;
-using System.Data.Entity; // Necessário para usar o .Include()
-using System.Linq;
-using System.Windows.Forms;
+using System.Data.Entity;   // Necessário para usar o método .Include() para carregar tabelas relacionadas
+using System.Linq;          // Necessário para usar expressões e filtros LINQ (Ex: .Any(), .Where(), .Select())
+using System.Windows.Forms; // Necessário para a infraestrutura de componentes Windows Forms
 
 namespace IShopping.Views
 {
+    // Classe do formulário responsável por gerir o catálogo de artigos/produtos do sistema (CRUD e Filtros)
     public partial class FormGestaoArtigo : Form
     {
+        // CONSTRUTOR - Executado imediatamente ao instanciar o formulário
         public FormGestaoArtigo()
         {
-            InitializeComponent();
+            InitializeComponent(); // Inicializa os componentes visuais desenhados no Designer
 
-            CarregarTipos(); // Carrega os tipos de artigo no combo box
-            CarregarGrid(); // Carrega os artigos na data grid view
+            CarregarTipos(); // Preenche a ComboBox principal com os tipos de artigos existentes
+            CarregarGrid();  // Carrega a datagridview com todos os artigos registados
         }
 
         private void FormGestaoArtigo_Load(object sender, EventArgs e)
         {
-            CarregarComboTipoArtigo(); // Carrega os tipos de artigo no combo box
+            CarregarComboTipoArtigo(); // Inicializa a ComboBox secundária utilizada para os filtros de pesquisa
         }
 
-        // CARREGAR TIPOS-- Carrega os tipos de artigo no combo box
+        // CARREGAR TIPOS - Preenche a ComboBox do formulário de inserção com dados vindos do Controller
         private void CarregarTipos()
         {
-            cmbTipoArtigo.DataSource = TipoArtigoController.Listar(); // Define a lista de tipos de artigo como fonte de dados do combo box
+            // Define a lista completa de tipos devolvida pelo Controller como fonte de dados
+            cmbTipoArtigo.DataSource = TipoArtigoController.Listar();
 
-            cmbTipoArtigo.DisplayMember = "Nome";
-            cmbTipoArtigo.ValueMember = "Id";
+            cmbTipoArtigo.DisplayMember = "Nome"; // Define o texto que o utilizador vai ler no ecrã
+            cmbTipoArtigo.ValueMember = "Id";     // Define o ID numérico que será guardado por trás na BD
 
-            cmbTipoArtigo.SelectedIndex = -1;
+            cmbTipoArtigo.SelectedIndex = -1;     // Garante que a ComboBox começa vazia (sem seleção padrão)
         }
 
-        //Limpar campos
+        // LIMPAR CAMPOS - Função utilitária interna para esvaziar os controlos de texto e seleções
         public void LimparCampos()
         {
             txtId.Clear();
             txtNome.Clear();
             txtPreco.Clear();
-            cmbTipoArtigo.SelectedIndex = -1; // Desseleciona o combo box
+            cmbTipoArtigo.SelectedIndex = -1; // Desseleciona qualquer item ativo na ComboBox de inserção
         }
 
-        // Carregar data grid view mostrando o Nome do Tipo de Artigo
+        // CARREGAR GRID - Alimenta a DataGridView com todos os artigos mapeados na Base de Dados
         public void CarregarGrid()
         {
             using (shoppingContext db = new shoppingContext())
             {
-                dataGridView1.DataSource = null;
+                dataGridView1.DataSource = null; // Corta o vínculo anterior para evitar duplicações de colunas
 
-                // Usamos o .Select para criar as colunas explicitamente, incluindo o texto do tipo de artigo
+                // Usamos Projeção (.Select) para customizar a tabela e trazer o Nome real do Tipo e não apenas o ID
                 dataGridView1.DataSource = db.Artigos
-                    .Include(a => a.TipoArtigo)
+                    .Include(a => a.TipoArtigo) 
                     .Select(a => new
                     {
                         Id = a.Id,
                         Nome = a.Nome,
                         Preço = a.Preco,
-                        TipoArtigo = a.TipoArtigo.Nome // Vai buscar o texto do tipo da outra tabela
+                        TipoArtigo = a.TipoArtigo.Nome // Extrai o nome textual da categoria relacionada
                     })
-                    .ToList();
+                    .ToList(); // Executa a consulta e transforma num formato de lista compatível com a Grid
             }
         }
 
-        // Botão para guardar um novo artigo
+        // BOTÃO GUARDAR - Cria e insere um novo artigo na Base de Dados
         private void btnGuardar_Click(object sender, EventArgs e)
         {
+            // Validação de interface: Bloqueia a gravação se existirem campos em branco ou sem categoria
             if (string.IsNullOrWhiteSpace(txtNome.Text) ||
                 string.IsNullOrWhiteSpace(txtPreco.Text) ||
                 cmbTipoArtigo.SelectedIndex == -1)
             {
                 MessageBox.Show("Preenche todos os campos.");
-                return;
+                return; // Aborta a inserção
             }
 
-            // Verificar se já existe um artigo com o mesmo nome (ignorar maiúsculas/minúsculas)
+            // Validação de Duplicados: Verifica se o nome digitado já existe (ignorando maiúsculas/minúsculas)
             using (shoppingContext db = new shoppingContext())
             {
                 bool existe = db.Artigos
@@ -84,44 +88,47 @@ namespace IShopping.Views
                 if (existe)
                 {
                     MessageBox.Show("Já existe um artigo com esse nome.");
-                    return;
+                    return; 
                 }
             }
 
             decimal preco;
+            // Tenta converter a string de texto do preço num formato decimal numérico válido
             if (!decimal.TryParse(txtPreco.Text, out preco))
             {
                 MessageBox.Show("Preço inválido.");
-                return;
+                return; 
             }
 
+            // Invoca o método de inserção do Controller passando os dados recolhidos do ecrã
             ArtigoController.Inserir(
                 txtNome.Text,
-                (int)cmbTipoArtigo.SelectedValue,
+                (int)cmbTipoArtigo.SelectedValue, // Converte o ID selecionado explicitamente para inteiro
                 preco
             );
 
             MessageBox.Show("Artigo inserido com sucesso!");
 
-            CarregarGrid();
-            LimparCampos();
+            CarregarGrid();  // Recarrega a tabela com o novo artigo incluído
+            LimparCampos();   // Limpa o ecrã para uma nova inserção
         }
 
-        // Botão para editar um artigo existente
+        // BOTÃO EDITAR - Atualiza as propriedades de um artigo já existente
         private void button1_Click(object sender, EventArgs e)
         {
             int id;
+            // Verifica se existe um ID numérico selecionado e carregado na caixa txtId
             if (!int.TryParse(txtId.Text, out id))
             {
                 MessageBox.Show("Seleciona um artigo.");
-                return;
+                return; 
             }
 
-            // Verificar se já existe um artigo com o mesmo nome (ignorar maiúsculas/minúsculas)
+            // Validação de segurança para garantir que o novo nome não cria conflitos na BD
             using (shoppingContext db = new shoppingContext())
             {
                 bool existe = db.Artigos
-                    .Any(a => a.Nome.ToLower() == txtNome.Text.ToLower());
+                    .Any(a => a.Nome.ToLower() == txtNome.Text.ToLower() && a.Id != id); // Ignora o próprio artigo em edição
 
                 if (existe)
                 {
@@ -130,14 +137,15 @@ namespace IShopping.Views
                 }
             }
 
-            decimal preco;// Variável para armazenar o preço convertido
-            // Verificar se o preço é um número válido
+            decimal preco; // Variável para armazenar o preço convertido
+            // Verifica se o preço digitado corresponde a um número válido
             if (!decimal.TryParse(txtPreco.Text, out preco))
             {
                 MessageBox.Show("Preço inválido.");
                 return;
             }
 
+            // Transmite as alterações atualizadas para a camada do Controller
             ArtigoController.Editar(
                 id,
                 txtNome.Text,
@@ -147,11 +155,11 @@ namespace IShopping.Views
 
             MessageBox.Show("Artigo editado!");
 
-            CarregarGrid();
-            LimparCampos();
+            CarregarGrid();  // Atualiza a visualização dos dados na tabela
+            LimparCampos();   // Limpa os campos de texto
         }
 
-        // Carregar os tipos de artigo no combo box
+        // CARREGAR COMBO FILTRO - Alimenta a segunda ComboBox utilizada exclusivamente para filtragem na Grid
         private void CarregarComboTipoArtigo()
         {
             using (shoppingContext db = new shoppingContext())
@@ -159,11 +167,11 @@ namespace IShopping.Views
                 cbTipoArtigo.DataSource = db.TipoArtigos.ToList();
                 cbTipoArtigo.DisplayMember = "Nome";
                 cbTipoArtigo.ValueMember = "Id";
-                cbTipoArtigo.SelectedIndex = -1;
+                cbTipoArtigo.SelectedIndex = -1; // Inicia sem filtro selecionado
             }
         }
 
-        //Ver os artigos selecionados na data grid view
+        // BOTÃO VER - Pesquisa um artigo pelo ID indicado e distribui as informações nos campos do formulário
         private void btnVer_Click(object sender, EventArgs e)
         {
             int id;
@@ -173,13 +181,15 @@ namespace IShopping.Views
                 return;
             }
 
+            // Procura o registo original na base de dados recorrendo ao ID
             Artigo artigo = ArtigoController.ProcurarPorId(id);
 
+            // Se o artigo existir, preenche os controlos visuais correspondentes com os valores guardados
             if (artigo != null)
             {
                 txtNome.Text = artigo.Nome;
                 txtPreco.Text = artigo.Preco.ToString();
-                cmbTipoArtigo.SelectedValue = artigo.TipoArtigoId;
+                cmbTipoArtigo.SelectedValue = artigo.TipoArtigoId; // Posiciona a ComboBox na categoria correta
             }
             else
             {
@@ -191,13 +201,13 @@ namespace IShopping.Views
         {
         }
 
-        //Voltar 
+        // BOTÃO VOLTAR - Encerra a janela de gestão de artigos
         private void button2_Click(object sender, EventArgs e)
         {
-            this.Close();
+            this.Close(); // Fecha o formulário ativo
         }
 
-        //Eliminar um artigo
+        // BOTÃO ELIMINAR - Remove permanentemente um artigo com base no ID selecionado
         private void button5_Click(object sender, EventArgs e)
         {
             int id;
@@ -207,65 +217,72 @@ namespace IShopping.Views
                 return;
             }
 
+            // Mostra uma caixa de diálogo para evitar deleções acidentais pelo utilizador
             DialogResult resposta = MessageBox.Show(
                 "Deseja eliminar este artigo?",
                 "Confirmação",
-                MessageBoxButtons.YesNo
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Warning
             );
 
+            // Se o utilizador confirmar a intenção clicando em "Sim"
             if (resposta == DialogResult.Yes)
             {
-                ArtigoController.Eliminar(id);
+                ArtigoController.Eliminar(id); // Executa o comando de eliminação no Controller
 
                 MessageBox.Show("Artigo eliminado!");
 
-                CarregarGrid();
-                LimparCampos();
+                CarregarGrid();  // Remove a linha correspondente da visualização da Grid
+                LimparCampos();   // Limpa os campos do ecrã
             }
         }
 
-        // Filtrar a Grid pela ComboBox selecionada mostrando o Nome do Tipo
+        // FILTRAR POR CATEGORIA - Dispara automaticamente sempre que o utilizador muda o Tipo na ComboBox de filtro
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
             using (shoppingContext db = new shoppingContext())
             {
-                // Se o checkbox "Todos" não estiver marcado e houver um tipo selecionado no combo box, filtra os artigos por esse tipo
+                // Se a CheckBox "Todos" não estiver ativa e houver um tipo selecionado válido, aplica o filtro
                 if (!cbxTodos.Checked &&
                     cbTipoArtigo.SelectedValue != null &&
                     cbTipoArtigo.SelectedValue is int)
                 {
-                    int tipoId = (int)cbTipoArtigo.SelectedValue; // Pega o ID do tipo selecionado no combo box e filtra os artigos por esse tipo, para mostrar o nome do tipo na grid e converte o valor selecionado para int
+                    int tipoId = (int)cbTipoArtigo.SelectedValue; // Captura e converte o ID da categoria filtrada
 
-                    dataGridView1.DataSource = db.Artigos // Filtra os artigos pelo tipo selecionado e mostra o nome do tipo na grid
-                        .Include(a => a.TipoArtigo) // O .Include é necessário para carregar os dados do tipo de artigo junto com os artigos, para que possamos acessar o nome do tipo na projeção
-                        .Where(a => a.TipoArtigoId == tipoId) //O .Where filtra os artigos pelo tipo selecionado, usando o ID do tipo para comparar com o TipoArtigoId de cada artigo, e o .Include é necessário para carregar os dados do tipo de artigo junto com os artigos, para que possamos acessar o nome do tipo na projeção
-                        .Select(a => new // O .Select é necessário para criar as colunas explicitamente, incluindo o texto do tipo de artigo
+                    // Filtra e reconstrói a estrutura de colunas da Grid exibindo apenas os elementos da categoria correspondente
+                    dataGridView1.DataSource = db.Artigos
+                        .Include(a => a.TipoArtigo)          // Realiza a junção de tabelas necessária
+                        .Where(a => a.TipoArtigoId == tipoId) // Filtra os artigos que contêm o TipoArtigoId selecionado
+                        .Select(a => new
                         {
                             Id = a.Id,
                             Nome = a.Nome,
                             Preço = a.Preco,
                             TipoArtigo = a.TipoArtigo.Nome
                         })
-                        .ToList(); // O .ToList() é necessário para executar a consulta e obter os resultados como uma lista, que pode ser atribuída ao DataSource da grid
+                        .ToList(); // Compila o resultado final em formato de listagem estática
                 }
             }
         }
 
+        // Fecha o form
         private void pictureBox1_Click(object sender, EventArgs e)
         {
             this.Close();
         }
 
+        // Botão limpar campos
         private void btnLimpar_Click(object sender, EventArgs e)
         {
-            LimparCampos();
+            LimparCampos(); // Invoca a rotina utilitária de limpeza de campos
         }
 
-        // Filtro do CheckBox Atualizado com Projeção do Nome do Tipo
+        // CHECKBOX MOSTRAR TODOS - Controla a alternância entre a listagem total e a filtragem seletiva por categoria
         private void cbxTodos_CheckedChanged(object sender, EventArgs e)
         {
             using (shoppingContext db = new shoppingContext())
             {
+                // Se a caixa "Todos" for marcada, desativa a ComboBox e traz todos os artigos sem distinção
                 if (cbxTodos.Checked)
                 {
                     dataGridView1.DataSource = db.Artigos
@@ -279,11 +296,13 @@ namespace IShopping.Views
                         })
                         .ToList();
 
-                    cbTipoArtigo.Enabled = false;
+                    cbTipoArtigo.Enabled = false; // Desativa o controlo de filtragem por categoria para evitar conflitos
                 }
+                // Se a caixa for desmarcada, reativa o controlo e aplica de imediato o filtro do item atualmente selecionado
                 else
                 {
-                    cbTipoArtigo.Enabled = true;
+                    cbTipoArtigo.Enabled = true; // Devolve o controlo da ComboBox ao utilizador
+
                     if (cbTipoArtigo.SelectedValue != null && cbTipoArtigo.SelectedValue is int)
                     {
                         int tipoId = (int)cbTipoArtigo.SelectedValue;
@@ -304,6 +323,7 @@ namespace IShopping.Views
             }
         }
 
+        // Evento gerado por clique nas células da Grid (Mantido vazio para evitar erros no ficheiro .Designer.cs)
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
         }

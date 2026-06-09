@@ -453,7 +453,7 @@
             // 
             this.lblAviso.AutoSize = true;
             this.lblAviso.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblAviso.Location = new System.Drawing.Point(23, 104);
+            this.lblAviso.Location = new System.Drawing.Point(76, 104);
             this.lblAviso.Name = "lblAviso";
             this.lblAviso.Size = new System.Drawing.Size(0, 20);
             this.lblAviso.TabIndex = 327;
