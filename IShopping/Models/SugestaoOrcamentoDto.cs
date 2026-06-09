@@ -1,12 +1,14 @@
-﻿
-namespace IShopping.Models
+﻿namespace IShopping.Models
 {
     // Alterado para public para o controlador conseguir aceder
     public class SugestaoOrcamentoDto
     {
-        public decimal MediaUltimosMeses { get; set; } // Representa a Média dos Orçamentos
-        public decimal MediaGastos { get; set; }       // Adicionado para a "Média dos Gastos" do ecrã
-        public decimal DiferencaMedia { get; set; }     // Adicionado para a "Diferença média" do ecrã
+        // Propriedades de Valores e Médias Financeiras
+        public decimal MediaUltimosMeses { get; set; }
+        public decimal MediaGastos { get; set; }
+        public decimal DiferencaMedia { get; set; }
+
+        // Previsões para o Próximo Período
         public decimal SugestaoProximoMes { get; set; }
     }
 }

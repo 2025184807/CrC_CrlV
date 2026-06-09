@@ -7,12 +7,18 @@ namespace IShopping
     [Table("Utilizadores")] // Nome da tabela no banco de dados
     internal class Utilizador
     {
+        // Chave Primária
         public int Id { get; set; }
+
+        // Propriedades de Credenciais e Acesso
         public string Username { get; set; }
         public string Password { get; set; }
 
+        // Dados de Auditoria 
         public string CriadoPor { get; set; }
         public string AlteradoPor { get; set; }
-        public List<CompraPlaneada> Compras { get; set; } // Relação com a tabela Compra, permitindo que um utilizador possa ter várias compras associadas a ele. A propriedade Compras é uma lista que armazena as compras relacionadas a um utilizador específico.
+
+        // Relações e Propriedades de Navegação
+        public List<CompraPlaneada> Compras { get; set; }
     }
 }
