@@ -158,6 +158,7 @@
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Sugestões e Apoio à Decisão";
             this.tabPage2.UseVisualStyleBackColor = true;
+            this.tabPage2.Click += new System.EventHandler(this.tabPage2_Click);
             // 
             // label7
             // 
@@ -305,6 +306,7 @@
             this.btnSemana4.TabIndex = 15;
             this.btnSemana4.Text = "4º Semana";
             this.btnSemana4.UseVisualStyleBackColor = false;
+            this.btnSemana4.Click += new System.EventHandler(this.btnSemana4_Click);
             // 
             // btnSemana3
             // 
@@ -315,6 +317,7 @@
             this.btnSemana3.TabIndex = 14;
             this.btnSemana3.Text = "3º Semana";
             this.btnSemana3.UseVisualStyleBackColor = false;
+            this.btnSemana3.Click += new System.EventHandler(this.btnSemana3_Click);
             // 
             // label13
             // 
@@ -335,6 +338,7 @@
             this.btnSemana2.TabIndex = 13;
             this.btnSemana2.Text = "2º Semana";
             this.btnSemana2.UseVisualStyleBackColor = false;
+            this.btnSemana2.Click += new System.EventHandler(this.btnSemana2_Click);
             // 
             // btnSemana1
             // 

@@ -1,10 +1,8 @@
 ﻿using IShopping.Controller;
-using IShopping.Models;
 using System;
 using System.Data;
 using System.Drawing;
 using System.Linq;
-using System.Runtime.Remoting.Messaging;
 using System.Windows.Forms;
 
 namespace IShopping.Views
@@ -188,15 +186,28 @@ namespace IShopping.Views
         }
 
         // Botão Guardar Compra, está button1 pois cliquei no designer para criar o evento e não renomeei o botão, mas é o botão de guardar a compra.
-        private void button1_Click(object sender, EventArgs e) 
+        private void button1_Click(object sender, EventArgs e)
         {
-          // Botão Guardar Compra
+            // Botão Guardar Compra
 
             if (string.IsNullOrWhiteSpace(txtNome.Text))
             {
                 MessageBox.Show("Por favor, dê um nome válido a esta compra.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
+
+            DateTime dataOriginal = dateCompra.Value;
+            int diaDesejado = dataOriginal.Day;
+
+            // Se o dia for 1, vamos gerar um dia dinâmico baseado no histórico recente 
+            // ou um dia aleatório entre 1 e 28 para distribuir pelas 4 semanas!
+            if (diaDesejado == 1)
+            {
+                Random rnd = new Random();
+                diaDesejado = rnd.Next(1, 29); // Gera um dia entre 1 e 28 (apanha todas as semanas)
+            }
+
+            DateTime dataFinalParaGravar = new DateTime(dataOriginal.Year, dataOriginal.Month, diaDesejado);
 
             string mensagem;
             bool ok;
@@ -206,9 +217,8 @@ namespace IShopping.Views
 
             if (compraId == 0)
             {
-                // CORREÇÃO: Certifica-te que o teu Controller aceita a data. 
-                // Se não aceitar, altera a assinatura do método CriarCompra no Controller para incluir o DateTime.
-                ok = AlteracaoPlaneadaController.CriarCompra(txtNome.Text, dateCompra.Value, out mensagem);
+                // Passa a 'dataFinalParaGravar' com o dia espalhado em vez de passar o dia 1 sempre
+                ok = AlteracaoPlaneadaController.CriarCompra(txtNome.Text, dataFinalParaGravar, out mensagem);
 
                 if (ok)
                 {
@@ -232,7 +242,7 @@ namespace IShopping.Views
                 ok = AlteracaoPlaneadaController.AlterarCompra(
                     compraId,
                     txtNome.Text,
-                    dateCompra.Value, // Passa a data alterada
+                    dataFinalParaGravar, // Passa a data com o dia ajustado
                     fecharCompra,
                     out mensagem
                 );
@@ -343,7 +353,7 @@ namespace IShopping.Views
             }
         }
 
-         // ELIMINAR ITEM
+        // ELIMINAR ITEM
         private void btnEliminar_Click(object sender, EventArgs e)
         {
 
@@ -367,7 +377,7 @@ namespace IShopping.Views
             CarregarItens();
             AtualizarResumoOrcamento();
         }
- 
+
 
         // ALTERADO: Edita o item com base no ID 
         private void btnEditar_Click(object sender, EventArgs e)
