@@ -190,6 +190,8 @@ namespace IShopping.Views
         // Botão Guardar Compra, está button1 pois cliquei no designer para criar o evento e não renomeei o botão, mas é o botão de guardar a compra.
         private void button1_Click(object sender, EventArgs e) 
         {
+          // Botão Guardar Compra
+
             if (string.IsNullOrWhiteSpace(txtNome.Text))
             {
                 MessageBox.Show("Por favor, dê um nome válido a esta compra.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -204,7 +206,9 @@ namespace IShopping.Views
 
             if (compraId == 0)
             {
-                ok = AlteracaoPlaneadaController.CriarCompra(txtNome.Text, out mensagem);
+                // CORREÇÃO: Certifica-te que o teu Controller aceita a data. 
+                // Se não aceitar, altera a assinatura do método CriarCompra no Controller para incluir o DateTime.
+                ok = AlteracaoPlaneadaController.CriarCompra(txtNome.Text, dateCompra.Value, out mensagem);
 
                 if (ok)
                 {
@@ -228,8 +232,8 @@ namespace IShopping.Views
                 ok = AlteracaoPlaneadaController.AlterarCompra(
                     compraId,
                     txtNome.Text,
-                    dateCompra.Value,
-                    fecharCompra, // Passa o booleano interpretado a partir do txtEstado
+                    dateCompra.Value, // Passa a data alterada
+                    fecharCompra,
                     out mensagem
                 );
 
@@ -241,7 +245,9 @@ namespace IShopping.Views
                 }
             }
 
-            MessageBox.Show(mensagem);
+            MessageBox.Show(mensagem, "Sucesso", MessageBoxButtons.OK, ok ? MessageBoxIcon.Information : MessageBoxIcon.Warning);
+
+            // Força a atualização do resumo com a nova data gravada
             AtualizarResumoOrcamento();
         }
 

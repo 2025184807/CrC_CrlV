@@ -45,6 +45,7 @@
             this.btnAbrirCompra = new System.Windows.Forms.Button();
             this.btnModoCompra = new System.Windows.Forms.Button();
             this.btnPlaneamento = new System.Windows.Forms.Button();
+            this.btnAtualizar = new System.Windows.Forms.Button();
             this.pictureBox5 = new System.Windows.Forms.PictureBox();
             this.pictureBox3 = new System.Windows.Forms.PictureBox();
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
@@ -218,7 +219,7 @@
             // 
             this.label9.AutoSize = true;
             this.label9.Font = new System.Drawing.Font("Microsoft Yi Baiti", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label9.Location = new System.Drawing.Point(862, 202);
+            this.label9.Location = new System.Drawing.Point(825, 210);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(36, 23);
             this.label9.TabIndex = 261;
@@ -227,7 +228,7 @@
             // txtId
             // 
             this.txtId.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtId.Location = new System.Drawing.Point(918, 206);
+            this.txtId.Location = new System.Drawing.Point(881, 214);
             this.txtId.Name = "txtId";
             this.txtId.Size = new System.Drawing.Size(104, 22);
             this.txtId.TabIndex = 260;
@@ -270,6 +271,20 @@
             this.btnPlaneamento.Text = "Planeamento de Compras";
             this.btnPlaneamento.UseVisualStyleBackColor = false;
             this.btnPlaneamento.Click += new System.EventHandler(this.btnPlaneamento_click);
+            // 
+            // btnAtualizar
+            // 
+            this.btnAtualizar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(68)))), ((int)(((byte)(100)))), ((int)(((byte)(145)))));
+            this.btnAtualizar.BackgroundImage = global::IShopping.Properties.Resources.refresh_arrow__2_;
+            this.btnAtualizar.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.btnAtualizar.Font = new System.Drawing.Font("Microsoft Yi Baiti", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnAtualizar.ForeColor = System.Drawing.Color.White;
+            this.btnAtualizar.Location = new System.Drawing.Point(991, 205);
+            this.btnAtualizar.Name = "btnAtualizar";
+            this.btnAtualizar.Size = new System.Drawing.Size(36, 34);
+            this.btnAtualizar.TabIndex = 269;
+            this.btnAtualizar.UseVisualStyleBackColor = false;
+            this.btnAtualizar.Click += new System.EventHandler(this.btnAtualizar_Click);
             // 
             // pictureBox5
             // 
@@ -324,9 +339,9 @@
             // 
             // pictureBox4
             // 
-            this.pictureBox4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(248)))), ((int)(((byte)(248)))));
+            this.pictureBox4.BackColor = System.Drawing.Color.Transparent;
             this.pictureBox4.Image = global::IShopping.Properties.Resources.cart1;
-            this.pictureBox4.Location = new System.Drawing.Point(233, 146);
+            this.pictureBox4.Location = new System.Drawing.Point(247, 148);
             this.pictureBox4.Name = "pictureBox4";
             this.pictureBox4.Size = new System.Drawing.Size(26, 28);
             this.pictureBox4.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -339,6 +354,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1056, 561);
+            this.Controls.Add(this.btnAtualizar);
             this.Controls.Add(this.pictureBox5);
             this.Controls.Add(this.btnPlaneamento);
             this.Controls.Add(this.pictureBox3);
@@ -402,5 +418,6 @@
         private System.Windows.Forms.PictureBox pictureBox3;
         private System.Windows.Forms.PictureBox pictureBox5;
         private System.Windows.Forms.Button btnPlaneamento;
+        private System.Windows.Forms.Button btnAtualizar;
     }
 }

@@ -22,11 +22,12 @@ namespace IShopping.Views
             CarregarListagensHistorico(); // Executa a função que preenche as tabelas
         }
 
+
         //Carrega os dados nas tabelas da primeira aba (Requisitos 20.a e 20.b)
         private void CarregarListagensHistorico()
         {
             // Forçar a criação limpa das colunas do dgvOrcamentos (Tabela de cima)
-            dgvOrcamentos.Columns.Clear();
+            dgvOrcamentos.Columns.Clear(); // Os campos da 
             dgvOrcamentos.Columns.Add("MesAno", "Mês/Ano");
             dgvOrcamentos.Columns.Add("Orcamento", "Orçamento");
             dgvOrcamentos.Columns.Add("TotalGasto", "Total Compras");
@@ -39,25 +40,27 @@ namespace IShopping.Views
             dgvComprasFechadas.Columns.Add("NaoPrevistos", "% Itens Não Previstos");
             dgvComprasFechadas.Columns.Add("TotalCompra", "Total Gasto (€)");
 
-            int anoAtual = DateTime.Today.Year; // Pega o ano atual para filtrar os dados
+            int anoAtual = DateTime.Now.Year; // Pega o ano atual para filtrar os dados
             bool encontrouDados = false;
-
-            // Vamos correr todos os 12 meses do ano
-            for (int mes = 1; mes <= 12; mes++)
+            int mes; // Começa pelo mês 1 (Janeiro)
+            // Percorre todos os 12 meses do ano
+            for (mes = 1; mes <= 12; mes++)
             {
+                // Obter o resumo do mês atual usando o controller (que acessa a BD e calcula os valores)
                 ResumoComprasDto resumo = EstatisticasAvancadasController.ObterResumoMensal(mes, anoAtual);
 
                 // Adiciona se houver orçamento OU compras registadas
                 if (resumo.OrcamentoMensal > 0 || resumo.TotalComprasMes > 0)
                 {
-                    encontrouDados = true;
-                    string nomeMesAno = $"{mes:D2}/{anoAtual}";
+                    encontrouDados = true; // Sinaliza que encontramos pelo menos um mês com dados para mostrar
+                    string nomeMesAno = $"{mes:D2}/{anoAtual}"; // Formata o mês como "MM/YYYY" para mostrar na tabela
 
+                    // Adiciona a linha do mês à tabela de orçamentos
                     int rowIndex = dgvOrcamentos.Rows.Add(
-                        nomeMesAno,
-                        resumo.OrcamentoMensal.ToString("C2"),
-                        resumo.TotalComprasMes.ToString("C2"),
-                        resumo.Diferenca.ToString("C2")
+                        nomeMesAno, // Mostra o mês e ano
+                        resumo.OrcamentoMensal.ToString("C2"), // Formata como moeda
+                        resumo.TotalComprasMes.ToString("C2"), // Formata como moeda
+                        resumo.Diferenca.ToString("C2") // Formata como moeda
                     );
 
                     // Pintar células
@@ -67,7 +70,7 @@ namespace IShopping.Views
                         dgvOrcamentos.Rows[rowIndex].Cells[3].Style.ForeColor = Color.Green;
                 }
 
-                // CORRIGIDO: Como a tua lista afinal é de 'string', o loop lê cada nomeCompra diretamente.
+           
                 // Usamos os valores gerais do 'resumo' do mês para preencher o resto sem quebrar o código!
                 if (resumo.ComprasFechadas != null && resumo.ComprasFechadas.Count > 0)
                 {
@@ -81,15 +84,14 @@ namespace IShopping.Views
                         );
                     }
                 }
-            }
+                }
 
-            // Alerta extra se a BD estiver completamente vazia (Melhoramento e Proteção)
-            if (!encontrouDados)
-            {
-                MessageBox.Show("Não foram encontrados dados de orçamentos ou compras fechadas para o ano corrente na Base de Dados.",
-                                "Informação", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                // Alerta extra se a BD estiver completamente vazia (Melhoramento e Proteção)
+                if (!encontrouDados)
+                {
+                    MessageBox.Show("Não foram encontrados dados de orçamentos ou compras fechadas para o ano corrente na Base de Dados.");
+                }
             }
-        }
 
         // Botão "Voltar" para fechar o formulário e retornar ao menu principal
         private void btnVoltar_Click(object sender, EventArgs e)
@@ -98,7 +100,6 @@ namespace IShopping.Views
         }
 
         // --- CÓDIGO DA SEGUNDA ABA (Sugestões e Apoio à Decisão ) ---
-
         private void btnGerarSugestao_Click(object sender, EventArgs e)
         {
             var dadosOrcamento = EstatisticasAvancadasController.SugerirOrcamentoProximoMes();
@@ -109,6 +110,7 @@ namespace IShopping.Views
             txtOrcamentoSugerido.Text = dadosOrcamento.SugestaoProximoMes.ToString("C2");
         }
 
+        // Gerar a lista de compras sugerida para a semana selecionada.
         private void btnGerarLista_Click(object sender, EventArgs e)
         {
             var itensSugeridos = EstatisticasAvancadasController.SugerirListaComprasSemana(semanaSelecionada);
@@ -121,6 +123,8 @@ namespace IShopping.Views
             }
         }
 
+        //Botão da 1ª, 2ª, 3ª e 4ª semana para selecionar a semana que queremos analisar.
+        //Botao da 1ª semana.
         private void btnSemana1_Click(object sender, EventArgs e)
         {
             semanaSelecionada = 1;
@@ -128,6 +132,7 @@ namespace IShopping.Views
             btnSemana1.BackColor = Color.LightBlue;
         }
 
+        //Botao da 2ª semana.
         private void btnSemana2_Click(object sender, EventArgs e)
         {
             semanaSelecionada = 2;
@@ -135,20 +140,21 @@ namespace IShopping.Views
             btnSemana2.BackColor = Color.LightBlue;
         }
 
+        //Botao da 3ª semana.
         private void btnSemana3_Click(object sender, EventArgs e)
         {
             semanaSelecionada = 3;
             ResetarCoresBotoes();
             btnSemana3.BackColor = Color.LightBlue;
         }
-
+        //Botao da 4ª semana.
         private void btnSemana4_Click(object sender, EventArgs e)
         {
             semanaSelecionada = 4;
             ResetarCoresBotoes();
             btnSemana4.BackColor = Color.LightBlue;
         }
-
+        // Função auxiliar para resetar as cores dos botões das semanas (para destacar apenas o selecionado).
         private void ResetarCoresBotoes()
         {
             btnSemana1.BackColor = SystemColors.Control;
@@ -157,9 +163,6 @@ namespace IShopping.Views
             btnSemana4.BackColor = SystemColors.Control;
         }
 
-        private void dgvOrcamentos_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
-
-        }
+        private void dgvOrcamentos_CellContentClick(object sender, DataGridViewCellEventArgs e) { }
     }
 }

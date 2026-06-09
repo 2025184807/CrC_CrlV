@@ -21,6 +21,10 @@ namespace IShopping.Views
         {
             dateCompra.Format = DateTimePickerFormat.Custom;
             dateCompra.CustomFormat = "MM/yyyy";
+
+            // Bloqueia a edição da data neste ecrã, permitindo apenas a visualização
+            dateCompra.Enabled = false;
+
             CarregarCmbCompra();
             CarregarCmbTipoArtigo();
         }
@@ -313,7 +317,7 @@ namespace IShopping.Views
                     .Select(i => new
                     {
                         i.Id,
-                        Nome = i.Artigos.Nome 
+                        Nome = i.Artigos.Nome
                     })
                     .ToList();
 
@@ -332,7 +336,7 @@ namespace IShopping.Views
             {
                 return;
             }
-            
+
             if (int.TryParse(cmbItemPrevisto.SelectedValue.ToString(), out int itemId))
             {
                 using (shoppingContext db = new shoppingContext())

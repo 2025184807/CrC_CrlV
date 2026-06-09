@@ -124,6 +124,7 @@ namespace IShopping.Views
             form.Show();
         }
 
+        // Botão que direciona pro form Estatísticas
         private void button2_Click(object sender, EventArgs e)
         {
             FormEstatisticas form = new FormEstatisticas();
@@ -165,8 +166,14 @@ namespace IShopping.Views
                 // Grava o texto gerado no caminho escolhido com codificação UTF-8 (para não estragar os acentos)
                 System.IO.File.WriteAllText(salvarFicheiro.FileName, conteudoCSV, System.Text.Encoding.UTF8);
 
-                MessageBox.Show("Ficheiro CSV exportado com sucesso!", "Exportação", MessageBoxButtons.OK);
+                MessageBox.Show("Ficheiro CSV exportado com sucesso!");
             }
+        }
+
+        //Atualizar Grelha
+        private void btnAtualizar_Click(object sender, EventArgs e)
+        {
+            ActualizarListaCompras();
         }
     }
 }
