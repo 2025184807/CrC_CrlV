@@ -375,7 +375,7 @@ namespace IShopping.Views
 
             if (string.IsNullOrWhiteSpace(txtIdItem.Text) || !int.TryParse(txtIdItem.Text, out int idItem))
             {
-                MessageBox.Show("Por favor, introduza um ID de Item numérico válido para atualizar.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Por favor, introduza um ID de Item numérico válido para atualizar.");
                 txtIdItem.Focus(); // Foca o campo de ID do item para correção
                 return;
             }
@@ -384,7 +384,7 @@ namespace IShopping.Views
 
             if (novaQtd <= 0)
             {
-                MessageBox.Show("A quantidade do item tem de ser maior que zero.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("A quantidade do item tem de ser maior que zero.");
                 return;
             }
 

@@ -5,19 +5,22 @@ using System.Linq;
 
 namespace IShopping.Controller
 {
+    // Controller responsável pelas operações do "Modo Compra" (quando o utilizador está efetivamente no supermercado a comprar)
     internal static class ModoCompraController
     {
-        // Método para registrar a aquisição de um item previsto, atualizando a quantidade adquirida e o preço unitário, e mantendo a data original da compra para não quebrar o vínculo com o Orçamento Mensal
+        // Regista que um item que já estava planeado/previsto foi comprado
         public static bool RegistarAquisicaoItemPrevisto(int itemId, int quantidadeAdquirida, decimal precoUnitario, out string mensagem)
         {
             mensagem = "";
 
+            // Valida se a quantidade comprada é válida
             if (quantidadeAdquirida <= 0)
             {
                 mensagem = "A quantidade adquirida deve ser superior a zero.";
                 return false;
             }
 
+            // Valida se o preço não é negativo
             if (precoUnitario < 0)
             {
                 mensagem = "O preço unitário não pode ser negativo.";
@@ -26,6 +29,7 @@ namespace IShopping.Controller
 
             using (shoppingContext db = new shoppingContext())
             {
+                // Procura o item planeado na base de dados
                 ItemCompraPlaneada item = db.ItemComprasPlaneadas.Find(itemId);
 
                 if (item == null)
@@ -34,19 +38,22 @@ namespace IShopping.Controller
                     return false;
                 }
 
+                // Procura a compra à qual este item pertence
                 CompraPlaneada compra = db.ComprasPlaneadas.Find(item.CompraPlaneadaId);
 
+                // Se a compra não existir ou já estiver trancada/fechada, impede a edição
                 if (compra == null || compra.Fechada)
                 {
                     mensagem = "A compra não está disponível para edição.";
                     return false;
                 }
 
+                // Atualiza o item com os valores reais do carrinho de compras
                 item.QuantidadeAdquirida = quantidadeAdquirida;
                 item.PrecoUnitario = precoUnitario;
-                item.Adquirido = true;
+                item.Adquirido = true; // Marca como comprado
 
-                // Mantém a data original da compra
+                // Grava quem fez a última alteração na compra
                 compra.AlteradoPor = sessao.UtilizadorAtual;
 
                 db.SaveChanges();
@@ -56,7 +63,7 @@ namespace IShopping.Controller
             }
         }
 
-        // Método para remover um item de uma compra, permitindo a remoção de itens não previstos ou a anulação do registro de aquisição de itens previstos, mantendo a data original da compra para não quebrar o vínculo com o Orçamento Mensal
+        // Remove um item do carrinho ou anula a sua compra se ele for um item previsto
         public static bool RemoverItemCompra(int itemId, out string mensagem)
         {
             mensagem = "";
@@ -79,33 +86,33 @@ namespace IShopping.Controller
                     return false;
                 }
 
-                // Se o item NÃO era previsto, remove-se completamente da base de dados
+                // Se o item não era previsto, apaga-se de vez
                 if (!item.Previsto)
                 {
                     db.ItemComprasPlaneadas.Remove(item);
                     mensagem = "Item não previsto removido com sucesso.";
                 }
-                // Se era um item previsto, anula-se a aquisição mas MANTÉM-SE o preço unitário
+                // Se era um item previsto, não o apagamos para não estragar o planeamento inicial; apenas pomos a quantidade adquirida a zero
                 else
                 {
                     item.QuantidadeAdquirida = 0;
-                    item.Adquirido = false;
-                    // item.PrecoUnitario fica como está, sem ser alterado para null
+                    item.Adquirido = false; // Deixa de estar marcado como comprado
                     mensagem = "Registo de aquisição do item previsto anulado (preço mantido).";
                 }
 
                 compra.AlteradoPor = sessao.UtilizadorAtual;
-                db.SaveChanges();
+                db.SaveChanges(); //Salva as alterações
 
                 return true;
             }
         }
 
-        // Método para adicionar um item não previsto a uma compra, permitindo registrar a aquisição de um artigo que não estava inicialmente planejado
+        // Adiciona um item que não tinha sido planeado inicialmente (
         public static bool AdicionarItemNaoPrevisto(int compraId, int artigoId, int quantidadeAdquirida, decimal precoUnitario, string observacoes, out string mensagem)
         {
             mensagem = "";
 
+            // Validações básicas de segurança para quantidades e preços
             if (quantidadeAdquirida <= 0)
             {
                 mensagem = "A quantidade adquirida deve ser superior a zero.";
@@ -134,14 +141,15 @@ namespace IShopping.Controller
                     return false;
                 }
 
-                // Cria o novo item que não estava planeado
+                // Cria e configura uma nova linha (registo) para a tabela de itens da compra
                 ItemCompraPlaneada item = new ItemCompraPlaneada
                 {
-                    CompraPlaneadaId = compraId,
-                    ArtigoId = artigoId,
+                    CompraPlaneadaId = compraId, // Associa este item ao ID da compra que está aberta no ecrã
+                    ArtigoId = artigoId, // Define qual é o artigo que está a ser comprado através do seu ID
                     QuantidadePrevista = 0,
-                    QuantidadeAdquirida = quantidadeAdquirida,
-                    PrecoUnitario = precoUnitario,
+
+                    QuantidadeAdquirida = quantidadeAdquirida, // Regista a quantidade real que o utilizador acabou de meter dentro da lista
+                    PrecoUnitario = precoUnitario, // Guarda o preço unitário que está a ser cobrado pelo artigo no momento da compra   
                     Previsto = false,
                     Adquirido = true,
                     Observacoes = observacoes
@@ -157,7 +165,7 @@ namespace IShopping.Controller
             }
         }
 
-        // Método para fechar uma compra, marcando-a como fechada e registrando a data de fechamento e o usuário responsável
+        // Fecha e tranca a lista de compras definitivamente, registando metadados de auditoria
         public static bool FecharCompra(int compraId, out string mensagem)
         {
             mensagem = "";
@@ -178,6 +186,7 @@ namespace IShopping.Controller
                     return false;
                 }
 
+                // Fecha a compra e guarda a data atual e o utilizador responsável pelo fecho
                 compra.Fechada = true;
                 compra.DataFecho = DateTime.Now;
                 compra.FechadoPor = sessao.UtilizadorAtual;
@@ -189,7 +198,7 @@ namespace IShopping.Controller
             }
         }
 
-        // Método para calcular o total gasto em uma compra, somando o valor de todos os itens adquiridos
+        // Calcula a soma total do dinheiro gasto em todos os itens comprados (Quantidade * Preço)
         public static decimal ObterTotalCompra(int compraId)
         {
             using (shoppingContext db = new shoppingContext())
@@ -201,31 +210,42 @@ namespace IShopping.Controller
             }
         }
 
-        // Método para obter o orçamento mensal associado a uma compra, com base na data da compra
+        // Procura e devolve o teto máximo de orçamento definido para o mês/ano desta compra
         public static decimal ObterOrcamentoCompra(int compraId)
         {
             using (shoppingContext db = new shoppingContext())
             {
                 var compra = db.ComprasPlaneadas.Find(compraId);
-                if (compra == null) return 0;
-
+                if (compra == null)
+                {
+                    return 0;
+                }
+                   
+                // Cruza o mês e ano da compra com a tabela de Orçamentos
                 var orcamento = db.Orcamentos.FirstOrDefault(o =>
                     o.Mes == compra.DataCompra.Month &&
                     o.Ano == compra.DataCompra.Year);
 
-                return orcamento?.ValorOrcamento ?? 0;
+                if (orcamento != null)
+                {
+                    return orcamento.ValorOrcamento;
+                }
+                else
+                {
+                    return 0;
+                }
             }
         }
 
-        // Método para obter o saldo disponível para uma compra, subtraindo o total gasto do orçamento mensal
+        // Calcula o saldo restante (Orçamento do mês - Total gasto até ao momento)
         public static decimal ObterSaldoDisponivel(int compraId)
         {
             decimal orcamento = ObterOrcamentoCompra(compraId);
             decimal totalGasto = ObterTotalCompra(compraId);
-            return orcamento - totalGasto;
+            return orcamento - totalGasto; // Devolve a diferença
         }
 
-        // Método para obter todas as compras em aberto, ordenadas por data de compra
+        // Retorna uma lista de todas as compras que ainda não foram fechadas, organizadas pelas mais antigas primeiro
         public static List<CompraPlaneada> ObterComprasEmAberto()
         {
             using (shoppingContext db = new shoppingContext())

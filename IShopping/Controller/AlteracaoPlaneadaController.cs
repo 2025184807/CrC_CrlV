@@ -1,16 +1,16 @@
 ﻿using IShopping.Models; // Serve para ligar os modelos públicos e o Contexto
 using System; // Serve para a função DateTime funcionar e para o tipo bool
 using System.Collections.Generic; // Serve para usar List<T> e outros tipos de coleções genéricas
-using System.Linq; // Serve para usar métodos de extensão como .Any(), .FirstOrDefault(), .ToList() e outros que facilitam a manipulação de coleções
+using System.Linq; // Serve para usar métodos de extensão como .Any(), .FirstOrDefault(), .ToList().
 
 namespace IShopping.Controller
 {
     // Este controlador é responsável por toda a lógica relacionada com a criação, alteração e gestão das compras planeadas.
-    internal class AlteracaoPlaneadaController // Internal serve para limitar o acesso a esta classe apenas dentro do assembly do projeto, ou seja, outras partes do código fora deste projeto não poderão acessar diretamente esta classe.
+    internal class AlteracaoPlaneadaController
     {
         //A função ObterCompras serve para obter todas as compras registadas para listar na Grid principal
         public static List<CompraPlaneada> ObterCompras() // Método para obter todas as compras planeadas, retorna uma lista de objetos do tipo CompraPlaneada
-        // O método é estático, o que significa que pode ser chamado diretamente sem a necessidade de criar uma instância da classe AlteracaoPlaneadaController.
+        // O método é static significa que pode ser chamado diretamente sem a necessidade de criar uma instância da classe AlteracaoPlaneadaController.
         // List<CompraPlaneada> indica que o método retorna uma lista de objetos do tipo CompraPlaneada, que representa as compras planeadas registradas no banco de dados.
 
         {
@@ -37,20 +37,18 @@ namespace IShopping.Controller
             mensagem = ""; // Inicializa a variável de saída mensagem como uma string vazia, para que possa ser preenchida com uma mensagem de sucesso ou erro durante o processo de criação da compra.
 
             // Valida se o nome da compra é nulo, vazio ou contém apenas espaços em branco.
-            // Se for, define a mensagem de erro e retorna false para indicar que a criação da compra falhou.
             if (string.IsNullOrWhiteSpace(nomeCompra))
             {
-                mensagem = "Indique o nome da compra."; // Define a mensagem de erro indicando que o nome da compra é obrigatório.
+                mensagem = "Indique o nome da compra.";
                 return false; // Retorna false para indicar que a criação da compra falhou devido à validação do nome.
             }
 
             // Valida se já existe uma compra com o mesmo nome, para evitar duplicatas.
             using (shoppingContext db = new shoppingContext())
             {
-                // impedir nomes repetidos (não fechadas ou todas, como quiseres)
-                bool existe = db.ComprasPlaneadas // Verifica se existe alguma compra planeada no banco de dados que tenha o mesmo nome fornecido.
-                    .Any(c => c.NomeCompra == nomeCompra); // Usa o método Any() para verificar se existe pelo menos uma compra que atenda à condição especificada (c.NomeCompra == nomeCompra).
-                                                           // Retorna true se existir, ou false caso contrário.
+                // Verifica se existe alguma compra planeada no banco de dados que tenha o mesmo nome fornecido
+                // Usa o método Any() para verificar se existe pelo menos uma compra que atenda à condição especificada (c.NomeCompra == nomeCompra).
+                bool existe = db.ComprasPlaneadas.Any(c => c.NomeCompra == nomeCompra);
 
                 // Se já existir uma compra com o mesmo nome, define a mensagem de erro e retorna false para indicar que a criação da compra falhou.
                 if (existe)
@@ -60,31 +58,29 @@ namespace IShopping.Controller
                 }
 
                 // Se o nome for válido e não houver duplicatas, cria um novo objeto CompraPlaneada e o adiciona ao banco de dados.
-                // Se o nome for válido e não houver duplicatas, cria um novo objeto CompraPlaneada e o adiciona ao banco de dados.
                 CompraPlaneada compra = new CompraPlaneada
                 {
                     // Nome da compra fornecido pelo utilizador.
                     NomeCompra = nomeCompra,
 
-                    // CORREÇÃO: Usa o Ano e o Mês que vieram do Form (dataCompra) em vez de DateTime.Now
+                    // Data, com mês e ano fornecido pelo utilizador e o dia começa com 1.
                     DataCompra = new DateTime(
                         dataCompra.Year,
                         dataCompra.Month,
                         1
                     ),
 
+                    DataCriacao = DateTime.Now, // Indica quando a compra foi criada.
+                    DataHoraAlteracao = DateTime.Now, // Indica quando a compra foi criada ou alterada pela última vez.
 
-                    DataCriacao = DateTime.Now, // A data e hora atuais são atribuídas à propriedade DataCriacao, onde indica quando a compra foi criada.
-                    DataHoraAlteracao = DateTime.Now, // A data e hora atuais são atribuídas à propriedade DataHoraAlteracao, onde indica quando a compra foi criada ou alterada pela última vez.
-
-                    CriadoPor = sessao.UtilizadorAtual, // O nome do utilizador atual, obtido da classe sessao, é atribuído à propriedade CriadoPor, onde indica quem criou a compra.
-                    AlteradoPor = sessao.UtilizadorAtual, // O nome do utilizador atual, obtido da classe sessao, é atribuído à propriedade AlteradoPor, onde indica quem alterou a compra pela última vez.
+                    CriadoPor = sessao.UtilizadorAtual, // Indica quem criou a compra.
+                    AlteradoPor = sessao.UtilizadorAtual, // Indica quem alterou a compra pela última vez.
 
                     Fechada = false // A propriedade Fechada é definida como false, onde indica que a compra ainda não foi fechada.
                 };
 
                 db.ComprasPlaneadas.Add(compra); // Adiciona o novo objeto compra ao contexto do banco de dados.
-                db.SaveChanges(); // Salva as alterações no banco de dados, persistindo a nova compra criada.
+                db.SaveChanges(); // Salva as alterações no banco de dados.
 
                 mensagem = "Compra criada com sucesso."; // Define a mensagem de sucesso indicando que a compra foi criada com sucesso.
                 return true; // Retorna true para indicar que a criação da compra foi bem-sucedida.
@@ -92,7 +88,7 @@ namespace IShopping.Controller
         }
 
         // Função para procurar um item por ID
-        public static ItemCompraPlaneada ProcurarItemPorId(int id) // Método para procurar um item de compra planeada por seu ID, retorna um objeto do tipo ItemCompraPlaneada
+        public static ItemCompraPlaneada ProcurarItemPorId(int id) // Método para procurar um item de compra planeada por seu ID.
         {
             using (shoppingContext db = new shoppingContext()) // Cria uma nova instância do contexto de banco de dados para acessar os dados dos itens de compra planeada.
             {
@@ -122,18 +118,21 @@ namespace IShopping.Controller
         }
 
         // Função para eliminar um item
-        public static void EliminarItem(int id, out string mensagem) 
+        public static void EliminarItem(int id, out string mensagem)
         {
             using (shoppingContext db = new shoppingContext()) // using serve para percorrer a base de dados.
             {
-                ItemCompraPlaneada item = db.ItemComprasPlaneadas.Find(id); //  Procura o item de compras planeadas com o id fornecido utilizadando o método Find().
-                if (item != null)// Se o item não for nulo, remove o item com sucesso.
+                // Procura a compra planeada na base de dados através do ID, utilizadando o método Find().
+                ItemCompraPlaneada item = db.ItemComprasPlaneadas.Find(id);
+
+                // Se o item não for nulo, remove o item com sucesso.
+                if (item != null)
                 {
-                    db.ItemComprasPlaneadas.Remove(item); 
+                    db.ItemComprasPlaneadas.Remove(item);
                     db.SaveChanges(); // Salva as alterações no banco de dados.
-                    mensagem = "Item eliminado com sucesso."; 
+                    mensagem = "Item eliminado com sucesso.";
                 }
-                else // Se o item for nul, mostra uma mensagem.
+                else
                 {
                     mensagem = "Item não encontrado.";
                 }
@@ -145,7 +144,7 @@ namespace IShopping.Controller
         {
             mensagem = "";
 
-            //Se o novo nome for nulo mostra uma mensagem para indicar o nome da compra e retorna falso.
+            // Valida se o novo nome está vazio ou contém apenas espaços.
             if (novoNome.Trim() == "") // O método Trim() serve para ler uma string.
             {
                 mensagem = "Indique o nome da compra.";
@@ -154,10 +153,11 @@ namespace IShopping.Controller
 
             using (shoppingContext db = new shoppingContext())
             {
-                var compra = db.ComprasPlaneadas.Find(compraId); // Procura compras planeadas com o id fornecido.
+                // Procura a compra planeada na base de dados através do ID
+                var compra = db.ComprasPlaneadas.Find(compraId);
 
                 // Caso a compra seja nula, mostra uma mensagem e retorna falso.
-                if (compra == null) 
+                if (compra == null)
                 {
                     mensagem = "Compra não encontrada.";
                     return false;
@@ -170,32 +170,40 @@ namespace IShopping.Controller
                     return false;
                 }
 
-                // Atualiza os dados do cabeçalho
-                compra.NomeCompra = novoNome; // a compra
+                // Atualiza os dados do cabeçalho da compra.
+                compra.NomeCompra = novoNome;
                 compra.DataCompra = novaData;
-                compra.DataHoraAlteracao = DateTime.Now;
-                compra.AlteradoPor = sessao.UtilizadorAtual;
+                compra.DataHoraAlteracao = DateTime.Now; // Guarda a data e hora da alteração.
+                compra.AlteradoPor = sessao.UtilizadorAtual; // Guarda o nome de quem alterou.
 
-                // Se a checkbox de fecho foi marcada
+                // Se a opção "Fechada" foi selecionada na ComboBox do formulário.
                 if (fecharCompra)
                 {
                     compra.Fechada = true;
-                    compra.DataFecho = DateTime.Now;
-                    compra.FechadoPor = sessao.UtilizadorAtual;
+                    compra.DataFecho = DateTime.Now; // Guarda o momento exato do fecho.
+                    compra.FechadoPor = sessao.UtilizadorAtual; // Guarda o utilizador que a fechou.
                 }
 
-                db.SaveChanges();
+                db.SaveChanges(); // Salva as alterações no banco de dados.
 
+                // Atribui a mensagem de sucesso usando um operador ternário (?), é como fosse o if-else.
+                // Se 'fecharCompra' for verdadeiro (true), escolhe a mensagem de fecho.
+                // Se for falso (false), escolhe a mensagem de alteração normal.
+                // condição ? expressão_se_verdadeiro : expressão_se_falso;
                 mensagem = fecharCompra ? "Compra fechada e guardada com sucesso." : "Compra alterada com sucesso.";
                 return true;
             }
         }
 
-        // 4. Adicionar um artigo previsto à lista de itens da compra
+        // public: O método é acessível por qualquer outra classe do projeto.
+        // static: O método pertence à própria classe e não a uma instância dela, podes chamá-lo diretamente, sem ter de fazer um 'new'.
+        // bool:   O tipo de retorno do método. Significa que esta função é obrigada a devolver: 'true' (se a operação correu bem) ou 'false' (se houve algum erro/falha).
+        // Função AdicionarItemPrevisto que serve para associar um artigo planeado a uma compra em aberto.
         public static bool AdicionarItemPrevisto(int compraId, int artigoid, int quantidadePrevista, out string mensagem)
         {
             mensagem = "";
 
+            // Valida se a quantidade inserida é válida (deve ser maior que zero).
             if (quantidadePrevista <= 0)
             {
                 mensagem = "A quantidade prevista deve ser superior a zero.";
@@ -204,29 +212,34 @@ namespace IShopping.Controller
 
             using (shoppingContext db = new shoppingContext())
             {
+                // Procura a compra planeada na base de dados através do ID.
                 var compra = db.ComprasPlaneadas.Find(compraId);
 
+                // Se a compra não for encontrada, retorna erro.
                 if (compra == null)
                 {
                     mensagem = "Compra não encontrada.";
                     return false;
                 }
 
+                // Se a compra já estiver trancada/fechada, impede a adição de novos itens.
                 if (compra.Fechada)
                 {
                     mensagem = "A compra já se encontra fechada.";
                     return false;
                 }
 
+                // Procura o artigo na tabela de artigos para validar a sua existência.
                 var artigo = db.Artigos.Find(artigoid);
 
+                // Se o artigo não existir no catálogo, retorna erro.
                 if (artigo == null)
                 {
                     mensagem = "Artigo não encontrado.";
                     return false;
                 }
 
-                // evita duplicados
+                // Verifica se este artigo já está associado a esta compra como um item previsto, para evitar itens duplicados.
                 bool existe = db.ItemComprasPlaneadas.Any(i =>
                     i.CompraPlaneadaId == compraId &&
                     i.ArtigoId == artigoid &&
@@ -238,23 +251,27 @@ namespace IShopping.Controller
                     return false;
                 }
 
+                // Cria a nova instância do item com os dados fornecidos e os valores padrão de inicialização
                 ItemCompraPlaneada item = new ItemCompraPlaneada
                 {
                     CompraPlaneadaId = compraId,
                     ArtigoId = artigoid,
                     QuantidadePrevista = quantidadePrevista,
-                    QuantidadeAdquirida = 0,
-                    PrecoUnitario = artigo.Preco,
-                    Previsto = true,
-                    Adquirido = false,
+                    QuantidadeAdquirida = 0,                  // Inicia a zero porque ainda não foi ao supermercado comprar
+                    PrecoUnitario = artigo.Preco,             // Assume o preço sugerido do catálogo do artigo
+                    Previsto = true,                          // Define que este item foi planeado antes da compra
+                    Adquirido = false,                        // Fica marcado como não comprado inicialmente
                     Observacoes = ""
                 };
 
+                // Adiciona o novo registo ao contexto da base de dados
                 db.ItemComprasPlaneadas.Add(item);
 
+                // Atualiza dados no cabeçalho da compra
                 compra.DataHoraAlteracao = DateTime.Now;
                 compra.AlteradoPor = sessao.UtilizadorAtual;
 
+                // Guarda permanentemente todas as alterações na base de dados
                 db.SaveChanges();
 
                 mensagem = "Item previsto adicionado com sucesso.";
