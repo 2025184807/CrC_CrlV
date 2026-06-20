@@ -1,18 +1,21 @@
-# CrC_CrlV
+# CrC_CrlV 
 
 # iShopping
 
 Aplicação de gestão de compras desenvolvida em C# WinForms com Entity Framework e SQL Server LocalDB, seguindo a arquitetura MVC.
 
-Projeto desenvolvido no âmbito da unidade curricular de Desenvolvimento de Aplicações - IPL TeSP PSI 2025/2026.
-
 ---
 
-## Grupo
+### Instituição e Contexto
+* **Instituição:** Instituto Politécnico de Leiria (IPL)
+* **Curso:** TeSP em Programação de Sistemas de Informação (PSI)
+* **Unidade Curricular:** Desenvolvimento de Aplicações (DA) e Metodologias de Desenvolvimento de Software (MDS) 
+* **Ano Letivo:** 2025/2026
+
+### Equipa de Desenvolvimento
 
 | Número | Nome |
 |--------|------|
-| 2025177996 | Tiago Silva |
 | 2025184807 | Leonor Azevedo |
 
 ---
@@ -43,17 +46,29 @@ Projeto desenvolvido no âmbito da unidade curricular de Desenvolvimento de Apli
 
 ---
 
-## Funcionalidades implementadas
-
-- Pagina de Login;
-- Página Principal;
-- Gestão de Tipos de Artigo;
-- Gestão de Artigos;
-- Gestão de Orçamento;
-- Planeamento de compras;
-- Criação e Alteração de uma Compra Planeada;
-- Modo de Compra;
-- Estatísticas;
-- Exportação CSV;
+### Arquitetura MVC (Model-View-Controller)
+A aplicação está estruturada em três camadas principais para facilitar a manutenção e escalabilidade:
+* **View (Camada de Apresentação):** Formulários WinForms (`FormMain`, `FormLogin`, etc.) responsáveis pela interface com o utilizador e captura de eventos.
+* **Controller (Camada de Lógica de Negócio):** Controladores que gerem o fluxo de dados, aplicam as regras de negócio (ex: validação de orçamento) e comunicam com os modelos.
+* **Model (Camada de Dados):** Classes que representam as entidades do negócio (Artigos, Compras, Orçamentos) e o contexto do Entity Framework (`IShoppingContext`).
+  
 ---
 
+## Funcionalidades implementadas
+
+- [x] **Autenticação:** Página de Login segura para acesso à plataforma.
+- [x] **Menu principal:** Página Principal com navegação centralizada.
+- [x] **Gestão de Artigos e Tipo de Artigo** Controlo total sobre Artigos e Tipos de Artigo.
+- [x] **Gestão de Orçamento Mensal:** Gestão de Orçamento com alertas de teto máximo.
+- [x] **Planeamento de compras:** Criação, alteração e estruturação de Compras Planeadas.
+- [x] **Modo de compra:** Modo de Compra ativo para utilização em tempo real no supermercado.
+- [x] **Estatisticas:** Painel de Estatísticas com cruzamento de gastos vs. orçamento.
+- [x] **Exportar CSV:** Exportação de dados em formato CSV.
+      
+---
+
+## Diagrama de Classes
+
+<img width="669" height="446" alt="image" src="https://github.com/user-attachments/assets/f9d09fc8-eed8-485b-a230-8634e8d694f1" />
+
+--- 
