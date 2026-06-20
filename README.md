@@ -16,6 +16,7 @@ Aplicação de gestão de compras desenvolvida em C# WinForms com Entity Framewo
 
 | Número | Nome |
 |--------|------|
+| 2025177996 | Tiago Silva |
 | 2025184807 | Leonor Azevedo |
 
 ---
