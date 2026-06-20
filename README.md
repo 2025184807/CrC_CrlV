@@ -68,6 +68,12 @@ A aplicação está estruturada em três camadas principais para facilitar a man
       
 ---
 
+## Repositório GitHub:
+
+- https://github.com/o-seu-utilizador/CrC_CrlV
+
+---
+
 ## Diagrama de Classes
 
 <img width="669" height="446" alt="image" src="https://github.com/user-attachments/assets/f9d09fc8-eed8-485b-a230-8634e8d694f1" />
